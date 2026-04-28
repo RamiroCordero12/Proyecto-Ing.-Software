@@ -19,8 +19,18 @@ namespace Proyecto_Ing._Software
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Hola!!");
-            return;
+            
+        }
+
+        private void bitacoraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void usuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormUsuarios formUsuarios = new FormUsuarios();
+            formUsuarios.Show();
         }
     }
 }
