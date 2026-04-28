@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnCrearUsuario = new System.Windows.Forms.Button();
             this.btnDeshabilitarUsuario = new System.Windows.Forms.Button();
+            this.btnModificarUsuario = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuario)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,12 +44,13 @@
             this.dgvUsuario.AllowUserToAddRows = false;
             this.dgvUsuario.AllowUserToDeleteRows = false;
             this.dgvUsuario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUsuario.Location = new System.Drawing.Point(29, 30);
+            this.dgvUsuario.Location = new System.Drawing.Point(24, 30);
             this.dgvUsuario.Name = "dgvUsuario";
             this.dgvUsuario.ReadOnly = true;
             this.dgvUsuario.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUsuario.Size = new System.Drawing.Size(507, 260);
             this.dgvUsuario.TabIndex = 0;
+            this.dgvUsuario.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuario_CellClick);
             // 
             // txtNombreUsuario
             // 
@@ -102,11 +104,22 @@
             this.btnDeshabilitarUsuario.UseVisualStyleBackColor = true;
             this.btnDeshabilitarUsuario.Click += new System.EventHandler(this.btnDeshabilitarUsuario_Click);
             // 
+            // btnModificarUsuario
+            // 
+            this.btnModificarUsuario.Location = new System.Drawing.Point(599, 115);
+            this.btnModificarUsuario.Name = "btnModificarUsuario";
+            this.btnModificarUsuario.Size = new System.Drawing.Size(149, 36);
+            this.btnModificarUsuario.TabIndex = 7;
+            this.btnModificarUsuario.Text = "Modificar usuario";
+            this.btnModificarUsuario.UseVisualStyleBackColor = true;
+            this.btnModificarUsuario.Click += new System.EventHandler(this.btnModificarUsuario_Click);
+            // 
             // FormUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnModificarUsuario);
             this.Controls.Add(this.btnDeshabilitarUsuario);
             this.Controls.Add(this.btnCrearUsuario);
             this.Controls.Add(this.label2);
@@ -131,5 +144,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCrearUsuario;
         private System.Windows.Forms.Button btnDeshabilitarUsuario;
+        private System.Windows.Forms.Button btnModificarUsuario;
     }
 }

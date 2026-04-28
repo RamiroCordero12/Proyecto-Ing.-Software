@@ -33,9 +33,9 @@ namespace DAL
 
 
                     int filasAfectadas = comando.ExecuteNonQuery();
-                    //ExecuteNonQuery: ExecuteNonQuery() se usa para comandos
-                    //que "hacen algo" en la base de datos pero no devuelven una tabla de
-                    //resultados para leer
+                    //ExecuteNonQuery: Metodo que ejecuta una sentencias
+                    //SQL que no devuelven conjunto de datos (INSERT, UPDATE
+                    //DELETE o CREATE.
 
                     //Si afecto a alguna fila el usuario se creo con exito
                     return filasAfectadas > 0;
@@ -46,18 +46,23 @@ namespace DAL
 
         public List<UsuarioBE> ListarUsuario()
         {
+            //Creamos una lista con lo puesto en UsuarioBE
             List<UsuarioBE> list = new List<UsuarioBE>();
 
+            //Creamos la consulta que seleccione los atributos de la tabla usuarios
+            //SELECT --> Selecciona 
+            //FROM --> De
+            //SELECT ..... FROM --> Selecciona ... De
             string consulta2 = "SELECT IdUsuario, NombreUsuario, Contrasena, Estado FROM dbo.Usuarios";
 
             using(SqlConnection conexionSql2 = conexion.ValidarConexion())
-            {
-                
-                
+            {                         
                     using(SqlCommand comando2 = new SqlCommand(consulta2, conexionSql2))
                     {
+                    //Abrimos la conexion a la base de datos
                         conexionSql2.Open();
 
+                    //El executeReader lee la base de datos
                         using(SqlDataReader reader = comando2.ExecuteReader())
                         {
                             while (reader.Read())
@@ -68,7 +73,8 @@ namespace DAL
                                 usuario.NombreUsuario = reader["NombreUsuario"].ToString();
                                 usuario.Contrasena = reader["Contrasena"].ToString();
                                 usuario.Estado = Convert.ToBoolean(reader["Estado"]);
-
+                            
+                            //Agrega los datos a la lista
                                 list.Add(usuario);
                             }
                         }
@@ -80,20 +86,28 @@ namespace DAL
 
         public bool DeshabilitarUsuario(int idUsuario)
         {
+            //Creamos una variable booleana para confirmar 
             bool exito = false;
 
+            //Conectamos
             using (SqlConnection conexionSql3 = conexion.ValidarConexion())
             {
+                //Creamos la consulta que modifique de usuario a estado en 0
+                //UPDATE --> Modifica de
+                //SET --> Asigna valores
+                //WHERE --> Donde
                 string consulta = "UPDATE dbo.Usuarios SET Estado = 0 WHERE IdUsuario = @IdUsuario";
 
                 using(SqlCommand comando3 = new SqlCommand(consulta, conexionSql3))
                 {
+                    //Agarramos el parametro de IdUsuario
                     comando3.Parameters.AddWithValue("@IdUsuario", idUsuario);
 
                     conexionSql3.Open();
 
                     int filasAfectadas = comando3.ExecuteNonQuery();
 
+                    //Si filasAfectadas es mayor a 0 entonces...
                     if(filasAfectadas > 0)
                     {
                         exito = true;                    
@@ -101,6 +115,38 @@ namespace DAL
                 }
             }
             return exito;
+        }
+
+        public bool ModificarUsuario(UsuarioBE usuarioBE)
+        {
+            //Variable booleana para confirmar el resultado
+            bool resultado = false;
+
+            using (SqlConnection conexionSql4 = conexion.ValidarConexion())
+            {
+                //Creamos la consulta que modifique el usuario
+                //UPDATE de usuarios el nombre de usuario y la contrasena done el
+                //el Id seleccionado sea el mismo que el de la base de datos
+                string consulta = "UPDATE Usuarios SET NombreUsuario = @NombreUsuario, Contrasena = @Contrasena WHERE IdUsuario = @IdUsuario";
+
+                using(SqlCommand comando4 = new SqlCommand(consulta, conexionSql4))
+                {
+                    //Agarramos los parametros que los vamos a modificar
+                    comando4.Parameters.AddWithValue("@NombreUsuario", usuarioBE.NombreUsuario);
+                    comando4.Parameters.AddWithValue("@Contrasena", usuarioBE.Contrasena);
+                    comando4.Parameters.AddWithValue("@IdUsuario", usuarioBE.IdUsuario);
+
+                    conexionSql4.Open();
+
+                    int filasSeleccionadas = comando4.ExecuteNonQuery();
+
+                    if(filasSeleccionadas > 0)
+                    {
+                        resultado = true;
+                    }
+                }
+            }
+            return resultado;
         }
     }
 }

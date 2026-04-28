@@ -41,5 +41,11 @@ namespace BLL
             UsuarioDAL usuarioDAL = new UsuarioDAL();
             return usuarioDAL.DeshabilitarUsuario(idUsuario);
         }
+
+        public bool ModificarUsuario(UsuarioBE usuarioBE)
+        {
+            UsuarioDAL usuarioDAL = new UsuarioDAL();
+            return usuarioDAL.ModificarUsuario(usuarioBE);
+        }
     }
 }
