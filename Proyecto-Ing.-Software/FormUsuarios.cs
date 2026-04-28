@@ -27,6 +27,7 @@ namespace Proyecto_Ing._Software
                 UsuarioBE usuario = new UsuarioBE();
                 usuario.NombreUsuario = txtNombreUsuario.Text;
                 usuario.Contrasena = txtContrasena.Text;
+                usuario.Estado = true;
 
                 UsuarioBLL usuarioBLL = new UsuarioBLL();
                 bool confirmacion = usuarioBLL.CrearUsuario(usuario);
@@ -41,9 +42,9 @@ namespace Proyecto_Ing._Software
                     ActualizarGrilla();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Error al crear un usuario");
+                MessageBox.Show(ex.Message, "Error");
             }
         }
 
@@ -60,6 +61,25 @@ namespace Proyecto_Ing._Software
             catch
             {
                 MessageBox.Show("Error al cargar el la grilla");
+            }
+        }
+
+        private void btnDeshabilitarUsuario_Click(object sender, EventArgs e)
+        {
+            int idSeleccionado = Convert.ToInt32(dgvUsuario.SelectedRows[0].Cells["IdUsuario"].Value);
+
+            UsuarioBLL usuarioBLL = new UsuarioBLL();
+            bool exito = usuarioBLL.DeshabilitarUsuario(idSeleccionado);
+
+            ActualizarGrilla();
+
+            if (exito)
+            {
+                MessageBox.Show("Usuario deshabilitado");
+            }
+            else
+            {
+                MessageBox.Show("Error para deshabilitar usuario");
             }
         }
     }

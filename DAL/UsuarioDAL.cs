@@ -15,39 +15,33 @@ namespace DAL
         public bool CrearUsuario(string nombre, string contrasena)
         {
             //Consulta SQL
-            string consulta = "INSERT INTO dbo.Usuarios (NombreUsuario, Contrasena) VALUES (@NombreUsuario, @Contrasena)"; 
+            string consulta = "INSERT INTO dbo.Usuarios (NombreUsuario, Contrasena, Estado) VALUES (@NombreUsuario, @Contrasena, @Estado)";
 
             //El uso de using hace que la conexion se abra y se cierra 
-            using(SqlConnection conexionSql = conexion.ValidacionConexion())
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
             {
-                try
+                //Agarramos el comando SQL que vamos a enviar
+                using (SqlCommand comando = new SqlCommand(consulta, conexionSql))
                 {
-                    //Agarramos el comando SQL que vamos a enviar
-                    using(SqlCommand comando = new SqlCommand(consulta , conexionSql))
-                    {
-                        //Estos son los parametros
-                        comando.Parameters.AddWithValue("NombreUsuario", nombre);
-                        comando.Parameters.AddWithValue("Contrasena", contrasena);
+                    //Estos son los parametros
+                    comando.Parameters.AddWithValue("NombreUsuario", nombre);
+                    comando.Parameters.AddWithValue("Contrasena", contrasena);
 
-                        //Antes de ejecutar abrimos la conexion
-                        conexionSql.Open();
+                    comando.Parameters.AddWithValue("Estado", true);
+                    //Antes de ejecutar abrimos la conexion
+                    conexionSql.Open();
 
-                        
-                        int filasAfectadas = comando.ExecuteNonQuery();
-                        //ExecuteNonQuery: ExecuteNonQuery() se usa para comandos
-                        //que "hacen algo" en la base de datos pero no devuelven una tabla de
-                        //resultados para leer
 
-                        //Si afecto a alguna fila el usuario se creo con exito
-                        return filasAfectadas > 0;
-                    }
+                    int filasAfectadas = comando.ExecuteNonQuery();
+                    //ExecuteNonQuery: ExecuteNonQuery() se usa para comandos
+                    //que "hacen algo" en la base de datos pero no devuelven una tabla de
+                    //resultados para leer
+
+                    //Si afecto a alguna fila el usuario se creo con exito
+                    return filasAfectadas > 0;
                 }
-                //Validacion
-                catch
-                {
-                    throw new Exception("Error al crear un nuevo usuario");
-                }
-            }
+            }                
+            
         }
 
         public List<UsuarioBE> ListarUsuario()
@@ -56,7 +50,7 @@ namespace DAL
 
             string consulta2 = "SELECT IdUsuario, NombreUsuario, Contrasena, Estado FROM dbo.Usuarios";
 
-            using(SqlConnection conexionSql2 = conexion.ValidacionConexion())
+            using(SqlConnection conexionSql2 = conexion.ValidarConexion())
             {
                 
                 
@@ -82,6 +76,31 @@ namespace DAL
                                 
             }
             return list;
+        }
+
+        public bool DeshabilitarUsuario(int idUsuario)
+        {
+            bool exito = false;
+
+            using (SqlConnection conexionSql3 = conexion.ValidarConexion())
+            {
+                string consulta = "UPDATE dbo.Usuarios SET Estado = 0 WHERE IdUsuario = @IdUsuario";
+
+                using(SqlCommand comando3 = new SqlCommand(consulta, conexionSql3))
+                {
+                    comando3.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                    conexionSql3.Open();
+
+                    int filasAfectadas = comando3.ExecuteNonQuery();
+
+                    if(filasAfectadas > 0)
+                    {
+                        exito = true;                    
+                    }
+                }
+            }
+            return exito;
         }
     }
 }
