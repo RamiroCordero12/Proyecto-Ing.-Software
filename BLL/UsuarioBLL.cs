@@ -23,7 +23,7 @@ namespace BLL
                 throw new Exception("Completa el campo de la contrasena");
             }
 
-            //Instancio DAL
+            //Instancio DALl
             UsuarioDAL usuarios = new UsuarioDAL();
 
             //Llamamos al metodo de DAL y lo vinculamos con las variables de BE
