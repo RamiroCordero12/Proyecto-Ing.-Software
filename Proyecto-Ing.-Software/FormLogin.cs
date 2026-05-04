@@ -29,7 +29,7 @@ namespace Proyecto_Ing._Software
 
                 MessageBox.Show($"Bienvenido {txtNombreUsuario.Text} al sistema!!");
 
-                Form1 form1 = new Form1();
+                FormMenuPrincipal form1 = new FormMenuPrincipal();
                 form1.Show();
 
                 this.Hide();

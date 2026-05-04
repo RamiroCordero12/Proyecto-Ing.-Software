@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proyecto-Ing.-Software", "Proyecto-Ing.-Software\Proyecto-Ing.-Software.csproj", "{0D1635D6-10C8-4714-9521-D30B53393DE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fulbito500", "Proyecto-Ing.-Software\Fulbito500.csproj", "{0D1635D6-10C8-4714-9521-D30B53393DE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{60656527-D0CD-4070-A6B9-E78A1C159614}"
 EndProject

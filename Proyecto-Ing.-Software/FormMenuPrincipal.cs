@@ -11,9 +11,9 @@ using Servicios;
 
 namespace Proyecto_Ing._Software
 {
-    public partial class Form1 : Form
+    public partial class FormMenuPrincipal : Form
     {
-        public Form1()
+        public FormMenuPrincipal()
         {
             InitializeComponent();
         }
