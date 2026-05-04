@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BE;
 using BLL;
+using Servicios;
 
 namespace Proyecto_Ing._Software
 {
@@ -25,9 +25,11 @@ namespace Proyecto_Ing._Software
         {
             try
             {
-                UsuarioBE usuario = new UsuarioBE();
+                Usuario usuario = new Usuario();
                 usuario.NombreUsuario = txtNombreUsuario.Text;
                 usuario.Contrasena = txtContrasena.Text;
+                usuario.Email = txtEmail.Text;
+                usuario.Rol = Convert.ToInt32(cmbRoles.SelectedIndex + 1);
                 usuario.Estado = true;
 
                 UsuarioBLL usuarioBLL = new UsuarioBLL();
@@ -93,6 +95,8 @@ namespace Proyecto_Ing._Software
                 IdUsuarioSeleccionado = Convert.ToInt32(fila.Cells["IdUsuario"].Value);
                 txtNombreUsuario.Text = fila.Cells["NombreUsuario"].Value.ToString();
                 txtContrasena.Text = fila.Cells["Contrasena"].Value.ToString();
+                txtEmail.Text = fila.Cells["Email"].Value.ToString();
+                
             }
         }
 
@@ -104,10 +108,12 @@ namespace Proyecto_Ing._Software
                 return;
             }
 
-            UsuarioBE usuario = new UsuarioBE();
+            Usuario usuario = new Usuario();
             usuario.IdUsuario = IdUsuarioSeleccionado;
             usuario.NombreUsuario = txtNombreUsuario.Text;
             usuario.Contrasena = txtContrasena.Text;
+            usuario.Email = txtEmail.Text;
+            usuario.Rol = cmbRoles.SelectionLength;
 
             UsuarioBLL usuarioBLL = new UsuarioBLL();
             bool exito = usuarioBLL.ModificarUsuario(usuario);
@@ -123,6 +129,30 @@ namespace Proyecto_Ing._Software
                 return;
             }
 
+        }
+
+        private void btnHabilitarUsuario_Click(object sender, EventArgs e)
+        {
+            int idSeleccionado = Convert.ToInt32(dgvUsuario.SelectedRows[0].Cells["IdUsuario"].Value);
+
+            UsuarioBLL usuarioBLL = new UsuarioBLL();
+            bool exito = usuarioBLL.HabilitarUsuario(idSeleccionado);
+
+            ActualizarGrilla();
+
+            if (exito)
+            {
+                MessageBox.Show("Usuario Habilitado");
+            }
+            else
+            {
+                MessageBox.Show("Error para habilitar usuario");
+            }
+        }
+
+        private void cmbRoles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

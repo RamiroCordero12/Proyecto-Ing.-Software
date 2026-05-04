@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using BE;
+using Servicios;
 
 namespace DAL
 {
@@ -12,10 +12,11 @@ namespace DAL
     {
         ConexionBD conexion = new ConexionBD();
 
-        public bool CrearUsuario(string nombre, string contrasena)
+        public bool CrearUsuario(Usuario usuario)
         {
             //Consulta SQL
-            string consulta = "INSERT INTO dbo.Usuarios (NombreUsuario, Contrasena, Estado) VALUES (@NombreUsuario, @Contrasena, @Estado)";
+            string consulta = "INSERT INTO dbo.Usuarios (NombreUsuario, Contrasena, Estado, Email, Rol) " +
+                "VALUES (@NombreUsuario, @Contrasena, 1, @Email, @Rol)";
 
             //El uso de using hace que la conexion se abra y se cierra 
             using (SqlConnection conexionSql = conexion.ValidarConexion())
@@ -24,10 +25,11 @@ namespace DAL
                 using (SqlCommand comando = new SqlCommand(consulta, conexionSql))
                 {
                     //Estos son los parametros
-                    comando.Parameters.AddWithValue("NombreUsuario", nombre);
-                    comando.Parameters.AddWithValue("Contrasena", contrasena);
+                    comando.Parameters.AddWithValue("NombreUsuario", usuario.NombreUsuario);
+                    comando.Parameters.AddWithValue("Contrasena", usuario.Contrasena);
+                    comando.Parameters.AddWithValue("Email", usuario.Email);
+                    comando.Parameters.AddWithValue("Rol", usuario.Rol);
 
-                    comando.Parameters.AddWithValue("Estado", true);
                     //Antes de ejecutar abrimos la conexion
                     conexionSql.Open();
 
@@ -44,16 +46,16 @@ namespace DAL
             
         }
 
-        public List<UsuarioBE> ListarUsuario()
+        public List<Usuario> ListarUsuario()
         {
             //Creamos una lista con lo puesto en UsuarioBE
-            List<UsuarioBE> list = new List<UsuarioBE>();
+            List<Usuario> list = new List<Usuario>();
 
             //Creamos la consulta que seleccione los atributos de la tabla usuarios
             //SELECT --> Selecciona 
             //FROM --> De
             //SELECT ..... FROM --> Selecciona ... De
-            string consulta2 = "SELECT IdUsuario, NombreUsuario, Contrasena, Estado FROM dbo.Usuarios";
+            string consulta2 = "SELECT IdUsuario, NombreUsuario, Contrasena, Email, Rol, Estado FROM dbo.Usuarios";
 
             using(SqlConnection conexionSql2 = conexion.ValidarConexion())
             {                         
@@ -67,12 +69,16 @@ namespace DAL
                         {
                             while (reader.Read())
                             {
-                                UsuarioBE usuario = new UsuarioBE();
+                                Usuario usuario = new Usuario();
 
-                                usuario.IdUsuario = Convert.ToInt32(reader["IdUsuario"]);
+                                usuario.IdUsuario = int.Parse(reader["IdUsuario"].ToString());
                                 usuario.NombreUsuario = reader["NombreUsuario"].ToString();
                                 usuario.Contrasena = reader["Contrasena"].ToString();
-                                usuario.Estado = Convert.ToBoolean(reader["Estado"]);
+                            usuario.Email = reader["Email"].ToString();
+                            usuario.Rol = int.Parse(reader["Rol"].ToString());
+                            
+                            usuario.Estado = Convert.ToBoolean(reader["Estado"]);
+                            
                             
                             //Agrega los datos a la lista
                                 list.Add(usuario);
@@ -117,26 +123,62 @@ namespace DAL
             return exito;
         }
 
-        public bool ModificarUsuario(UsuarioBE usuarioBE)
+        public bool HabilitarUsuario(int idUsuario)
+        {
+            //Creamos una variable booleana para confirmar 
+            bool exito = false;
+
+            //Conectamos
+            using (SqlConnection conexionSql3 = conexion.ValidarConexion())
+            {
+                //Creamos la consulta que modifique de usuario a estado en 0
+                //UPDATE --> Modifica de
+                //SET --> Asigna valores
+                //WHERE --> Donde
+                string consulta = "UPDATE dbo.Usuarios SET Estado = 1 WHERE IdUsuario = @IdUsuario";
+
+                using (SqlCommand comando4 = new SqlCommand(consulta, conexionSql3))
+                {
+                    //Agarramos el parametro de IdUsuario
+                    comando4.Parameters.AddWithValue("@IdUsuario", idUsuario);
+
+                    conexionSql3.Open();
+
+                    int filasAfectadas = comando4.ExecuteNonQuery();
+
+                    //Si filasAfectadas es mayor a 0 entonces...
+                    if (filasAfectadas > 0)
+                    {
+                        exito = true;
+                    }
+                }
+            }
+            return exito;
+        }
+
+        public bool ModificarUsuario(Usuario usuario)
         {
             //Variable booleana para confirmar el resultado
             bool resultado = false;
 
-            using (SqlConnection conexionSql4 = conexion.ValidarConexion())
+            using (SqlConnection conexionSql5 = conexion.ValidarConexion())
             {
                 //Creamos la consulta que modifique el usuario
                 //UPDATE de usuarios el nombre de usuario y la contrasena done el
                 //el Id seleccionado sea el mismo que el de la base de datos
-                string consulta = "UPDATE Usuarios SET NombreUsuario = @NombreUsuario, Contrasena = @Contrasena WHERE IdUsuario = @IdUsuario";
+                string consulta = "UPDATE Usuarios SET NombreUsuario = @NombreUsuario, Contrasena = @Contrasena, Email = @Email, Rol = @Rol " +
+                    "WHERE IdUsuario = @IdUsuario";
 
-                using(SqlCommand comando4 = new SqlCommand(consulta, conexionSql4))
+                using(SqlCommand comando4 = new SqlCommand(consulta, conexionSql5))
                 {
                     //Agarramos los parametros que los vamos a modificar
-                    comando4.Parameters.AddWithValue("@NombreUsuario", usuarioBE.NombreUsuario);
-                    comando4.Parameters.AddWithValue("@Contrasena", usuarioBE.Contrasena);
-                    comando4.Parameters.AddWithValue("@IdUsuario", usuarioBE.IdUsuario);
+                    comando4.Parameters.AddWithValue("@NombreUsuario", usuario.NombreUsuario);
+                    comando4.Parameters.AddWithValue("@Contrasena", usuario.Contrasena);
+                    comando4.Parameters.AddWithValue("@IdUsuario", usuario.IdUsuario);
+                    comando4.Parameters.AddWithValue("@Email", usuario.Email);
+                    comando4.Parameters.AddWithValue("@Rol", usuario.Rol);
 
-                    conexionSql4.Open();
+                    conexionSql5.Open();
 
                     int filasSeleccionadas = comando4.ExecuteNonQuery();
 
@@ -147,6 +189,41 @@ namespace DAL
                 }
             }
             return resultado;
+        }
+
+        public Usuario Login(string nombreUsuario, string contrasena)
+        {
+            Usuario usuarioLogueado = null;
+
+            string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Estado, Email, Rol FROM dbo.Usuarios WHERE NombreUsuario = @NombreUsuario AND Contrasena = @Contrasena AND Estado = 1";
+
+            using(SqlConnection conexionSql6 = conexion.ValidarConexion())
+            {
+                using(SqlCommand comando = new SqlCommand(consulta, conexionSql6))
+                {
+                    comando.Parameters.AddWithValue("NombreUsuario", nombreUsuario);
+                    comando.Parameters.AddWithValue("Contrasena", contrasena);
+
+                    conexionSql6.Open();
+
+                    using(SqlDataReader reader = comando.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            usuarioLogueado = new Usuario
+                            {
+                                IdUsuario = int.Parse(reader["IdUsuario"].ToString()),
+                                NombreUsuario = reader["NombreUsuario"].ToString(),
+                                Contrasena = reader["Contrasena"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Rol = int.Parse(reader["Rol"].ToString()),
+                            };
+
+                        }
+                    }
+                }
+            }
+            return usuarioLogueado;
         }
     }
 }
