@@ -36,7 +36,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.usuariosDataSet1 = new Proyecto_Ing._Software.UsuariosDataSet();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usuariosDataSet1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtNombreUsuario
@@ -101,6 +103,11 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // usuariosDataSet1
+            // 
+            this.usuariosDataSet1.DataSetName = "UsuariosDataSet";
+            this.usuariosDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -117,6 +124,7 @@
             this.Name = "FormLogin";
             this.Text = "FormLogin";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.usuariosDataSet1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,5 +139,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button1;
+        private UsuariosDataSet usuariosDataSet1;
     }
 }

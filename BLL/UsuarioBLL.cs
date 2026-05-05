@@ -11,6 +11,7 @@ namespace BLL
 {
     public class UsuarioBLL
     {
+        BitacoraDAL bitacora = new BitacoraDAL();
 
         public bool CrearUsuario(Usuario usuario)
         {
@@ -31,7 +32,19 @@ namespace BLL
             UsuarioDAL usuarios = new UsuarioDAL();
 
             //Llamamos al metodo de DAL y lo vinculamos con las variables de BE
-            return usuarios.CrearUsuario(usuario);
+            bool verificar =  usuarios.CrearUsuario(usuario);
+
+            if (verificar)
+            {
+                int idUsuarioActual = SessionManager.GetInstance.usuario.IdUsuario;
+                bitacora.RegistroBitacora(idUsuarioActual, "Crear usuario");
+                return true;
+            }
+            else
+            {
+                throw new Exception("No se pudo crear el usuario");
+
+            }
         }
 
         public List<Usuario> ListarUsuarios()
