@@ -41,10 +41,12 @@ namespace Proyecto_Ing._Software
             if (usuarioLogueado.Rol == 1)
             {
                 usuarioToolStripMenuItem.Visible = true;
+                bitacoraToolStripMenuItem.Visible = true;
             }
             else if(usuarioLogueado.Rol == 2)
             {
                 usuarioToolStripMenuItem.Visible = false;
+                bitacoraToolStripMenuItem.Visible = false;
             }
         }
 
@@ -62,6 +64,17 @@ namespace Proyecto_Ing._Software
                 this.Close();
             }
             
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bitacoraToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            FormBitacora formBitacora = new FormBitacora();
+            formBitacora.Show();
         }
     }
 }

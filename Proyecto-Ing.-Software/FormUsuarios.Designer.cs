@@ -41,6 +41,8 @@
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.cmbRoles = new System.Windows.Forms.ComboBox();
             this.btnHabilitarUsuario = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuario)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,7 +113,7 @@
             // 
             // btnModificarUsuario
             // 
-            this.btnModificarUsuario.Location = new System.Drawing.Point(243, 391);
+            this.btnModificarUsuario.Location = new System.Drawing.Point(243, 348);
             this.btnModificarUsuario.Name = "btnModificarUsuario";
             this.btnModificarUsuario.Size = new System.Drawing.Size(149, 36);
             this.btnModificarUsuario.TabIndex = 7;
@@ -167,11 +169,31 @@
             this.btnHabilitarUsuario.UseVisualStyleBackColor = true;
             this.btnHabilitarUsuario.Click += new System.EventHandler(this.btnHabilitarUsuario_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(892, 30);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(122, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Administrador = Rol  = 1 ";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(891, 52);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(106, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Empleado = Rol  = 2 ";
+            // 
             // FormUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1156, 572);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.btnHabilitarUsuario);
             this.Controls.Add(this.cmbRoles);
             this.Controls.Add(this.label3);
@@ -208,5 +230,7 @@
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.ComboBox cmbRoles;
         private System.Windows.Forms.Button btnHabilitarUsuario;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }
