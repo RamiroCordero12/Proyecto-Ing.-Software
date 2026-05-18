@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.bitacora = new System.Windows.Forms.DataGridView();
+            this.DgvBitacora = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.bitacora)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvBitacora)).BeginInit();
             this.SuspendLayout();
             // 
-            // bitacora
+            // DgvBitacora
             // 
-            this.bitacora.AllowUserToAddRows = false;
-            this.bitacora.AllowUserToDeleteRows = false;
-            this.bitacora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.bitacora.Location = new System.Drawing.Point(12, 52);
-            this.bitacora.Name = "bitacora";
-            this.bitacora.ReadOnly = true;
-            this.bitacora.Size = new System.Drawing.Size(591, 283);
-            this.bitacora.TabIndex = 0;
-            this.bitacora.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.bitacora_CellContentClick);
+            this.DgvBitacora.AllowUserToAddRows = false;
+            this.DgvBitacora.AllowUserToDeleteRows = false;
+            this.DgvBitacora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvBitacora.Location = new System.Drawing.Point(12, 52);
+            this.DgvBitacora.Name = "DgvBitacora";
+            this.DgvBitacora.ReadOnly = true;
+            this.DgvBitacora.Size = new System.Drawing.Size(591, 283);
+            this.DgvBitacora.TabIndex = 0;
+            this.DgvBitacora.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.bitacora_CellContentClick);
             // 
             // label1
             // 
@@ -62,11 +62,11 @@
             this.BackColor = System.Drawing.Color.ForestGreen;
             this.ClientSize = new System.Drawing.Size(729, 439);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.bitacora);
+            this.Controls.Add(this.DgvBitacora);
             this.Name = "FormBitacora";
             this.Text = "FormBitacora";
             this.Load += new System.EventHandler(this.FormBitacora_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.bitacora)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvBitacora)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -74,7 +74,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView bitacora;
+        private System.Windows.Forms.DataGridView DgvBitacora;
         private System.Windows.Forms.Label label1;
     }
 }

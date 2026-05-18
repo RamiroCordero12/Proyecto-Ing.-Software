@@ -14,7 +14,7 @@ namespace Proyecto_Ing._Software
 {
     public partial class FormUsuarios : Form
     {
-        private int IdUsuarioSeleccionado = 0;
+        private int dniUsuario = 0;
         public FormUsuarios()
         {
             InitializeComponent();
@@ -26,28 +26,29 @@ namespace Proyecto_Ing._Software
             try
             {
                 Usuario usuario = new Usuario();
-                usuario.NombreUsuario = txtNombreUsuario.Text;
-                usuario.Contrasena = txtContrasena.Text;
+
+                usuario.DNI = int.Parse(txtDNI.Text);
+                usuario.Nombre = txtNombre.Text;
+                usuario.Apellido = txtApellido.Text;
                 usuario.Email = txtEmail.Text;
-                usuario.Rol = Convert.ToInt32(cmbRoles.SelectedIndex + 1);
-                usuario.Estado = true;
+                usuario.Rol = cmbRoles.SelectedIndex + 1;
+                usuario.Estado = 1;
 
                 UsuarioBLL usuarioBLL = new UsuarioBLL();
-                bool confirmacion = usuarioBLL.CrearUsuario(usuario);
 
-                if (confirmacion)
+                int adminLogueado = SessionManager.GetInstance.usuario.DNI;
+
+                bool exito = usuarioBLL.CrearUsuario(usuario, adminLogueado);
+
+                if (exito)
                 {
                     MessageBox.Show("Usuario creado!");
-
-                    txtNombreUsuario.Clear();
-                    txtContrasena.Clear();
-
                     ActualizarGrilla();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error");
+                MessageBox.Show("Error al crear un usuario: " + ex.Message);
             }
         }
 
@@ -61,18 +62,18 @@ namespace Proyecto_Ing._Software
                 dgvUsuario.DataSource = usuarioBLL.ListarUsuarios();
 
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar el la grilla");
+                MessageBox.Show("Error al cargar el la grilla: " + ex.Message);
             }
         }
 
         private void btnDeshabilitarUsuario_Click(object sender, EventArgs e)
         {
-            int idSeleccionado = Convert.ToInt32(dgvUsuario.SelectedRows[0].Cells["IdUsuario"].Value);
+            int dniSeleccionado = Convert.ToInt32(dgvUsuario.SelectedRows[0].Cells["DNI"].Value);
 
             UsuarioBLL usuarioBLL = new UsuarioBLL();
-            bool exito = usuarioBLL.DeshabilitarUsuario(idSeleccionado);
+            bool exito = usuarioBLL.DeshabilitarUsuario(dniSeleccionado);
 
             ActualizarGrilla();
 
@@ -88,35 +89,38 @@ namespace Proyecto_Ing._Software
 
         private void dgvUsuario_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.RowIndex >= 0)
+            if (e.RowIndex >= 0)
             {
                 DataGridViewRow fila = dgvUsuario.Rows[e.RowIndex];
 
-                IdUsuarioSeleccionado = Convert.ToInt32(fila.Cells["IdUsuario"].Value);
-                txtNombreUsuario.Text = fila.Cells["NombreUsuario"].Value.ToString();
-                txtContrasena.Text = fila.Cells["Contrasena"].Value.ToString();
+                dniUsuario = Convert.ToInt32(fila.Cells["DNI"].Value);
+                txtDNI.Text = fila.Cells["DNI"].Value.ToString();
+                txtNombre.Text = fila.Cells["Nombre"].Value.ToString();
+                txtApellido.Text = fila.Cells["Apellido"].Value.ToString();
                 txtEmail.Text = fila.Cells["Email"].Value.ToString();
-                
+
+
             }
         }
 
         private void btnModificarUsuario_Click(object sender, EventArgs e)
         {
-            if(IdUsuarioSeleccionado == 0)
+            if (dniUsuario == 0)
             {
                 MessageBox.Show("Selecciona un usuario para modificar");
                 return;
             }
 
             Usuario usuario = new Usuario();
-            usuario.IdUsuario = IdUsuarioSeleccionado;
-            usuario.NombreUsuario = txtNombreUsuario.Text;
-            usuario.Contrasena = txtContrasena.Text;
+            usuario.DNI = dniUsuario;
+            usuario.DNI = int.Parse(txtDNI.Text);
+            usuario.Nombre = txtNombre.Text;
+            usuario.Apellido = txtApellido.Text;
             usuario.Email = txtEmail.Text;
-            usuario.Rol = cmbRoles.SelectionLength;
+            usuario.Rol = cmbRoles.SelectedIndex + 1;
 
             UsuarioBLL usuarioBLL = new UsuarioBLL();
-            bool exito = usuarioBLL.ModificarUsuario(usuario);
+            bool exito = usuarioBLL.ModificarUsuario(usuario, dniUsuario);
 
             if (exito)
             {
@@ -133,10 +137,10 @@ namespace Proyecto_Ing._Software
 
         private void btnHabilitarUsuario_Click(object sender, EventArgs e)
         {
-            int idSeleccionado = Convert.ToInt32(dgvUsuario.SelectedRows[0].Cells["IdUsuario"].Value);
+            int dniSeleccionado = Convert.ToInt32(dgvUsuario.SelectedRows[0].Cells["DNI"].Value);
 
             UsuarioBLL usuarioBLL = new UsuarioBLL();
-            bool exito = usuarioBLL.HabilitarUsuario(idSeleccionado);
+            bool exito = usuarioBLL.HabilitarUsuario(dniSeleccionado);
 
             ActualizarGrilla();
 
@@ -153,6 +157,11 @@ namespace Proyecto_Ing._Software
         private void cmbRoles_SelectedIndexChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void FormUsuarios_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

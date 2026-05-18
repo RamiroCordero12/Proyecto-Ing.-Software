@@ -13,21 +13,16 @@ namespace BLL
     {
         BitacoraDAL bitacora = new BitacoraDAL();
 
-        public bool CrearUsuario(Usuario usuario)
+        public bool CrearUsuario(Usuario usuario, int dniAdminActual)
         {
             //Validaciones
-            if (string.IsNullOrWhiteSpace(usuario.NombreUsuario))
+            if (string.IsNullOrWhiteSpace(usuario.Nombre) || string.IsNullOrWhiteSpace(usuario.Apellido) || usuario.DNI == null)
             {
-                throw new Exception("Completa el campo de nombre de usuario");
+                throw new Exception("Completa el campo faltante");
             }
-            if (string.IsNullOrWhiteSpace(usuario.Contrasena))
-            {
-                throw new Exception("Completa el campo de la contrasena");
-            }
-
-            //Encriptamos la contrasena del usuario creado
-            usuario.Contrasena = Encriptador.Encriptacion(usuario.Contrasena);
-            
+            usuario.NombreUsuario = usuario.Nombre + usuario.DNI;
+            string contrasenaNueva = usuario.Apellido + usuario.DNI;
+            usuario.Contrasena = Encriptador.Encriptacion(contrasenaNueva);            
             //Instancio DALl
             UsuarioDAL usuarios = new UsuarioDAL();
 
@@ -36,8 +31,10 @@ namespace BLL
 
             if (verificar)
             {
-                int idUsuarioActual = SessionManager.GetInstance.usuario.IdUsuario;
-                bitacora.RegistroBitacora(idUsuarioActual, "Crear usuario");
+                Bitacora _bitacora = new Bitacora();
+
+                bitacora.RegistroBitacora(_bitacora.IdBitacora, usuario.DNI, 
+                    _bitacora.Accion = "Creación de usuario" , DateTime.Now, "Usuarios", _bitacora.Criticidad = "Alta");            
                 return true;
             }
             else
@@ -53,41 +50,62 @@ namespace BLL
             return usuarioDAL.ListarUsuario();
         }
 
-        public bool DeshabilitarUsuario(int idUsuario)
+        public bool DeshabilitarUsuario(int dniUsuario)
         {
-            if(idUsuario <= 0)
+            if(dniUsuario <= 0)
             {
                 throw new Exception("Error al seleccionar un usuario");
             }
 
             UsuarioDAL usuarioDAL = new UsuarioDAL();
-            return usuarioDAL.DeshabilitarUsuario(idUsuario);
+            return usuarioDAL.DeshabilitarUsuario(dniUsuario);
         }
 
-        public bool HabilitarUsuario(int idUsuario)
+        public bool HabilitarUsuario(int dniUsuario)
         {
-            if (idUsuario <= 0)
+            if (dniUsuario <= 0)
             {
                 throw new Exception("Error al seleccionar un usuario");
             }
 
             UsuarioDAL usuarioDAL = new UsuarioDAL();
-            return usuarioDAL.HabilitarUsuario(idUsuario);
+            return usuarioDAL.HabilitarUsuario(dniUsuario);
         }
 
-        public bool ModificarUsuario(Usuario usuario)
+        public bool ModificarUsuario(Usuario usuario, int dniViejo)
         {
-            if (!string.IsNullOrEmpty(usuario.NombreUsuario))
+            //Evaluamos el campo que vamos a encriptar
+            //if (!string.IsNullOrEmpty(usuario.Contrasena))
+            //{
+            //    usuario.Contrasena = Encriptador.Encriptacion(usuario.Contrasena);
+            //}
+            //else
+            //{
+            //    throw new Exception("Error al modificar la contrasena");
+            //}
+            //Instanciamos DAL y ejecutamos la consulta (UPDATE)
+            usuario.NombreUsuario = usuario.Nombre + usuario.DNI;
+            string contrasenaNueva = usuario.Apellido + usuario.DNI;
+            usuario.Contrasena = Encriptador.Encriptacion(contrasenaNueva);
+
+            UsuarioDAL usuarioDAL = new UsuarioDAL();
+
+            bool exito = usuarioDAL.ModificarUsuario(usuario, dniViejo);
+
+            //Registramos en la bitacora
+            if (exito)
             {
-                usuario.Contrasena = Encriptador.Encriptacion(usuario.Contrasena);
+                Bitacora _bitacora = new Bitacora();
+
+                bitacora.RegistroBitacora(_bitacora.IdBitacora, usuario.DNI,
+                    _bitacora.Accion = "Modificacion de usuario", DateTime.Now, "Usuarios", _bitacora.Criticidad = "Alta");
+                return true;
             }
             else
             {
-                throw new Exception("Error al modificar la contrasena");
+                throw new Exception("No se pudo modificar el usuario");
             }
 
-            UsuarioDAL usuarioDAL = new UsuarioDAL();
-            return usuarioDAL.ModificarUsuario(usuario);
         }
 
         public Usuario Login(string NombreUsuario, string Contrasena)

@@ -24,12 +24,12 @@ namespace Proyecto_Ing._Software
             {
                 BitacoraBLL listBitacora = new BitacoraBLL();
 
-                bitacora.DataSource = null;
-                bitacora.DataSource = listBitacora.ListarBitacora();
+                DgvBitacora.DataSource = null;
+                DgvBitacora.DataSource = listBitacora.ListarBitacora();
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar la lista");
+                MessageBox.Show("Error al cargar la lista: " + ex.Message);
             }
 
         }

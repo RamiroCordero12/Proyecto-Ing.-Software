@@ -15,8 +15,9 @@ namespace DAL
         public bool CrearUsuario(Usuario usuario)
         {
             //Consulta SQL
-            string consulta = "INSERT INTO dbo.Usuarios (NombreUsuario, Contrasena, Estado, Email, Rol) " +
-                "VALUES (@NombreUsuario, @Contrasena, 1, @Email, @Rol)";
+            string consulta = "INSERT INTO Usuarios (DNI, Nombre, Apellido, NombreUsuario, Contrasena, " +
+                "Estado, Email, Rol) " +
+                "VALUES (@DNI, @Nombre, @Apellido, @NombreUsuario, @Contrasena, 1, @Email, @Rol)";
 
             //El uso de using hace que la conexion se abra y se cierra 
             using (SqlConnection conexionSql = conexion.ValidarConexion())
@@ -25,6 +26,9 @@ namespace DAL
                 using (SqlCommand comando = new SqlCommand(consulta, conexionSql))
                 {
                     //Estos son los parametros
+                    comando.Parameters.AddWithValue("DNI", usuario.DNI);
+                    comando.Parameters.AddWithValue("Nombre", usuario.Nombre);
+                    comando.Parameters.AddWithValue("Apellido", usuario.Apellido);
                     comando.Parameters.AddWithValue("NombreUsuario", usuario.NombreUsuario);
                     comando.Parameters.AddWithValue("Contrasena", usuario.Contrasena);
                     comando.Parameters.AddWithValue("Email", usuario.Email);
@@ -55,7 +59,7 @@ namespace DAL
             //SELECT --> Selecciona 
             //FROM --> De
             //SELECT ..... FROM --> Selecciona ... De
-            string consulta2 = "SELECT IdUsuario, NombreUsuario, Contrasena, Email, Rol, Estado FROM dbo.Usuarios";
+            string consulta2 = "SELECT DNI, Nombre, Apellido, NombreUsuario, Contrasena, Email, Rol, Estado FROM dbo.Usuarios";
 
             using(SqlConnection conexionSql2 = conexion.ValidarConexion())
             {                         
@@ -71,15 +75,14 @@ namespace DAL
                             {
                                 Usuario usuario = new Usuario();
 
-                                usuario.IdUsuario = int.Parse(reader["IdUsuario"].ToString());
+                                usuario.DNI = int.Parse(reader["DNI"].ToString());
+                                usuario.Nombre = reader["Nombre"].ToString();
+                                usuario.Apellido = reader["Apellido"].ToString();
                                 usuario.NombreUsuario = reader["NombreUsuario"].ToString();
                                 usuario.Contrasena = reader["Contrasena"].ToString();
-                            usuario.Email = reader["Email"].ToString();
-                            usuario.Rol = int.Parse(reader["Rol"].ToString());
-                            
-                            usuario.Estado = Convert.ToBoolean(reader["Estado"]);
-                            
-                            
+                                usuario.Email = reader["Email"].ToString();
+                                usuario.Rol = int.Parse(reader["Rol"].ToString());               
+                                usuario.Estado = Convert.ToInt32(reader["Estado"]);                                             
                             //Agrega los datos a la lista
                                 list.Add(usuario);
                             }
@@ -90,7 +93,7 @@ namespace DAL
             return list;
         }
 
-        public bool DeshabilitarUsuario(int idUsuario)
+        public bool DeshabilitarUsuario(int dniUsuario)
         {
             //Creamos una variable booleana para confirmar 
             bool exito = false;
@@ -102,12 +105,12 @@ namespace DAL
                 //UPDATE --> Modifica de
                 //SET --> Asigna valores
                 //WHERE --> Donde
-                string consulta = "UPDATE dbo.Usuarios SET Estado = 0 WHERE IdUsuario = @IdUsuario";
+                string consulta = "UPDATE dbo.Usuarios SET Estado = 0 WHERE DNI = @DNI";
 
                 using(SqlCommand comando3 = new SqlCommand(consulta, conexionSql3))
                 {
                     //Agarramos el parametro de IdUsuario
-                    comando3.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                    comando3.Parameters.AddWithValue("@DNI", dniUsuario);
 
                     conexionSql3.Open();
 
@@ -123,7 +126,7 @@ namespace DAL
             return exito;
         }
 
-        public bool HabilitarUsuario(int idUsuario)
+        public bool HabilitarUsuario(int dniUsuario)
         {
             //Creamos una variable booleana para confirmar 
             bool exito = false;
@@ -135,12 +138,12 @@ namespace DAL
                 //UPDATE --> Modifica de
                 //SET --> Asigna valores
                 //WHERE --> Donde
-                string consulta = "UPDATE dbo.Usuarios SET Estado = 1 WHERE IdUsuario = @IdUsuario";
+                string consulta = "UPDATE dbo.Usuarios SET Estado = 1 WHERE DNI = @DNI";
 
                 using (SqlCommand comando4 = new SqlCommand(consulta, conexionSql3))
                 {
                     //Agarramos el parametro de IdUsuario
-                    comando4.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                    comando4.Parameters.AddWithValue("@DNI", dniUsuario);
 
                     conexionSql3.Open();
 
@@ -156,7 +159,7 @@ namespace DAL
             return exito;
         }
 
-        public bool ModificarUsuario(Usuario usuario)
+        public bool ModificarUsuario(Usuario usuario, int dniViejo)
         {
             //Variable booleana para confirmar el resultado
             bool resultado = false;
@@ -166,17 +169,21 @@ namespace DAL
                 //Creamos la consulta que modifique el usuario
                 //UPDATE de usuarios el nombre de usuario y la contrasena done el
                 //el Id seleccionado sea el mismo que el de la base de datos
-                string consulta = "UPDATE Usuarios SET NombreUsuario = @NombreUsuario, Contrasena = @Contrasena, Email = @Email, Rol = @Rol " +
-                    "WHERE IdUsuario = @IdUsuario";
+                string consulta = "UPDATE Usuarios SET DNI = @DniNuevo, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Rol = @Rol, " +
+                    "NombreUsuario = @NombreUsuario, Contrasena = @Contrasena WHERE DNI = @DniViejo";
 
                 using(SqlCommand comando4 = new SqlCommand(consulta, conexionSql5))
                 {
                     //Agarramos los parametros que los vamos a modificar
-                    comando4.Parameters.AddWithValue("@NombreUsuario", usuario.NombreUsuario);
-                    comando4.Parameters.AddWithValue("@Contrasena", usuario.Contrasena);
-                    comando4.Parameters.AddWithValue("@IdUsuario", usuario.IdUsuario);
+                    comando4.Parameters.AddWithValue("@Nombre", usuario.Nombre);
+                    comando4.Parameters.AddWithValue("@Apellido", usuario.Apellido);
                     comando4.Parameters.AddWithValue("@Email", usuario.Email);
                     comando4.Parameters.AddWithValue("@Rol", usuario.Rol);
+                    comando4.Parameters.AddWithValue("@NombreUsuario", usuario.NombreUsuario);
+                    comando4.Parameters.AddWithValue("@Contrasena", usuario.Contrasena);
+                    comando4.Parameters.AddWithValue("@DniNuevo", usuario.DNI);
+                    comando4.Parameters.AddWithValue("@DniViejo", dniViejo);
+
 
                     conexionSql5.Open();
 
@@ -195,7 +202,7 @@ namespace DAL
         {
             Usuario usuarioLogueado = null;
 
-            string consulta = "SELECT IdUsuario, NombreUsuario, Contrasena, Estado, Email, Rol FROM dbo.Usuarios WHERE NombreUsuario = @NombreUsuario AND Contrasena = @Contrasena AND Estado = 1";
+            string consulta = "SELECT DNI, NombreUsuario, Contrasena, Estado, Email, Rol FROM dbo.Usuarios WHERE NombreUsuario = @NombreUsuario AND Contrasena = @Contrasena AND Estado = 1";
 
             using(SqlConnection conexionSql6 = conexion.ValidarConexion())
             {
@@ -212,7 +219,7 @@ namespace DAL
                         {
                             usuarioLogueado = new Usuario
                             {
-                                IdUsuario = int.Parse(reader["IdUsuario"].ToString()),
+                                DNI = int.Parse(reader["DNI"].ToString()),
                                 NombreUsuario = reader["NombreUsuario"].ToString(),
                                 Contrasena = reader["Contrasena"].ToString(),
                                 Email = reader["Email"].ToString(),
