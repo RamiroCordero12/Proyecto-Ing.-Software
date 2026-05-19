@@ -53,7 +53,7 @@
             this.dgvUsuario.AllowUserToAddRows = false;
             this.dgvUsuario.AllowUserToDeleteRows = false;
             this.dgvUsuario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUsuario.Location = new System.Drawing.Point(24, 30);
+            this.dgvUsuario.Location = new System.Drawing.Point(23, 30);
             this.dgvUsuario.Name = "dgvUsuario";
             this.dgvUsuario.ReadOnly = true;
             this.dgvUsuario.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;

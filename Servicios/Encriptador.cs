@@ -19,7 +19,7 @@ namespace Servicios
                 StringBuilder constructor = new StringBuilder();
                 for(int i = 0; i < bytes.Length; i++)
                 {
-                    constructor.Append(bytes[i].ToString("x2"));
+                    constructor.Append(bytes[i].ToString("X2"));
                 }
 
                 return constructor.ToString();

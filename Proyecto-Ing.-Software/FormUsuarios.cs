@@ -32,7 +32,7 @@ namespace Proyecto_Ing._Software
                 usuario.Apellido = txtApellido.Text;
                 usuario.Email = txtEmail.Text;
                 usuario.Rol = cmbRoles.SelectedIndex + 1;
-                usuario.Estado = 1;
+                usuario.Estado = true;
 
                 UsuarioBLL usuarioBLL = new UsuarioBLL();
 
@@ -60,11 +60,10 @@ namespace Proyecto_Ing._Software
 
                 dgvUsuario.DataSource = null;
                 dgvUsuario.DataSource = usuarioBLL.ListarUsuarios();
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar el la grilla: " + ex.Message);
+                MessageBox.Show("Error al cargar la grilla: " + ex.Message);
             }
         }
 
@@ -75,8 +74,6 @@ namespace Proyecto_Ing._Software
             UsuarioBLL usuarioBLL = new UsuarioBLL();
             bool exito = usuarioBLL.DeshabilitarUsuario(dniSeleccionado);
 
-            ActualizarGrilla();
-
             if (exito)
             {
                 MessageBox.Show("Usuario deshabilitado");
@@ -85,6 +82,8 @@ namespace Proyecto_Ing._Software
             {
                 MessageBox.Show("Error para deshabilitar usuario");
             }
+            ActualizarGrilla();
+
         }
 
         private void dgvUsuario_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -98,7 +97,6 @@ namespace Proyecto_Ing._Software
                 txtNombre.Text = fila.Cells["Nombre"].Value.ToString();
                 txtApellido.Text = fila.Cells["Apellido"].Value.ToString();
                 txtEmail.Text = fila.Cells["Email"].Value.ToString();
-
 
             }
         }
@@ -142,16 +140,17 @@ namespace Proyecto_Ing._Software
             UsuarioBLL usuarioBLL = new UsuarioBLL();
             bool exito = usuarioBLL.HabilitarUsuario(dniSeleccionado);
 
-            ActualizarGrilla();
-
             if (exito)
             {
                 MessageBox.Show("Usuario Habilitado");
+                ActualizarGrilla();
+
             }
             else
             {
                 MessageBox.Show("Error para habilitar usuario");
             }
+
         }
 
         private void cmbRoles_SelectedIndexChanged(object sender, EventArgs e)

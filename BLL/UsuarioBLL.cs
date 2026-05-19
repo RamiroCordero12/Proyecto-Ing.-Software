@@ -34,7 +34,7 @@ namespace BLL
                 Bitacora _bitacora = new Bitacora();
 
                 bitacora.RegistroBitacora(_bitacora.IdBitacora, usuario.DNI, 
-                    _bitacora.Accion = "Creación de usuario" , DateTime.Now, "Usuarios", _bitacora.Criticidad = "Alta");            
+                    _bitacora.Accion = "Creación de usuario" , DateTime.Now, "Gestor de usuarios", _bitacora.Criticidad = "Alta");            
                 return true;
             }
             else
@@ -58,7 +58,19 @@ namespace BLL
             }
 
             UsuarioDAL usuarioDAL = new UsuarioDAL();
-            return usuarioDAL.DeshabilitarUsuario(dniUsuario);
+            bool verificar = usuarioDAL.DeshabilitarUsuario(dniUsuario);
+
+            if (verificar)
+            {
+                Bitacora _bitacora = new Bitacora();
+                Usuario usuario = new Usuario();
+
+                bitacora.RegistroBitacora(_bitacora.IdBitacora, dniUsuario,
+                    _bitacora.Accion = "Deshabilitar usuario", DateTime.Now, "Gestor de usuarios", _bitacora.Criticidad = "Alta");
+                return true;
+            }
+
+            return true;
         }
 
         public bool HabilitarUsuario(int dniUsuario)
@@ -69,21 +81,24 @@ namespace BLL
             }
 
             UsuarioDAL usuarioDAL = new UsuarioDAL();
-            return usuarioDAL.HabilitarUsuario(dniUsuario);
+            bool verificar = usuarioDAL.DeshabilitarUsuario(dniUsuario);
+
+            if (verificar)
+            {
+                Bitacora _bitacora = new Bitacora();
+                Usuario usuario = new Usuario();
+
+                bitacora.RegistroBitacora(_bitacora.IdBitacora, dniUsuario,
+                    _bitacora.Accion = "Habilitar usuario", DateTime.Now, "Gestor de usuarios", _bitacora.Criticidad = "Alta");
+                return true;
+            }
+
+            return true;
         }
 
         public bool ModificarUsuario(Usuario usuario, int dniViejo)
         {
-            //Evaluamos el campo que vamos a encriptar
-            //if (!string.IsNullOrEmpty(usuario.Contrasena))
-            //{
-            //    usuario.Contrasena = Encriptador.Encriptacion(usuario.Contrasena);
-            //}
-            //else
-            //{
-            //    throw new Exception("Error al modificar la contrasena");
-            //}
-            //Instanciamos DAL y ejecutamos la consulta (UPDATE)
+            
             usuario.NombreUsuario = usuario.Nombre + usuario.DNI;
             string contrasenaNueva = usuario.Apellido + usuario.DNI;
             usuario.Contrasena = Encriptador.Encriptacion(contrasenaNueva);
@@ -98,7 +113,7 @@ namespace BLL
                 Bitacora _bitacora = new Bitacora();
 
                 bitacora.RegistroBitacora(_bitacora.IdBitacora, usuario.DNI,
-                    _bitacora.Accion = "Modificacion de usuario", DateTime.Now, "Usuarios", _bitacora.Criticidad = "Alta");
+                    _bitacora.Accion = "Modificacion de usuario", DateTime.Now, "Gestor de usuarios", _bitacora.Criticidad = "Alta");
                 return true;
             }
             else
@@ -122,13 +137,20 @@ namespace BLL
 
             if(usuarioEncontrado != null)
             {
+                Bitacora _bitacora = new Bitacora();
+
+                bitacora.RegistroBitacora(_bitacora.IdBitacora, usuarioEncontrado.DNI,
+                    _bitacora.Accion = "Login de usuario", DateTime.Now,
+                    "Gestor de usuarios", _bitacora.Criticidad = "Alta");
+
                 SessionManager.GetInstance.Login(usuarioEncontrado);
-                return usuarioEncontrado;
+                return usuarioEncontrado;               
             }
             else
             {
                 throw new Exception("Error. Usuario no encontrado");
             }
         }
+        
     }
 }

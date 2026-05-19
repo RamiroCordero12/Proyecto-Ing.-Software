@@ -61,12 +61,12 @@ namespace DAL
             //SELECT ..... FROM --> Selecciona ... De
             string consulta2 = "SELECT DNI, Nombre, Apellido, NombreUsuario, Contrasena, Email, Rol, Estado FROM dbo.Usuarios";
 
-            using(SqlConnection conexionSql2 = conexion.ValidarConexion())
+            using(SqlConnection conexionSql = conexion.ValidarConexion())
             {                         
-                    using(SqlCommand comando2 = new SqlCommand(consulta2, conexionSql2))
+                    using(SqlCommand comando2 = new SqlCommand(consulta2, conexionSql))
                     {
                     //Abrimos la conexion a la base de datos
-                        conexionSql2.Open();
+                        conexionSql.Open();
 
                     //El executeReader lee la base de datos
                         using(SqlDataReader reader = comando2.ExecuteReader())
@@ -82,7 +82,7 @@ namespace DAL
                                 usuario.Contrasena = reader["Contrasena"].ToString();
                                 usuario.Email = reader["Email"].ToString();
                                 usuario.Rol = int.Parse(reader["Rol"].ToString());               
-                                usuario.Estado = Convert.ToInt32(reader["Estado"]);                                             
+                                usuario.Estado = bool.Parse(reader["Estado"].ToString());                                             
                             //Agrega los datos a la lista
                                 list.Add(usuario);
                             }
@@ -99,7 +99,7 @@ namespace DAL
             bool exito = false;
 
             //Conectamos
-            using (SqlConnection conexionSql3 = conexion.ValidarConexion())
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
             {
                 //Creamos la consulta que modifique de usuario a estado en 0
                 //UPDATE --> Modifica de
@@ -107,12 +107,12 @@ namespace DAL
                 //WHERE --> Donde
                 string consulta = "UPDATE dbo.Usuarios SET Estado = 0 WHERE DNI = @DNI";
 
-                using(SqlCommand comando3 = new SqlCommand(consulta, conexionSql3))
+                using(SqlCommand comando3 = new SqlCommand(consulta, conexionSql))
                 {
                     //Agarramos el parametro de IdUsuario
                     comando3.Parameters.AddWithValue("@DNI", dniUsuario);
 
-                    conexionSql3.Open();
+                    conexionSql.Open();
 
                     int filasAfectadas = comando3.ExecuteNonQuery();
 
@@ -132,7 +132,7 @@ namespace DAL
             bool exito = false;
 
             //Conectamos
-            using (SqlConnection conexionSql3 = conexion.ValidarConexion())
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
             {
                 //Creamos la consulta que modifique de usuario a estado en 0
                 //UPDATE --> Modifica de
@@ -140,12 +140,12 @@ namespace DAL
                 //WHERE --> Donde
                 string consulta = "UPDATE dbo.Usuarios SET Estado = 1 WHERE DNI = @DNI";
 
-                using (SqlCommand comando4 = new SqlCommand(consulta, conexionSql3))
+                using (SqlCommand comando4 = new SqlCommand(consulta, conexionSql))
                 {
                     //Agarramos el parametro de IdUsuario
                     comando4.Parameters.AddWithValue("@DNI", dniUsuario);
 
-                    conexionSql3.Open();
+                    conexionSql.Open();
 
                     int filasAfectadas = comando4.ExecuteNonQuery();
 
@@ -164,7 +164,7 @@ namespace DAL
             //Variable booleana para confirmar el resultado
             bool resultado = false;
 
-            using (SqlConnection conexionSql5 = conexion.ValidarConexion())
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
             {
                 //Creamos la consulta que modifique el usuario
                 //UPDATE de usuarios el nombre de usuario y la contrasena done el
@@ -172,7 +172,7 @@ namespace DAL
                 string consulta = "UPDATE Usuarios SET DNI = @DniNuevo, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Rol = @Rol, " +
                     "NombreUsuario = @NombreUsuario, Contrasena = @Contrasena WHERE DNI = @DniViejo";
 
-                using(SqlCommand comando4 = new SqlCommand(consulta, conexionSql5))
+                using(SqlCommand comando4 = new SqlCommand(consulta, conexionSql))
                 {
                     //Agarramos los parametros que los vamos a modificar
                     comando4.Parameters.AddWithValue("@Nombre", usuario.Nombre);
@@ -185,7 +185,7 @@ namespace DAL
                     comando4.Parameters.AddWithValue("@DniViejo", dniViejo);
 
 
-                    conexionSql5.Open();
+                    conexionSql.Open();
 
                     int filasSeleccionadas = comando4.ExecuteNonQuery();
 
@@ -204,14 +204,14 @@ namespace DAL
 
             string consulta = "SELECT DNI, NombreUsuario, Contrasena, Estado, Email, Rol FROM dbo.Usuarios WHERE NombreUsuario = @NombreUsuario AND Contrasena = @Contrasena AND Estado = 1";
 
-            using(SqlConnection conexionSql6 = conexion.ValidarConexion())
+            using(SqlConnection conexionSql = conexion.ValidarConexion())
             {
-                using(SqlCommand comando = new SqlCommand(consulta, conexionSql6))
+                using(SqlCommand comando = new SqlCommand(consulta, conexionSql))
                 {
                     comando.Parameters.AddWithValue("NombreUsuario", nombreUsuario);
                     comando.Parameters.AddWithValue("Contrasena", contrasena);
 
-                    conexionSql6.Open();
+                    conexionSql.Open();
 
                     using(SqlDataReader reader = comando.ExecuteReader())
                     {
@@ -232,5 +232,6 @@ namespace DAL
             }
             return usuarioLogueado;
         }
+               
     }
 }

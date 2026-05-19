@@ -76,5 +76,11 @@ namespace Proyecto_Ing._Software
             FormBitacora formBitacora = new FormBitacora();
             formBitacora.Show();
         }
+
+        private void cambiarContrasenaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormCambiarContrasena formCambiar = new FormCambiarContrasena();
+            formCambiar.Show();
+        }
     }
 }
