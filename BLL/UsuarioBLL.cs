@@ -81,7 +81,7 @@ namespace BLL
             }
 
             UsuarioDAL usuarioDAL = new UsuarioDAL();
-            bool verificar = usuarioDAL.DeshabilitarUsuario(dniUsuario);
+            bool verificar = usuarioDAL.HabilitarUsuario(dniUsuario);
 
             if (verificar)
             {
