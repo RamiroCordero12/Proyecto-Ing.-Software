@@ -141,7 +141,7 @@ namespace BLL
 
                 bitacora.RegistroBitacora(_bitacora.IdBitacora, usuarioEncontrado.DNI,
                     _bitacora.Accion = "Login de usuario", DateTime.Now,
-                    "Gestor de usuarios", _bitacora.Criticidad = "Alta");
+                    "FormLogin", _bitacora.Criticidad = "Alta");
 
                 SessionManager.GetInstance.Login(usuarioEncontrado);
                 return usuarioEncontrado;               
