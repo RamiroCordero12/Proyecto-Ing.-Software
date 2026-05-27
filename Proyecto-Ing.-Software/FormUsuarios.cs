@@ -46,9 +46,26 @@ namespace Proyecto_Ing._Software
                     ActualizarGrilla();
                 }
             }
+            catch (System.Data.SqlClient.SqlException sqlEx)
+            {
+                string amigable;
+                switch (sqlEx.Number)
+                {
+                    case 2627: // Violation of primary key or unique index
+                    case 2601: // Cannot insert duplicate key row
+                        amigable = "Ya existe un usuario con ese DNI).";
+                        break;
+
+                    default:
+                        amigable = "Error de base de datos. Contacte al administrador.";
+                        break;
+                }
+                MessageBox.Show(amigable, "Error al crear usuario", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al crear un usuario: " + ex.Message);
+                // fallback for other exceptions
+                MessageBox.Show("Ocurrió un error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

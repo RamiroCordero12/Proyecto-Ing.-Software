@@ -232,6 +232,40 @@ namespace DAL
             }
             return usuarioLogueado;
         }
-               
+        public bool CambiarContrasena(int dni, string nuevaContrasenaHash)
+        {
+            bool resultado = false;
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
+            {
+                string consulta = "UPDATE Usuarios SET Contrasena = @Contrasena WHERE DNI = @DNI";
+                using (SqlCommand cmd = new SqlCommand(consulta, conexionSql))
+                {
+                    cmd.Parameters.AddWithValue("@Contrasena", nuevaContrasenaHash);
+                    cmd.Parameters.AddWithValue("@DNI", dni);
+                    conexionSql.Open();
+                    int filas = cmd.ExecuteNonQuery();
+                    resultado = filas > 0;
+                }
+            }
+            return resultado;
+        }
+
+        // Helper para conseguir el hash de la contraseña del usuario actual
+        public string ObtenerContrasenaHash(int dni)
+        {
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
+            {
+                string consulta = "SELECT Contrasena FROM Usuarios WHERE DNI = @DNI";
+                using (SqlCommand cmd = new SqlCommand(consulta, conexionSql))
+                {
+                    cmd.Parameters.AddWithValue("@DNI", dni);
+                    conexionSql.Open();
+                    var result = cmd.ExecuteScalar();
+                    return result == null || result == DBNull.Value ? null : result.ToString();
+                }
+            }
+        }
+
+
     }
 }

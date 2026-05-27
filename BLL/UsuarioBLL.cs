@@ -151,6 +151,37 @@ namespace BLL
                 throw new Exception("Error. Usuario no encontrado");
             }
         }
-        
+        public bool CambiarContrasena(int dni, string contrasenaActualPlain, string contrasenaNuevaPlain, string contrasenaConfirmPlain)
+        {
+            if (string.IsNullOrWhiteSpace(contrasenaNuevaPlain) || contrasenaNuevaPlain.Length < 8)
+                throw new ArgumentException("La nueva contraseña debe tener al menos 8 caracteres.");
+
+            if (contrasenaNuevaPlain != contrasenaConfirmPlain)
+                throw new ArgumentException("La nueva contraseña y la confirmación no coinciden.");
+
+            UsuarioDAL dal = new UsuarioDAL();
+            string hashActualEnDb = dal.ObtenerContrasenaHash(dni);
+            if (hashActualEnDb == null) throw new Exception("Usuario no encontrado.");
+
+            // Verificar contraseña actual usando hash
+            string providedActualHash = Encriptador.Encriptacion(contrasenaActualPlain);
+            if (providedActualHash != hashActualEnDb)
+                throw new UnauthorizedAccessException("La contraseña actual es incorrecta.");
+
+            // hashear nueva contraseña y actualizar
+            string nuevaHash = Encriptador.Encriptacion(contrasenaNuevaPlain);
+            bool exito = dal.CambiarContrasena(dni, nuevaHash);
+            if (exito)
+            {
+                Bitacora _bitacora = new Bitacora();
+
+                bitacora.RegistroBitacora(_bitacora.IdBitacora, dni,
+                    _bitacora.Accion = "Cambio de contraseña", DateTime.Now, "Gestor de usuarios", _bitacora.Criticidad = "Alta");
+                return true;
+            }
+            return true;
+        }
+
+
     }
 }
