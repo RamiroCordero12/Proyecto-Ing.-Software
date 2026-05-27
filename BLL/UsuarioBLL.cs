@@ -16,7 +16,7 @@ namespace BLL
         public bool CrearUsuario(Usuario usuario, int dniAdminActual)
         {
             //Validaciones
-            if (string.IsNullOrWhiteSpace(usuario.Nombre) || string.IsNullOrWhiteSpace(usuario.Apellido) || usuario.DNI == null)
+            if (string.IsNullOrWhiteSpace(usuario.Nombre) || string.IsNullOrWhiteSpace(usuario.Apellido))
             {
                 throw new Exception("Completa el campo faltante");
             }
