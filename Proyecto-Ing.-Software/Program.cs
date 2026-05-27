@@ -16,7 +16,13 @@ namespace Proyecto_Ing._Software
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormLogin());
+            using (var login = new FormLogin())
+            {
+                var result = login.ShowDialog();
+                if (result != DialogResult.OK) return; 
+                                                       
+            }
+            Application.Run(new FormMenuPrincipal());
         }
     }
 }

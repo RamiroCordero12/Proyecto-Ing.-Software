@@ -33,8 +33,9 @@
             this.usuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.cambiarContrasenaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.reloginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -45,7 +46,8 @@
             this.usuarioToolStripMenuItem,
             this.logoutToolStripMenuItem,
             this.bitacoraToolStripMenuItem,
-            this.cambiarContrasenaToolStripMenuItem});
+            this.cambiarContrasenaToolStripMenuItem,
+            this.reloginToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -73,6 +75,13 @@
             this.bitacoraToolStripMenuItem.Text = "Bitacora";
             this.bitacoraToolStripMenuItem.Click += new System.EventHandler(this.bitacoraToolStripMenuItem_Click_1);
             // 
+            // cambiarContrasenaToolStripMenuItem
+            // 
+            this.cambiarContrasenaToolStripMenuItem.Name = "cambiarContrasenaToolStripMenuItem";
+            this.cambiarContrasenaToolStripMenuItem.Size = new System.Drawing.Size(125, 20);
+            this.cambiarContrasenaToolStripMenuItem.Text = "Cambiar contrasena";
+            this.cambiarContrasenaToolStripMenuItem.Click += new System.EventHandler(this.cambiarContrasenaToolStripMenuItem_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -84,12 +93,12 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
-            // cambiarContrasenaToolStripMenuItem
+            // reloginToolStripMenuItem
             // 
-            this.cambiarContrasenaToolStripMenuItem.Name = "cambiarContrasenaToolStripMenuItem";
-            this.cambiarContrasenaToolStripMenuItem.Size = new System.Drawing.Size(125, 20);
-            this.cambiarContrasenaToolStripMenuItem.Text = "Cambiar contrasena";
-            this.cambiarContrasenaToolStripMenuItem.Click += new System.EventHandler(this.cambiarContrasenaToolStripMenuItem_Click);
+            this.reloginToolStripMenuItem.Name = "reloginToolStripMenuItem";
+            this.reloginToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.reloginToolStripMenuItem.Text = "Relogin";
+            this.reloginToolStripMenuItem.Click += new System.EventHandler(this.reloginToolStripMenuItem_Click);
             // 
             // FormMenuPrincipal
             // 
@@ -119,6 +128,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem bitacoraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cambiarContrasenaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reloginToolStripMenuItem;
     }
 }
 

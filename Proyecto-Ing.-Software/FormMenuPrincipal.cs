@@ -82,5 +82,12 @@ namespace Proyecto_Ing._Software
             FormCambiarContrasena formCambiar = new FormCambiarContrasena();
             formCambiar.Show();
         }
+
+        private void reloginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormLogin formLogin = new FormLogin();
+            formLogin.Show();
+
+        }
     }
 }
