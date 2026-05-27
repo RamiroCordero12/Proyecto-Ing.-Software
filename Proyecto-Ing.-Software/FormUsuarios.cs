@@ -60,6 +60,8 @@ namespace Proyecto_Ing._Software
 
                 dgvUsuario.DataSource = null;
                 dgvUsuario.DataSource = usuarioBLL.ListarUsuarios();
+                if (dgvUsuario.Columns.Contains("Contrasena"))
+                    dgvUsuario.Columns["Contrasena"].Visible = false;
             }
             catch (Exception ex)
             {
