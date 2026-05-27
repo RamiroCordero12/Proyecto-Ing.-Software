@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -54,14 +55,18 @@ namespace Proyecto_Ing._Software
         {
             DialogResult confirmar = MessageBox.Show("Estas seguro de cerrar sesion?", "Cerrar sesion", MessageBoxButtons.YesNo);
 
-            if(confirmar == DialogResult.Yes)
+            if (confirmar == DialogResult.Yes)
             {
+                this.Hide();
                 SessionManager.GetInstance.Logout();
 
-                FormLogin formlogin = new FormLogin();
-                formlogin.Show();
+                using (var login = new FormLogin())
+                {
+                    var result = login.ShowDialog();
+                    if (result != DialogResult.OK) return;
 
-                this.Close();
+                }
+                this.Show();
             }
             
         }
@@ -85,8 +90,18 @@ namespace Proyecto_Ing._Software
 
         private void reloginToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormLogin formLogin = new FormLogin();
-            formLogin.Show();
+            var resp = MessageBox.Show("Iniciar una nueva sesión va a terminar la actual. Continuar?",
+                           "Confirmar relogin", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (resp == DialogResult.No) return; 
+            SessionManager.GetInstance.Logout();
+            this.Hide();
+            using (var login = new FormLogin())
+            {
+                var result = login.ShowDialog();
+                if (result != DialogResult.OK) return;
+
+            }
+            this.Show();
 
         }
     }
