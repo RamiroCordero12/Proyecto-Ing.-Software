@@ -11,7 +11,7 @@ namespace DAL
     public class ConexionBD
     {
         //Cadena que conecta la base de datos con el codigo
-        string cadenaConexion = @"Data Source=.\SQLEXPRESS;Initial Catalog = Fulbito500; Integrated Security = True; Encrypt=False";
+        string cadenaConexion = @"Data Source=localhost\SQLEXPRESS01;Initial Catalog = Fulbito500; Integrated Security = True; Encrypt=False";
     
         //Metodo que valida la conexion con la base de datos
         public SqlConnection ValidarConexion()

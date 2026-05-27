@@ -8,6 +8,6 @@ namespace BE
 {
     public class UsuarioBE
     {
-        
+        // pendiente 
     }
 }

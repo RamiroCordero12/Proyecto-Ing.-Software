@@ -27,7 +27,7 @@ namespace Proyecto_Ing._Software
             {
                 Usuario usuarioLogueado = usuarioBLL.Login(txtNombreUsuario.Text, txtContrasena.Text);
 
-                MessageBox.Show($"Bienvenido {txtNombreUsuario.Text} al sistema!!");
+                MessageBox.Show($"Bienvenido {txtNombreUsuario.Text}.");
 
                 FormMenuPrincipal form1 = new FormMenuPrincipal();
                 form1.Show();
