@@ -59,7 +59,8 @@ namespace DAL
             //SELECT --> Selecciona 
             //FROM --> De
             //SELECT ..... FROM --> Selecciona ... De
-            string consulta2 = "SELECT DNI, Nombre, Apellido, NombreUsuario, Contrasena, Email, Rol, Estado FROM dbo.Usuarios";
+             string consulta2 = "SELECT DNI, Nombre, Apellido, NombreUsuario, Contrasena, Email, Rol, Estado FROM dbo.Usuarios";
+           
 
             using(SqlConnection conexionSql = conexion.ValidarConexion())
             {                         

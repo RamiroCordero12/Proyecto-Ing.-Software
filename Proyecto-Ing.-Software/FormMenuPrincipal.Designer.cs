@@ -34,8 +34,8 @@
             this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cambiarContrasenaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.reloginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -82,6 +82,13 @@
             this.cambiarContrasenaToolStripMenuItem.Text = "Cambiar contrasena";
             this.cambiarContrasenaToolStripMenuItem.Click += new System.EventHandler(this.cambiarContrasenaToolStripMenuItem_Click);
             // 
+            // reloginToolStripMenuItem
+            // 
+            this.reloginToolStripMenuItem.Name = "reloginToolStripMenuItem";
+            this.reloginToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.reloginToolStripMenuItem.Text = "Relogin";
+            this.reloginToolStripMenuItem.Click += new System.EventHandler(this.reloginToolStripMenuItem_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -92,13 +99,6 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
-            // reloginToolStripMenuItem
-            // 
-            this.reloginToolStripMenuItem.Name = "reloginToolStripMenuItem";
-            this.reloginToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.reloginToolStripMenuItem.Text = "Relogin";
-            this.reloginToolStripMenuItem.Click += new System.EventHandler(this.reloginToolStripMenuItem_Click);
             // 
             // FormMenuPrincipal
             // 
