@@ -19,7 +19,7 @@ namespace Servicios
 
         // nuevo
         public int IntentosFallidos { get; set; }
-        public string Lenguaje { get; set; }
+        public int Lenguaje { get; set; }
     }
 }
 

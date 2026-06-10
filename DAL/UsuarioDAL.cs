@@ -84,7 +84,7 @@ namespace DAL
                                 usuario.Rol = int.Parse(reader["Rol"].ToString());               
                                 usuario.Estado = bool.Parse(reader["Estado"].ToString());      
                                 usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
-                                usuario.Lenguaje = reader["Lenguaje"].ToString();
+                                usuario.Lenguaje = int.Parse(reader["Lenguaje"].ToString());
                             //Agrega los datos a la lista
                                 list.Add(usuario);
                             }
@@ -172,7 +172,7 @@ namespace DAL
                 //UPDATE de usuarios el nombre de usuario y la contrasena done el
                 //el Id seleccionado sea el mismo que el de la base de datos
                 string consulta = "UPDATE Usuarios SET DNI = @DniNuevo, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Rol = @Rol, " +
-                    "NombreUsuario = @NombreUsuario, Contrasena = @Contrasena WHERE DNI = @DniViejo";
+                    "NombreUsuario = @NombreUsuario, Lenguaje = @Lenguaje, Contrasena = @Contrasena WHERE DNI = @DniViejo";
 
                 using(SqlCommand comando4 = new SqlCommand(consulta, conexionSql))
                 {
@@ -185,6 +185,7 @@ namespace DAL
                     comando4.Parameters.AddWithValue("@Contrasena", usuario.Contrasena);
                     comando4.Parameters.AddWithValue("@DniNuevo", usuario.DNI);
                     comando4.Parameters.AddWithValue("@DniViejo", dniViejo);
+                    comando4.Parameters.AddWithValue("@Lenguaje", usuario.Lenguaje);
 
 
                     conexionSql.Open();
@@ -291,7 +292,7 @@ namespace DAL
                             Rol = int.Parse(reader["Rol"].ToString()),
                             Estado = reader["Estado"] != DBNull.Value && (bool)reader["Estado"],
                             IntentosFallidos = reader["IntentosFallidos"] != DBNull.Value ? int.Parse(reader["IntentosFallidos"].ToString()) : 0,
-                            Lenguaje = reader["Lenguaje"].ToString(),
+                            Lenguaje = int.Parse(reader["Lenguaje"].ToString()),
                         };
                     }
                 }
@@ -316,6 +317,23 @@ namespace DAL
                 exito = filas > 0;
             }
             return exito;
+        }
+        public bool CambiarLenguaje(int dni, int lenguaje)
+        {
+            bool resultado = false;
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
+            {
+                string consulta = "UPDATE Usuarios SET Lenguaje = @Lenguaje WHERE DNI = @DNI";
+                using (SqlCommand cmd = new SqlCommand(consulta, conexionSql))
+                {
+                    cmd.Parameters.AddWithValue("@Lenguaje", lenguaje);
+                    cmd.Parameters.AddWithValue("@DNI", dni);
+                    conexionSql.Open();
+                    int filas = cmd.ExecuteNonQuery();
+                    resultado = filas > 0;
+                }
+            }
+            return resultado;
         }
 
     }

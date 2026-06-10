@@ -36,6 +36,7 @@
             this.cambiarContrasenaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cambiarLenguajeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -47,7 +48,8 @@
             this.logoutToolStripMenuItem,
             this.bitacoraToolStripMenuItem,
             this.cambiarContrasenaToolStripMenuItem,
-            this.reloginToolStripMenuItem});
+            this.reloginToolStripMenuItem,
+            this.cambiarLenguajeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -100,6 +102,13 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // cambiarLenguajeToolStripMenuItem
+            // 
+            this.cambiarLenguajeToolStripMenuItem.Name = "cambiarLenguajeToolStripMenuItem";
+            this.cambiarLenguajeToolStripMenuItem.Size = new System.Drawing.Size(112, 20);
+            this.cambiarLenguajeToolStripMenuItem.Text = "Cambiar lenguaje";
+            this.cambiarLenguajeToolStripMenuItem.Click += new System.EventHandler(this.cambiarLenguajeToolStripMenuItem_Click);
+            // 
             // FormMenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -129,6 +138,7 @@
         private System.Windows.Forms.ToolStripMenuItem bitacoraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cambiarContrasenaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reloginToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cambiarLenguajeToolStripMenuItem;
     }
 }
 

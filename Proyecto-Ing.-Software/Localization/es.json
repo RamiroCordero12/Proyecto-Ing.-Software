@@ -1,0 +1,81 @@
+{
+  "FormLogin": {
+    "Title": "FULBITO 500",
+    "LabelUsername": "Nombre de usuario",
+    "LabelPassword": "Contraseña",
+    "ButtonLogin": "Ingresar",
+    "WelcomeMessage": "Bienvenido {0}.",
+    "ErrorTitle": "Error al iniciar sesión"
+  },
+  "FormMenuPrincipal": {
+    "Title": "Menú Principal",
+    "MenuUsuarios": "Gestor de usuarios",
+    "MenuLogout": "Cerrar sesión",
+    "MenuBitacora": "Bitácora",
+    "MenuCambiarContrasena": "Cambiar contraseña",
+    "MenuCambiarLenguaje":  "Cambiar lenguaje",
+    "MenuRelogin": "Reiniciar sesión",
+    "LogoutConfirm": "¿Estás seguro de cerrar sesión?",
+    "LogoutTitle": "Cerrar sesión",
+    "ReloginConfirm": "Iniciar una nueva sesión va a terminar la actual. ¿Continuar?",
+    "ReloginTitle": "Confirmar reinicio de sesión"
+  },
+  "FormUsuarios": {
+    "Title": "Gestor de Usuarios",
+    "LabelDNI": "DNI",
+    "LabelNombre": "Nombre",
+    "LabelApellido": "Apellido",
+    "LabelEmail": "Email",
+    "LabelCambiarRol": "Cambiar rol:",
+    "LabelCambiarLenguaje": "Cambiar lenguaje:",
+    "ButtonCrear": "Crear usuario",
+    "ButtonDeshabilitar": "Deshabilitar usuario",
+    "ButtonHabilitar": "Habilitar usuario",
+    "ButtonModificar": "Modificar usuario",
+    "RolAdministrador": "Administrador",
+    "RolEmpleado": "Empleado",
+    "LegendaRol1": "Administrador = Rol = 1",
+    "LegendaRol2": "Empleado = Rol = 2",
+    "MsgUsuarioCreado": "¡Usuario creado!",
+    "MsgUsuarioDeshabilitado": "Usuario deshabilitado",
+    "MsgUsuarioHabilitado": "Usuario habilitado",
+    "MsgUsuarioModificado": "Usuario modificado",
+    "MsgSeleccionarUsuario": "Selecciona un usuario para modificar",
+    "MsgErrorDuplicado": "Ya existe un usuario con ese DNI.",
+    "MsgErrorBD": "Error de base de datos. Contacte al administrador.",
+    "MsgErrorCrear": "Error al crear usuario",
+    "MsgErrorHabilitar": "Error para habilitar usuario",
+    "MsgErrorDeshabilitar": "Error para deshabilitar usuario",
+    "MsgErrorModificar": "Error al modificar un usuario",
+    "MsgErrorGrilla": "Error al cargar la grilla: "
+  },
+  "FormBitacora": {
+    "Title": "Bitácora de eventos",
+    "LabelDesde": "Filtrar desde:",
+    "LabelHasta": "Hasta",
+    "ButtonFiltrar": "Filtrar",
+    "ErrorFechaInvalida": "La fecha 'Hasta' no puede ser anterior a la fecha 'Desde'.",
+    "ErrorFechaInvalidaTitle": "Filtro inválido",
+    "ErrorSinResultados": "No se encontraron registros en el rango de fechas seleccionado.",
+    "ErrorSinResultadosTitle": "Sin resultados",
+    "MsgErrorCargar": "Error al cargar la lista: "
+  },
+  "FormCambiarContrasena": {
+    "Title": "Cambiar contraseña",
+    "LabelActual": "Contraseña (Actual)",
+    "LabelNueva": "Contraseña nueva",
+    "LabelConfirmar": "Confirmar contraseña",
+    "ButtonConfirmar": "Confirmar",
+    "MsgExito": "Contraseña actualizada correctamente.",
+    "MsgExitoTitle": "Éxito",
+    "MsgValidacionTitle": "Validación",
+    "MsgAccesoDenegadoTitle": "Acceso denegado",
+    "MsgErrorTitle": "Error",
+    "MsgErrorBase": "Error al cambiar la contraseña: "
+  },
+  "Idiomas": {
+    "Espanol": "Español",
+    "Ingles": "English",
+    "Portugues": "Português"
+  }
+}

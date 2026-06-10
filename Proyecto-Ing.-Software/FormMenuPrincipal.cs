@@ -1,108 +1,124 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Servicios;
+using Servicios.Localization;
 
 namespace Proyecto_Ing._Software
 {
-    public partial class FormMenuPrincipal : Form
+    public partial class FormMenuPrincipal : Form, ILocalizationObserver
     {
+        private readonly LocalizationService _loc = LocalizationService.Instance;
+
         public FormMenuPrincipal()
         {
             InitializeComponent();
+            _loc.Subscribe(this);
+            ApplyLocalization();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        // ─────────────────────────────────────────
+        //  ILocalizationObserver
+        // ─────────────────────────────────────────
+
+        public void OnLanguageChanged() => ApplyLocalization();
+
+        private void ApplyLocalization()
         {
-            
+            this.Text = _loc["FormMenuPrincipal", "Title"];
+            usuarioToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuUsuarios"];
+            logoutToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuLogout"];
+            bitacoraToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuBitacora"];
+            cambiarLenguajeToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuCambiarLenguaje"];
+            cambiarContrasenaToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuCambiarContrasena"];
+            reloginToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuRelogin"];
         }
 
-        private void bitacoraToolStripMenuItem_Click(object sender, EventArgs e)
+        protected override void OnFormClosed(FormClosedEventArgs e)
         {
-
+            _loc.Unsubscribe(this);
+            base.OnFormClosed(e);
         }
 
-        private void usuarioToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FormUsuarios formUsuarios = new FormUsuarios();
-            formUsuarios.Show();
-        }
+        // ─────────────────────────────────────────
+        //  Load: enforce role-based visibility
+        // ─────────────────────────────────────────
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Usuario usuarioLogueado = SessionManager.GetInstance.usuario;
 
-            if (usuarioLogueado.Rol == 1)
-            {
-                usuarioToolStripMenuItem.Visible = true;
-                bitacoraToolStripMenuItem.Visible = true;
-            }
-            else if(usuarioLogueado.Rol == 2)
-            {
-                usuarioToolStripMenuItem.Visible = false;
-                bitacoraToolStripMenuItem.Visible = false;
-            }
+            bool esAdmin = (usuarioLogueado.Rol == 1);
+            usuarioToolStripMenuItem.Visible = esAdmin;
+            bitacoraToolStripMenuItem.Visible = esAdmin;
         }
 
-        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        // ─────────────────────────────────────────
+        //  Menu handlers
+        // ─────────────────────────────────────────
+
+        private void usuarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult confirmar = MessageBox.Show("Estas seguro de cerrar sesion?", "Cerrar sesion", MessageBoxButtons.YesNo);
-
-            if (confirmar == DialogResult.Yes)
-            {
-                this.Hide();
-                SessionManager.GetInstance.Logout();
-
-                using (var login = new FormLogin())
-                {
-                    var result = login.ShowDialog();
-                    if (result != DialogResult.OK) return;
-
-                }
-                this.Show();
-            }
-            
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
+            new FormUsuarios().Show();
         }
 
         private void bitacoraToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            FormBitacora formBitacora = new FormBitacora();
-            formBitacora.Show();
+            new FormBitacora().Show();
         }
 
         private void cambiarContrasenaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormCambiarContrasena formCambiar = new FormCambiarContrasena();
-            formCambiar.Show();
+            new FormCambiarContrasena().Show();
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var confirmar = MessageBox.Show(
+                _loc["FormMenuPrincipal", "LogoutConfirm"],
+                _loc["FormMenuPrincipal", "LogoutTitle"],
+                MessageBoxButtons.YesNo);
+
+            if (confirmar != DialogResult.Yes) return;
+
+            this.Hide();
+            SessionManager.GetInstance.Logout();
+
+            using (var login = new FormLogin())
+            {
+                if (login.ShowDialog() != DialogResult.OK) return;
+            }
+            this.Show();
         }
 
         private void reloginToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var resp = MessageBox.Show("Iniciar una nueva sesión va a terminar la actual. Continuar?",
-                           "Confirmar relogin", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (resp == DialogResult.No) return; 
+            var resp = MessageBox.Show(
+                _loc["FormMenuPrincipal", "ReloginConfirm"],
+                _loc["FormMenuPrincipal", "ReloginTitle"],
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (resp != DialogResult.Yes) return;
+
             SessionManager.GetInstance.Logout();
             this.Hide();
+
             using (var login = new FormLogin())
             {
-                var result = login.ShowDialog();
-                if (result != DialogResult.OK) return;
-
+                if (login.ShowDialog() != DialogResult.OK) return;
             }
             this.Show();
+        }
 
+        private void pictureBox1_Click(object sender, EventArgs e) { }
+
+        // Designer-generated empty handler kept for compatibility
+        private void bitacoraToolStripMenuItem_Click(object sender, EventArgs e) { }
+        private void button1_Click(object sender, EventArgs e) { }
+
+        private void cambiarLenguajeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormCambiarLenguaje().Show();
         }
     }
 }

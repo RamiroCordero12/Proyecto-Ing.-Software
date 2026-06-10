@@ -58,6 +58,12 @@
     <Compile Include="FormCambiarContrasena.Designer.cs">
       <DependentUpon>FormCambiarContrasena.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormCambiarLenguaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCambiarLenguaje.Designer.cs">
+      <DependentUpon>FormCambiarLenguaje.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +98,9 @@
     <EmbeddedResource Include="FormCambiarContrasena.resx">
       <DependentUpon>FormCambiarContrasena.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormCambiarLenguaje.resx">
+      <DependentUpon>FormCambiarLenguaje.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMenuPrincipal.resx">
       <DependentUpon>FormMenuPrincipal.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,6 +119,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Localization\en.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Localization\es.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Localization\pt.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

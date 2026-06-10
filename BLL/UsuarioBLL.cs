@@ -102,7 +102,7 @@ namespace BLL
             usuario.NombreUsuario = usuario.Nombre + usuario.DNI;
             string contrasenaNueva = usuario.Apellido + usuario.DNI;
             usuario.Contrasena = Encriptador.Encriptacion(contrasenaNueva);
-
+            
             UsuarioDAL usuarioDAL = new UsuarioDAL();
 
             bool exito = usuarioDAL.ModificarUsuario(usuario, dniViejo);
@@ -120,7 +120,7 @@ namespace BLL
             {
                 throw new Exception("No se pudo modificar el usuario");
             }
-
+            
         }
 
         public Usuario Login(string NombreUsuario, string Contrasena)
@@ -221,6 +221,29 @@ namespace BLL
                     _bitacora.Accion = "Cambio de contraseña", DateTime.Now, "Gestor de usuarios", _bitacora.Criticidad = "Alta");
                 return true;
             }
+            return true;
+        }
+
+        public bool CambiarLenguaje(int dniUsuario, int lenguaje)
+        {
+            if (dniUsuario <= 0)
+            {
+                throw new Exception("Error al seleccionar un usuario");
+            }
+
+            UsuarioDAL usuarioDAL = new UsuarioDAL();
+            bool verificar = usuarioDAL.CambiarLenguaje(dniUsuario, lenguaje);
+
+            if (verificar)
+            {
+                Bitacora _bitacora = new Bitacora();
+                Usuario usuario = new Usuario();
+
+                bitacora.RegistroBitacora(_bitacora.IdBitacora, dniUsuario,
+                    _bitacora.Accion = "Lenguaje cambiado", DateTime.Now, "Gestor de usuarios", _bitacora.Criticidad = "Alta");
+                return true;
+            }
+
             return true;
         }
 

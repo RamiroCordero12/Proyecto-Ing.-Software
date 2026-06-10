@@ -1,0 +1,81 @@
+{
+  "FormLogin": {
+    "Title": "FULBITO 500",
+    "LabelUsername": "Nome de usuário",
+    "LabelPassword": "Senha",
+    "ButtonLogin": "Entrar",
+    "WelcomeMessage": "Bem-vindo {0}.",
+    "ErrorTitle": "Erro ao iniciar sessão"
+  },
+  "FormMenuPrincipal": {
+    "Title": "Menu Principal",
+    "MenuUsuarios": "Gestor de usuários",
+    "MenuLogout": "Sair",
+    "MenuBitacora": "Registro de eventos",
+    "MenuCambiarContrasena": "Alterar senha",
+    "MenuCambiarLenguaje":  "Alterar idioma",
+    "MenuRelogin": "Reiniciar sessão",
+    "LogoutConfirm": "Tem certeza que deseja sair?",
+    "LogoutTitle": "Sair",
+    "ReloginConfirm": "Iniciar uma nova sessão encerrará a atual. Continuar?",
+    "ReloginTitle": "Confirmar reinício de sessão"
+  },
+  "FormUsuarios": {
+    "Title": "Gestor de Usuários",
+    "LabelDNI": "DNI",
+    "LabelNombre": "Nome",
+    "LabelApellido": "Sobrenome",
+    "LabelEmail": "Email",
+    "LabelCambiarRol": "Alterar perfil:",
+    "LabelCambiarLenguaje": "Alterar idioma:",
+    "ButtonCrear": "Criar usuário",
+    "ButtonDeshabilitar": "Desativar usuário",
+    "ButtonHabilitar": "Ativar usuário",
+    "ButtonModificar": "Modificar usuário",
+    "RolAdministrador": "Administrador",
+    "RolEmpleado": "Funcionário",
+    "LegendaRol1": "Administrador = Perfil = 1",
+    "LegendaRol2": "Funcionário = Perfil = 2",
+    "MsgUsuarioCreado": "Usuário criado!",
+    "MsgUsuarioDeshabilitado": "Usuário desativado",
+    "MsgUsuarioHabilitado": "Usuário ativado",
+    "MsgUsuarioModificado": "Usuário modificado",
+    "MsgSeleccionarUsuario": "Selecione um usuário para modificar",
+    "MsgErrorDuplicado": "Já existe um usuário com esse DNI.",
+    "MsgErrorBD": "Erro no banco de dados. Contate o administrador.",
+    "MsgErrorCrear": "Erro ao criar usuário",
+    "MsgErrorHabilitar": "Erro ao ativar usuário",
+    "MsgErrorDeshabilitar": "Erro ao desativar usuário",
+    "MsgErrorModificar": "Erro ao modificar usuário",
+    "MsgErrorGrilla": "Erro ao carregar a grade: "
+  },
+  "FormBitacora": {
+    "Title": "Registro de eventos",
+    "LabelDesde": "Filtrar de:",
+    "LabelHasta": "Até",
+    "ButtonFiltrar": "Filtrar",
+    "ErrorFechaInvalida": "A data 'Até' não pode ser anterior à data 'De'.",
+    "ErrorFechaInvalidaTitle": "Filtro inválido",
+    "ErrorSinResultados": "Nenhum registro encontrado no intervalo de datas selecionado.",
+    "ErrorSinResultadosTitle": "Sem resultados",
+    "MsgErrorCargar": "Erro ao carregar a lista: "
+  },
+  "FormCambiarContrasena": {
+    "Title": "Alterar senha",
+    "LabelActual": "Senha atual",
+    "LabelNueva": "Nova senha",
+    "LabelConfirmar": "Confirmar senha",
+    "ButtonConfirmar": "Confirmar",
+    "MsgExito": "Senha atualizada com sucesso.",
+    "MsgExitoTitle": "Sucesso",
+    "MsgValidacionTitle": "Validação",
+    "MsgAccesoDenegadoTitle": "Acesso negado",
+    "MsgErrorTitle": "Erro",
+    "MsgErrorBase": "Erro ao alterar a senha: "
+  },
+  "Idiomas": {
+    "Espanol": "Español",
+    "Ingles": "English",
+    "Portugues": "Português"
+  }
+}

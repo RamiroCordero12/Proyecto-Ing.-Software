@@ -1,0 +1,81 @@
+{
+  "FormLogin": {
+    "Title": "FULBITO 500",
+    "LabelUsername": "Username",
+    "LabelPassword": "Password",
+    "ButtonLogin": "Login",
+    "WelcomeMessage": "Welcome {0}.",
+    "ErrorTitle": "Login error"
+  },
+  "FormMenuPrincipal": {
+    "Title": "Main Menu",
+    "MenuUsuarios": "User Manager",
+    "MenuLogout": "Logout",
+    "MenuBitacora": "Audit Log",
+    "MenuCambiarContrasena": "Change password",
+    "MenuCambiarLenguaje":  "Change language",
+    "MenuRelogin": "Re-login",
+    "LogoutConfirm": "Are you sure you want to log out?",
+    "LogoutTitle": "Log out",
+    "ReloginConfirm": "Starting a new session will end the current one. Continue?",
+    "ReloginTitle": "Confirm re-login"
+  },
+  "FormUsuarios": {
+    "Title": "User Manager",
+    "LabelDNI": "DNI",
+    "LabelNombre": "First name",
+    "LabelApellido": "Last name",
+    "LabelEmail": "Email",
+    "LabelCambiarRol": "Change role:",
+    "LabelCambiarLenguaje": "Change language:",
+    "ButtonCrear": "Create user",
+    "ButtonDeshabilitar": "Disable user",
+    "ButtonHabilitar": "Enable user",
+    "ButtonModificar": "Modify user",
+    "RolAdministrador": "Administrator",
+    "RolEmpleado": "Employee",
+    "LegendaRol1": "Administrator = Role = 1",
+    "LegendaRol2": "Employee = Role = 2",
+    "MsgUsuarioCreado": "User created!",
+    "MsgUsuarioDeshabilitado": "User disabled",
+    "MsgUsuarioHabilitado": "User enabled",
+    "MsgUsuarioModificado": "User modified",
+    "MsgSeleccionarUsuario": "Select a user to modify",
+    "MsgErrorDuplicado": "A user with that DNI already exists.",
+    "MsgErrorBD": "Database error. Contact the administrator.",
+    "MsgErrorCrear": "Error creating user",
+    "MsgErrorHabilitar": "Error enabling user",
+    "MsgErrorDeshabilitar": "Error disabling user",
+    "MsgErrorModificar": "Error modifying user",
+    "MsgErrorGrilla": "Error loading grid: "
+  },
+  "FormBitacora": {
+    "Title": "Event log",
+    "LabelDesde": "Filter from:",
+    "LabelHasta": "To",
+    "ButtonFiltrar": "Filter",
+    "ErrorFechaInvalida": "The 'To' date cannot be before the 'From' date.",
+    "ErrorFechaInvalidaTitle": "Invalid filter",
+    "ErrorSinResultados": "No records found in the selected date range.",
+    "ErrorSinResultadosTitle": "No results",
+    "MsgErrorCargar": "Error loading list: "
+  },
+  "FormCambiarContrasena": {
+    "Title": "Change password",
+    "LabelActual": "Current password",
+    "LabelNueva": "New password",
+    "LabelConfirmar": "Confirm password",
+    "ButtonConfirmar": "Confirm",
+    "MsgExito": "Password updated successfully.",
+    "MsgExitoTitle": "Success",
+    "MsgValidacionTitle": "Validation",
+    "MsgAccesoDenegadoTitle": "Access denied",
+    "MsgErrorTitle": "Error",
+    "MsgErrorBase": "Error changing password: "
+  },
+  "Idiomas": {
+    "Espanol": "Español",
+    "Ingles": "English",
+    "Portugues": "Português"
+  }
+}
