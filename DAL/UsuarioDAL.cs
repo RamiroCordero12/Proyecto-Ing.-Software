@@ -266,6 +266,56 @@ namespace DAL
             }
         }
 
+        public Usuario GetUsuarioByNombreUsuario(string nombreUsuario)
+        {
+            Usuario usuario = null;
+            string consulta = "SELECT DNI, NombreUsuario, Contrasena, Estado, Email, Rol, IntentosFallidos FROM dbo.Usuarios WHERE NombreUsuario = @NombreUsuario";
+
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
+            using (SqlCommand comando = new SqlCommand(consulta, conexionSql))
+            {
+                comando.Parameters.AddWithValue("@NombreUsuario", nombreUsuario);
+                conexionSql.Open();
+                using (SqlDataReader reader = comando.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        usuario = new Usuario
+                        {
+                            DNI = int.Parse(reader["DNI"].ToString()),
+                            NombreUsuario = reader["NombreUsuario"].ToString(),
+                            Contrasena = reader["Contrasena"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Rol = int.Parse(reader["Rol"].ToString()),
+                            Estado = reader["Estado"] != DBNull.Value && (bool)reader["Estado"],
+                            IntentosFallidos = reader["IntentosFallidos"] != DBNull.Value ? int.Parse(reader["IntentosFallidos"].ToString()) : 0
+                        };
+                    }
+                }
+            }
+            return usuario;
+        }
+
+        public bool ActualizarIntentosYEstado(int dni, int intentosFallidos, bool estado)
+        {
+            bool exito = false;
+            string consulta = "UPDATE dbo.Usuarios SET IntentosFallidos = @IntentosFallidos, Estado = @Estado WHERE DNI = @DNI";
+
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
+            using (SqlCommand comando = new SqlCommand(consulta, conexionSql))
+            {
+                comando.Parameters.AddWithValue("@IntentosFallidos", intentosFallidos);
+                comando.Parameters.AddWithValue("@Estado", estado ? 1 : 0);
+                comando.Parameters.AddWithValue("@DNI", dni);
+
+                conexionSql.Open();
+                int filas = comando.ExecuteNonQuery();
+                exito = filas > 0;
+            }
+            return exito;
+        }
 
     }
+
 }
+

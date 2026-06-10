@@ -14,7 +14,11 @@ namespace Servicios
         public string NombreUsuario { get; set; }
         public string Contrasena { get; set; }
         public bool Estado { get; set; }
-        public string Email { get; set;  }
+        public string Email { get; set; }
         public int Rol { get; set; }
+
+        // nuevo
+        public int IntentosFallidos { get; set; }
     }
 }
+

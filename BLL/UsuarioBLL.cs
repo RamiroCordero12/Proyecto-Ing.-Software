@@ -125,32 +125,74 @@ namespace BLL
 
         public Usuario Login(string NombreUsuario, string Contrasena)
         {
-            if(string.IsNullOrEmpty(NombreUsuario) || string.IsNullOrEmpty(Contrasena))
-            {
+            if (string.IsNullOrEmpty(NombreUsuario) || string.IsNullOrEmpty(Contrasena))
                 throw new Exception("Completa todos los campos");
-            }
 
             string contrasenaEncriptada = Encriptador.Encriptacion(Contrasena);
 
             UsuarioDAL usuarioDAL = new UsuarioDAL();
-            Usuario usuarioEncontrado = usuarioDAL.Login(NombreUsuario, contrasenaEncriptada);
 
-            if(usuarioEncontrado != null)
+            // Pedir registro completo de usuario
+            Usuario usuarioEncontrado = usuarioDAL.GetUsuarioByNombreUsuario(NombreUsuario);
+
+            if (usuarioEncontrado == null)
             {
-                Bitacora _bitacora = new Bitacora();
+                throw new Exception("Usuario o contraseña incorrectos");
+            }
 
+           
+            if (!usuarioEncontrado.Estado)
+            {
+                throw new Exception("Cuenta bloqueada. Contacte al administrador.");
+            }
+
+            if (usuarioEncontrado.Contrasena == contrasenaEncriptada)
+            {
+                if (usuarioEncontrado.IntentosFallidos != 0)
+                {
+                    usuarioDAL.ActualizarIntentosYEstado(usuarioEncontrado.DNI, 0, true);
+                }
+
+                // Loguear login correcto
+                Bitacora _bitacora = new Bitacora();
                 bitacora.RegistroBitacora(_bitacora.IdBitacora, usuarioEncontrado.DNI,
                     _bitacora.Accion = "Login de usuario", DateTime.Now,
                     "FormLogin", _bitacora.Criticidad = "Alta");
 
                 SessionManager.GetInstance.Login(usuarioEncontrado);
-                return usuarioEncontrado;               
+                return usuarioEncontrado;
             }
             else
             {
-                throw new Exception("Error. Usuario no encontrado");
+                // Incrementar intentos
+                int nuevosIntentos = usuarioEncontrado.IntentosFallidos + 1;
+                bool bloquear = nuevosIntentos >= 3;
+
+                // Actualizar BD: incrementar intentos y bloquear si es neces
+                usuarioDAL.ActualizarIntentosYEstado(usuarioEncontrado.DNI, nuevosIntentos, bloquear ? false : true);
+
+                // Loguear intento fallido
+                Bitacora _bitacora = new Bitacora();
+                bitacora.RegistroBitacora(_bitacora.IdBitacora, usuarioEncontrado.DNI,
+                    _bitacora.Accion = $"Intento fallido #{nuevosIntentos}", DateTime.Now,
+                    "FormLogin", _bitacora.Criticidad = "Media");
+
+                if (bloquear)
+                {
+                    // Log deshabilitación
+                    bitacora.RegistroBitacora(_bitacora.IdBitacora, usuarioEncontrado.DNI,
+                        _bitacora.Accion = "Cuenta deshabilitada por intentos fallidos", DateTime.Now,
+                        "FormLogin", _bitacora.Criticidad = "Alta");
+
+                    throw new Exception("Cuenta bloqueada. Contacte al administrador.");
+                }
+                else
+                {
+                    throw new Exception("Error. Usuario no encontrado");
+                }
             }
         }
+
         public bool CambiarContrasena(int dni, string contrasenaActualPlain, string contrasenaNuevaPlain, string contrasenaConfirmPlain)
         {
             if (string.IsNullOrWhiteSpace(contrasenaNuevaPlain) || contrasenaNuevaPlain.Length < 8)
