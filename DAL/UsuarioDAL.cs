@@ -59,7 +59,7 @@ namespace DAL
             //SELECT --> Selecciona 
             //FROM --> De
             //SELECT ..... FROM --> Selecciona ... De
-            string consulta2 = "SELECT DNI, Nombre, Apellido, NombreUsuario, Contrasena, Email, Rol, Estado FROM dbo.Usuarios";
+            string consulta2 = "SELECT DNI, Nombre, Apellido, NombreUsuario, Contrasena, Email, Rol, Estado, IntentosFallidos FROM dbo.Usuarios";
 
             using(SqlConnection conexionSql = conexion.ValidarConexion())
             {                         
@@ -82,7 +82,8 @@ namespace DAL
                                 usuario.Contrasena = reader["Contrasena"].ToString();
                                 usuario.Email = reader["Email"].ToString();
                                 usuario.Rol = int.Parse(reader["Rol"].ToString());               
-                                usuario.Estado = bool.Parse(reader["Estado"].ToString());                                             
+                                usuario.Estado = bool.Parse(reader["Estado"].ToString());      
+                                usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
                             //Agrega los datos a la lista
                                 list.Add(usuario);
                             }
@@ -138,7 +139,7 @@ namespace DAL
                 //UPDATE --> Modifica de
                 //SET --> Asigna valores
                 //WHERE --> Donde
-                string consulta = "UPDATE dbo.Usuarios SET Estado = 1 WHERE DNI = @DNI";
+                string consulta = "UPDATE dbo.Usuarios SET Estado = 1, IntentosFallidos = 0 WHERE DNI = @DNI";
 
                 using (SqlCommand comando4 = new SqlCommand(consulta, conexionSql))
                 {
