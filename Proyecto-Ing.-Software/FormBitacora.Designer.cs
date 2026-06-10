@@ -29,7 +29,12 @@
         private void InitializeComponent()
         {
             this.DgvBitacora = new System.Windows.Forms.DataGridView();
-            this.lblTitulo = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dateTimeDesde = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeHasta = new System.Windows.Forms.DateTimePicker();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnFiltrar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DgvBitacora)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,15 +50,15 @@
             this.DgvBitacora.TabIndex = 0;
             this.DgvBitacora.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.bitacora_CellContentClick);
             // 
-            // lblTitulo
+            // label1
             // 
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitulo.Location = new System.Drawing.Point(5, 7);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(349, 42);
-            this.lblTitulo.TabIndex = 1;
-            this.lblTitulo.Text = "Bitacora de eventos";
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(5, 7);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(349, 42);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Bitacora de eventos";
             // 
             // dateTimeDesde
             // 
@@ -102,8 +107,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
-            this.ClientSize = new System.Drawing.Size(729, 439);
-            this.Controls.Add(this.lblTitulo);
+            this.ClientSize = new System.Drawing.Size(933, 439);
+            this.Controls.Add(this.btnFiltrar);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.dateTimeHasta);
+            this.Controls.Add(this.dateTimeDesde);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.DgvBitacora);
             this.Name = "FormBitacora";
             this.Text = "FormBitacora";
@@ -117,6 +127,11 @@
         #endregion
 
         private System.Windows.Forms.DataGridView DgvBitacora;
-        private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DateTimePicker dateTimeDesde;
+        private System.Windows.Forms.DateTimePicker dateTimeHasta;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnFiltrar;
     }
 }
