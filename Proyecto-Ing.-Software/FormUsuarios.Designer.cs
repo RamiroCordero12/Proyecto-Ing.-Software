@@ -32,19 +32,21 @@
             this.btnCrearUsuario = new System.Windows.Forms.Button();
             this.btnDeshabilitarUsuario = new System.Windows.Forms.Button();
             this.btnModificarUsuario = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblCambiarRol = new System.Windows.Forms.Label();
+            this.lblEmail = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.cmbRoles = new System.Windows.Forms.ComboBox();
             this.btnHabilitarUsuario = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.lblApellido = new System.Windows.Forms.Label();
+            this.lblNombre = new System.Windows.Forms.Label();
             this.txtApellido = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblDNI = new System.Windows.Forms.Label();
             this.txtDNI = new System.Windows.Forms.TextBox();
+            this.cmbLenguaje = new System.Windows.Forms.ComboBox();
+            this.lblCambiarLenguaje = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuario)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,7 +61,7 @@
             this.dgvUsuario.Name = "dgvUsuario";
             this.dgvUsuario.ReadOnly = true;
             this.dgvUsuario.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsuario.Size = new System.Drawing.Size(862, 260);
+            this.dgvUsuario.Size = new System.Drawing.Size(940, 260);
             this.dgvUsuario.TabIndex = 0;
             this.dgvUsuario.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuario_CellClick);
             // 
@@ -93,23 +95,23 @@
             this.btnModificarUsuario.UseVisualStyleBackColor = true;
             this.btnModificarUsuario.Click += new System.EventHandler(this.btnModificarUsuario_Click);
             // 
-            // label3
+            // lblCambiarRol
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 488);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(23, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Rol";
+            this.lblCambiarRol.AutoSize = true;
+            this.lblCambiarRol.Location = new System.Drawing.Point(21, 512);
+            this.lblCambiarRol.Name = "lblCambiarRol";
+            this.lblCambiarRol.Size = new System.Drawing.Size(62, 13);
+            this.lblCambiarRol.TabIndex = 11;
+            this.lblCambiarRol.Text = "Cambiar rol:";
             // 
-            // label4
+            // lblEmail
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 430);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(32, 13);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Email";
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Location = new System.Drawing.Point(24, 430);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(32, 13);
+            this.lblEmail.TabIndex = 10;
+            this.lblEmail.Text = "Email";
             // 
             // txtEmail
             // 
@@ -125,7 +127,7 @@
             this.cmbRoles.Items.AddRange(new object[] {
             "Administrador",
             "Empleado"});
-            this.cmbRoles.Location = new System.Drawing.Point(24, 505);
+            this.cmbRoles.Location = new System.Drawing.Point(24, 528);
             this.cmbRoles.Name = "cmbRoles";
             this.cmbRoles.Size = new System.Drawing.Size(121, 21);
             this.cmbRoles.TabIndex = 12;
@@ -144,7 +146,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(892, 30);
+            this.label5.Location = new System.Drawing.Point(969, 30);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 13);
             this.label5.TabIndex = 14;
@@ -153,29 +155,29 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(891, 52);
+            this.label6.Location = new System.Drawing.Point(968, 52);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(106, 13);
             this.label6.TabIndex = 15;
             this.label6.Text = "Empleado = Rol  = 2 ";
             // 
-            // label7
+            // lblApellido
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(24, 391);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(44, 13);
-            this.label7.TabIndex = 19;
-            this.label7.Text = "Apellido";
+            this.lblApellido.AutoSize = true;
+            this.lblApellido.Location = new System.Drawing.Point(24, 391);
+            this.lblApellido.Name = "lblApellido";
+            this.lblApellido.Size = new System.Drawing.Size(44, 13);
+            this.lblApellido.TabIndex = 19;
+            this.lblApellido.Text = "Apellido";
             // 
-            // label8
+            // lblNombre
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(24, 352);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(44, 13);
-            this.label8.TabIndex = 18;
-            this.label8.Text = "Nombre";
+            this.lblNombre.AutoSize = true;
+            this.lblNombre.Location = new System.Drawing.Point(24, 352);
+            this.lblNombre.Name = "lblNombre";
+            this.lblNombre.Size = new System.Drawing.Size(44, 13);
+            this.lblNombre.TabIndex = 18;
+            this.lblNombre.Text = "Nombre";
             // 
             // txtApellido
             // 
@@ -191,14 +193,14 @@
             this.txtNombre.Size = new System.Drawing.Size(100, 20);
             this.txtNombre.TabIndex = 16;
             // 
-            // label1
+            // lblDNI
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 313);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(26, 13);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "DNI";
+            this.lblDNI.AutoSize = true;
+            this.lblDNI.Location = new System.Drawing.Point(24, 313);
+            this.lblDNI.Name = "lblDNI";
+            this.lblDNI.Size = new System.Drawing.Size(26, 13);
+            this.lblDNI.TabIndex = 21;
+            this.lblDNI.Text = "DNI";
             // 
             // txtDNI
             // 
@@ -207,24 +209,48 @@
             this.txtDNI.Size = new System.Drawing.Size(100, 20);
             this.txtDNI.TabIndex = 20;
             // 
+            // cmbLenguaje
+            // 
+            this.cmbLenguaje.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLenguaje.FormattingEnabled = true;
+            this.cmbLenguaje.Items.AddRange(new object[] {
+            "Español",
+            "English",
+            "Portuges"});
+            this.cmbLenguaje.Location = new System.Drawing.Point(24, 488);
+            this.cmbLenguaje.Name = "cmbLenguaje";
+            this.cmbLenguaje.Size = new System.Drawing.Size(121, 21);
+            this.cmbLenguaje.TabIndex = 23;
+            // 
+            // lblCambiarLenguaje
+            // 
+            this.lblCambiarLenguaje.AutoSize = true;
+            this.lblCambiarLenguaje.Location = new System.Drawing.Point(21, 472);
+            this.lblCambiarLenguaje.Name = "lblCambiarLenguaje";
+            this.lblCambiarLenguaje.Size = new System.Drawing.Size(91, 13);
+            this.lblCambiarLenguaje.TabIndex = 22;
+            this.lblCambiarLenguaje.Text = "Cambiar lenguaje:";
+            // 
             // FormUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
             this.ClientSize = new System.Drawing.Size(1156, 572);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.cmbLenguaje);
+            this.Controls.Add(this.lblCambiarLenguaje);
+            this.Controls.Add(this.lblDNI);
             this.Controls.Add(this.txtDNI);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label8);
+            this.Controls.Add(this.lblApellido);
+            this.Controls.Add(this.lblNombre);
             this.Controls.Add(this.txtApellido);
             this.Controls.Add(this.txtNombre);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnHabilitarUsuario);
             this.Controls.Add(this.cmbRoles);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblCambiarRol);
+            this.Controls.Add(this.lblEmail);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.btnModificarUsuario);
             this.Controls.Add(this.btnDeshabilitarUsuario);
@@ -245,18 +271,20 @@
         private System.Windows.Forms.Button btnCrearUsuario;
         private System.Windows.Forms.Button btnDeshabilitarUsuario;
         private System.Windows.Forms.Button btnModificarUsuario;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblCambiarRol;
+        private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.ComboBox cmbRoles;
         private System.Windows.Forms.Button btnHabilitarUsuario;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblApellido;
+        private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.TextBox txtApellido;
         private System.Windows.Forms.TextBox txtNombre;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblDNI;
         private System.Windows.Forms.TextBox txtDNI;
+        private System.Windows.Forms.ComboBox cmbLenguaje;
+        private System.Windows.Forms.Label lblCambiarLenguaje;
     }
 }

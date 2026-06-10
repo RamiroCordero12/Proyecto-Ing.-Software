@@ -59,7 +59,7 @@ namespace DAL
             //SELECT --> Selecciona 
             //FROM --> De
             //SELECT ..... FROM --> Selecciona ... De
-            string consulta2 = "SELECT DNI, Nombre, Apellido, NombreUsuario, Contrasena, Email, Rol, Estado, IntentosFallidos FROM dbo.Usuarios";
+            string consulta2 = "SELECT DNI, Nombre, Apellido, NombreUsuario, Contrasena, Email, Rol, Estado, IntentosFallidos, Lenguaje FROM dbo.Usuarios";
 
             using(SqlConnection conexionSql = conexion.ValidarConexion())
             {                         
@@ -84,6 +84,7 @@ namespace DAL
                                 usuario.Rol = int.Parse(reader["Rol"].ToString());               
                                 usuario.Estado = bool.Parse(reader["Estado"].ToString());      
                                 usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
+                                usuario.Lenguaje = reader["Lenguaje"].ToString();
                             //Agrega los datos a la lista
                                 list.Add(usuario);
                             }
@@ -270,7 +271,7 @@ namespace DAL
         public Usuario GetUsuarioByNombreUsuario(string nombreUsuario)
         {
             Usuario usuario = null;
-            string consulta = "SELECT DNI, NombreUsuario, Contrasena, Estado, Email, Rol, IntentosFallidos FROM dbo.Usuarios WHERE NombreUsuario = @NombreUsuario";
+            string consulta = "SELECT DNI, NombreUsuario, Contrasena, Estado, Email, Rol, IntentosFallidos, Lenguaje FROM dbo.Usuarios WHERE NombreUsuario = @NombreUsuario";
 
             using (SqlConnection conexionSql = conexion.ValidarConexion())
             using (SqlCommand comando = new SqlCommand(consulta, conexionSql))
@@ -289,7 +290,8 @@ namespace DAL
                             Email = reader["Email"].ToString(),
                             Rol = int.Parse(reader["Rol"].ToString()),
                             Estado = reader["Estado"] != DBNull.Value && (bool)reader["Estado"],
-                            IntentosFallidos = reader["IntentosFallidos"] != DBNull.Value ? int.Parse(reader["IntentosFallidos"].ToString()) : 0
+                            IntentosFallidos = reader["IntentosFallidos"] != DBNull.Value ? int.Parse(reader["IntentosFallidos"].ToString()) : 0,
+                            Lenguaje = reader["Lenguaje"].ToString(),
                         };
                     }
                 }
