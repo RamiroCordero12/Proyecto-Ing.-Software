@@ -41,7 +41,7 @@
             this.DgvBitacora.Location = new System.Drawing.Point(12, 52);
             this.DgvBitacora.Name = "DgvBitacora";
             this.DgvBitacora.ReadOnly = true;
-            this.DgvBitacora.Size = new System.Drawing.Size(591, 283);
+            this.DgvBitacora.Size = new System.Drawing.Size(703, 283);
             this.DgvBitacora.TabIndex = 0;
             this.DgvBitacora.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.bitacora_CellContentClick);
             // 
@@ -54,6 +54,48 @@
             this.lblTitulo.Size = new System.Drawing.Size(349, 42);
             this.lblTitulo.TabIndex = 1;
             this.lblTitulo.Text = "Bitacora de eventos";
+            // 
+            // dateTimeDesde
+            // 
+            this.dateTimeDesde.Location = new System.Drawing.Point(721, 52);
+            this.dateTimeDesde.Name = "dateTimeDesde";
+            this.dateTimeDesde.Size = new System.Drawing.Size(200, 20);
+            this.dateTimeDesde.TabIndex = 2;
+            // 
+            // dateTimeHasta
+            // 
+            this.dateTimeHasta.Location = new System.Drawing.Point(721, 107);
+            this.dateTimeHasta.Name = "dateTimeHasta";
+            this.dateTimeHasta.Size = new System.Drawing.Size(200, 20);
+            this.dateTimeHasta.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(721, 33);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "filtrar desde: ";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(721, 91);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(33, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "hasta";
+            // 
+            // btnFiltrar
+            // 
+            this.btnFiltrar.Location = new System.Drawing.Point(721, 143);
+            this.btnFiltrar.Name = "btnFiltrar";
+            this.btnFiltrar.Size = new System.Drawing.Size(75, 23);
+            this.btnFiltrar.TabIndex = 6;
+            this.btnFiltrar.Text = "Filtrar";
+            this.btnFiltrar.UseVisualStyleBackColor = true;
+            this.btnFiltrar.Click += new System.EventHandler(this.btnFiltrar_Click);
             // 
             // FormBitacora
             // 
