@@ -32,8 +32,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimeDesde = new System.Windows.Forms.DateTimePicker();
             this.dateTimeHasta = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblDesde = new System.Windows.Forms.Label();
+            this.lblHasta = new System.Windows.Forms.Label();
             this.btnFiltrar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DgvBitacora)).BeginInit();
             this.SuspendLayout();
@@ -74,23 +74,23 @@
             this.dateTimeHasta.Size = new System.Drawing.Size(200, 20);
             this.dateTimeHasta.TabIndex = 3;
             // 
-            // label2
+            // lblDesde
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(721, 33);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "filtrar desde: ";
+            this.lblDesde.AutoSize = true;
+            this.lblDesde.Location = new System.Drawing.Point(721, 33);
+            this.lblDesde.Name = "lblDesde";
+            this.lblDesde.Size = new System.Drawing.Size(70, 13);
+            this.lblDesde.TabIndex = 4;
+            this.lblDesde.Text = "Filtrar desde: ";
             // 
-            // label3
+            // lblHasta
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(721, 91);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "hasta";
+            this.lblHasta.AutoSize = true;
+            this.lblHasta.Location = new System.Drawing.Point(721, 91);
+            this.lblHasta.Name = "lblHasta";
+            this.lblHasta.Size = new System.Drawing.Size(35, 13);
+            this.lblHasta.TabIndex = 5;
+            this.lblHasta.Text = "Hasta";
             // 
             // btnFiltrar
             // 
@@ -109,8 +109,8 @@
             this.BackColor = System.Drawing.Color.ForestGreen;
             this.ClientSize = new System.Drawing.Size(933, 439);
             this.Controls.Add(this.btnFiltrar);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblHasta);
+            this.Controls.Add(this.lblDesde);
             this.Controls.Add(this.dateTimeHasta);
             this.Controls.Add(this.dateTimeDesde);
             this.Controls.Add(this.label1);
@@ -130,8 +130,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dateTimeDesde;
         private System.Windows.Forms.DateTimePicker dateTimeHasta;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblDesde;
+        private System.Windows.Forms.Label lblHasta;
         private System.Windows.Forms.Button btnFiltrar;
     }
 }
