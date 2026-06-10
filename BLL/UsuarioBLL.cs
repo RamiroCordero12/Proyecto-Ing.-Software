@@ -188,7 +188,7 @@ namespace BLL
                 }
                 else
                 {
-                    throw new Exception("Error. Usuario no encontrado");
+                    throw new Exception("Usuario o contraseña incorrectos");
                 }
             }
         }
