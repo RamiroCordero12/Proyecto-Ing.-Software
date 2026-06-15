@@ -50,6 +50,7 @@ namespace Proyecto_Ing._Software
             bool esAdmin = (usuarioLogueado.Rol == 1);
             usuarioToolStripMenuItem.Visible = esAdmin;
             bitacoraToolStripMenuItem.Visible = esAdmin;
+
         }
 
         // ─────────────────────────────────────────
@@ -119,6 +120,11 @@ namespace Proyecto_Ing._Software
         private void cambiarLenguajeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new FormCambiarLenguaje().Show();
+        }
+
+        private void familiasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormFamilias().Show();
         }
     }
 }

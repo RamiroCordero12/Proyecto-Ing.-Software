@@ -35,6 +35,7 @@
             this.cambiarContrasenaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cambiarLenguajeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.familiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,10 +47,11 @@
             this.bitacoraToolStripMenuItem,
             this.cambiarContrasenaToolStripMenuItem,
             this.reloginToolStripMenuItem,
-            this.cambiarLenguajeToolStripMenuItem});
+            this.cambiarLenguajeToolStripMenuItem,
+            this.familiasToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(545, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(762, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -95,12 +97,19 @@
             this.cambiarLenguajeToolStripMenuItem.Text = "Cambiar lenguaje";
             this.cambiarLenguajeToolStripMenuItem.Click += new System.EventHandler(this.cambiarLenguajeToolStripMenuItem_Click);
             // 
+            // familiasToolStripMenuItem
+            // 
+            this.familiasToolStripMenuItem.Name = "familiasToolStripMenuItem";
+            this.familiasToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.familiasToolStripMenuItem.Text = "Familias";
+            this.familiasToolStripMenuItem.Click += new System.EventHandler(this.familiasToolStripMenuItem_Click);
+            // 
             // FormMenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
-            this.ClientSize = new System.Drawing.Size(545, 248);
+            this.ClientSize = new System.Drawing.Size(762, 248);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMenuPrincipal";
@@ -122,6 +131,7 @@
         private System.Windows.Forms.ToolStripMenuItem cambiarContrasenaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reloginToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cambiarLenguajeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem familiasToolStripMenuItem;
     }
 }
 

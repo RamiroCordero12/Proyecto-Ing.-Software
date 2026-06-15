@@ -43,8 +43,12 @@
   <ItemGroup>
     <Compile Include="Bitacora.cs" />
     <Compile Include="Encriptador.cs" />
+    <Compile Include="CompositeRoles\IComponentePermiso.cs" />
+    <Compile Include="CompositeRoles\FamiliaComponent.cs" />
     <Compile Include="Localizationservice.cs" />
+    <Compile Include="CompositeRoles\PatenteComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CompositeRoles\Rol.cs" />
     <Compile Include="SessionManager.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>

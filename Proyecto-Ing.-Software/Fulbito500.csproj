@@ -64,6 +64,12 @@
     <Compile Include="FormCambiarLenguaje.Designer.cs">
       <DependentUpon>FormCambiarLenguaje.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormFamilias.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFamilias.Designer.cs">
+      <DependentUpon>FormFamilias.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCambiarLenguaje.resx">
       <DependentUpon>FormCambiarLenguaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormFamilias.resx">
+      <DependentUpon>FormFamilias.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMenuPrincipal.resx">
       <DependentUpon>FormMenuPrincipal.cs</DependentUpon>
