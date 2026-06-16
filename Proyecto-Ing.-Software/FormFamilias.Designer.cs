@@ -112,6 +112,7 @@
             this.btnCrearFamilia.TabIndex = 7;
             this.btnCrearFamilia.Text = "Crear familia";
             this.btnCrearFamilia.UseVisualStyleBackColor = true;
+            this.btnCrearFamilia.Click += new System.EventHandler(this.btnCrearFamilia_Click);
             // 
             // label5
             // 
@@ -139,6 +140,7 @@
             this.btnModificar.TabIndex = 14;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click_1);
             // 
             // btnEliminar
             // 
@@ -148,6 +150,7 @@
             this.btnEliminar.TabIndex = 15;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click_1);
             // 
             // btnLimpiar
             // 
@@ -157,6 +160,7 @@
             this.btnLimpiar.TabIndex = 16;
             this.btnLimpiar.Text = "Limpiar";
             this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click_1);
             // 
             // FormFamilias
             // 

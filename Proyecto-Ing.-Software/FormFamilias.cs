@@ -124,10 +124,16 @@ namespace Proyecto_Ing._Software
                 clbPatentes.SetItemChecked(i, idsEnFamilia.Contains(p.Id));
             }
         }
+       
 
-        // ── Create ────────────────────────────────────────────────────────
-        private void btnCrear_Click(object sender, EventArgs e)
+        
+
+       
+       
+
+        private void btnCrearFamilia_Click(object sender, EventArgs e)
         {
+
             try
             {
                 var familia = new FamiliaComponent
@@ -155,46 +161,13 @@ namespace Proyecto_Ing._Software
             }
         }
 
-        // ── Modify ────────────────────────────────────────────────────────
-        private void btnModificar_Click(object sender, EventArgs e)
+        private void btnLimpiar_Click_1(object sender, EventArgs e)
         {
-            if (_idFamiliaSeleccionada == 0)
-            {
-                MessageBox.Show("Seleccione una familia de la grilla para modificar.",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            LimpiarFormulario();
 
-            try
-            {
-                var familia = new FamiliaComponent
-                {
-                    Id = _idFamiliaSeleccionada,
-                    Nombre = txtNombre.Text.Trim(),
-                    Descripcion = txtDescripcion.Text.Trim()
-                };
-
-                List<int> idsPatentes = ObtenerPatentesMarcadas();
-
-                bool ok = new FamiliasBLL().ModificarFamilia(familia, idsPatentes);
-
-                if (ok)
-                {
-                    MessageBox.Show("Familia modificada correctamente.",
-                        "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LimpiarFormulario();
-                    ActualizarGrilla();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error al modificar familia",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
-        // ── Delete ────────────────────────────────────────────────────────
-        private void btnEliminar_Click(object sender, EventArgs e)
+        private void btnEliminar_Click_1(object sender, EventArgs e)
         {
             if (_idFamiliaSeleccionada == 0)
             {
@@ -229,10 +202,41 @@ namespace Proyecto_Ing._Software
             }
         }
 
-        // ── Clear ─────────────────────────────────────────────────────────
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        private void btnModificar_Click_1(object sender, EventArgs e)
         {
-            LimpiarFormulario();
+            if (_idFamiliaSeleccionada == 0)
+            {
+                MessageBox.Show("Seleccione una familia de la grilla para modificar.",
+                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                var familia = new FamiliaComponent
+                {
+                    Id = _idFamiliaSeleccionada,
+                    Nombre = txtNombre.Text.Trim(),
+                    Descripcion = txtDescripcion.Text.Trim()
+                };
+
+                List<int> idsPatentes = ObtenerPatentesMarcadas();
+
+                bool ok = new FamiliasBLL().ModificarFamilia(familia, idsPatentes);
+
+                if (ok)
+                {
+                    MessageBox.Show("Familia modificada correctamente.",
+                        "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarFormulario();
+                    ActualizarGrilla();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error al modificar familia",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

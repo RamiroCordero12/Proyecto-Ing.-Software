@@ -126,5 +126,10 @@ namespace Proyecto_Ing._Software
         {
             new FormFamilias().Show();
         }
+
+        private void rolesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormRoles().Show();
+        }
     }
 }
