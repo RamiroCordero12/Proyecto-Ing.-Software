@@ -13,7 +13,7 @@
     "MenuLogout": "Cerrar sesión",
     "MenuBitacora": "Bitácora",
     "MenuCambiarContrasena": "Cambiar contraseña",
-    "MenuCambiarLenguaje":  "Cambiar lenguaje",
+    "MenuCambiarLenguaje": "Cambiar lenguaje",
     "MenuRelogin": "Reiniciar sesión",
     "LogoutConfirm": "¿Estás seguro de cerrar sesión?",
     "LogoutTitle": "Cerrar sesión",
@@ -54,9 +54,14 @@
     "LabelDesde": "Filtrar desde:",
     "LabelHasta": "Hasta",
     "ButtonFiltrar": "Filtrar",
+    "LabelPorUsuario": "Por usuario:",
+    "LabelPorEvento": "Por evento:",
+    "LabelPorCriticidad": "Por criticidad:",
+    "LabelPorModulo": "Por módulo:",
+    "OpcionTodos": "(Todos)",
     "ErrorFechaInvalida": "La fecha 'Hasta' no puede ser anterior a la fecha 'Desde'.",
     "ErrorFechaInvalidaTitle": "Filtro inválido",
-    "ErrorSinResultados": "No se encontraron registros en el rango de fechas seleccionado.",
+    "ErrorSinResultados": "No se encontraron registros con los filtros seleccionados.",
     "ErrorSinResultadosTitle": "Sin resultados",
     "MsgErrorCargar": "Error al cargar la lista: "
   },
@@ -72,6 +77,9 @@
     "MsgAccesoDenegadoTitle": "Acceso denegado",
     "MsgErrorTitle": "Error",
     "MsgErrorBase": "Error al cambiar la contraseña: "
+  },
+  "FormCambiarLenguaje": {
+    "Title": "Cambiar lenguaje"
   },
   "Idiomas": {
     "Espanol": "Español",

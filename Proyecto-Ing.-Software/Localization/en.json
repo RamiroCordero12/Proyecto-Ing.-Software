@@ -13,7 +13,7 @@
     "MenuLogout": "Logout",
     "MenuBitacora": "Audit Log",
     "MenuCambiarContrasena": "Change password",
-    "MenuCambiarLenguaje":  "Change language",
+    "MenuCambiarLenguaje": "Change language",
     "MenuRelogin": "Re-login",
     "LogoutConfirm": "Are you sure you want to log out?",
     "LogoutTitle": "Log out",
@@ -54,9 +54,14 @@
     "LabelDesde": "Filter from:",
     "LabelHasta": "To",
     "ButtonFiltrar": "Filter",
+    "LabelPorUsuario": "By user:",
+    "LabelPorEvento": "By event:",
+    "LabelPorCriticidad": "By severity:",
+    "LabelPorModulo": "By module:",
+    "OpcionTodos": "(All)",
     "ErrorFechaInvalida": "The 'To' date cannot be before the 'From' date.",
     "ErrorFechaInvalidaTitle": "Invalid filter",
-    "ErrorSinResultados": "No records found in the selected date range.",
+    "ErrorSinResultados": "No records found matching the selected filters.",
     "ErrorSinResultadosTitle": "No results",
     "MsgErrorCargar": "Error loading list: "
   },
@@ -72,6 +77,9 @@
     "MsgAccesoDenegadoTitle": "Access denied",
     "MsgErrorTitle": "Error",
     "MsgErrorBase": "Error changing password: "
+  },
+  "FormCambiarLenguaje": {
+    "Title": "Change language"
   },
   "Idiomas": {
     "Espanol": "Español",
