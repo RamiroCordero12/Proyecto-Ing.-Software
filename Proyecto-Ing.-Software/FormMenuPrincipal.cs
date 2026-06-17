@@ -31,6 +31,8 @@ namespace Proyecto_Ing._Software
             cambiarLenguajeToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuCambiarLenguaje"];
             cambiarContrasenaToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuCambiarContrasena"];
             reloginToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuRelogin"];
+            familiasToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuFamilias"];
+            rolesToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuRoles"];
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)

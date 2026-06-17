@@ -1,30 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL;
 using Servicios;
+using Servicios.Localization;
 
 namespace Proyecto_Ing._Software
 {
-    public partial class FormFamilias : Form
+    public partial class FormFamilias : Form, ILocalizationObserver
     {
         private int _idFamiliaSeleccionada = 0;
         private List<PatenteComponent> _todasLasPatentes = new List<PatenteComponent>();
         private List<FamiliaComponent> _todasLasFamilias = new List<FamiliaComponent>();
+        private readonly LocalizationService _loc = LocalizationService.Instance;
 
         public FormFamilias()
         {
             InitializeComponent();
+            _loc.Subscribe(this);
+            ApplyLocalization();
             CargarPatentes();
             ActualizarGrilla();
         }
+        // ─────────────────────────────────────────
+        //  ILocalizationObserver
+        // ─────────────────────────────────────────
 
+        public void OnLanguageChanged() => ApplyLocalization();
+
+        private void ApplyLocalization()
+        {
+            this.Text = _loc["FormFamilias", "Title"];
+            label1.Text = _loc["FormFamilias", "Title"];
+            label2.Text = _loc["FormFamilias", "LabelNombre"];
+            label3.Text = _loc["FormFamilias", "LabelDescripcion"];
+            label4.Text = _loc["FormFamilias", "LabelPatentes"];
+            label5.Text = _loc["FormFamilias", "LabelExistentes"];
+            btnCrearFamilia.Text = _loc["FormFamilias", "ButtonCrear"];
+            btnModificar.Text = _loc["FormFamilias", "ButtonModificar"];
+            btnEliminar.Text = _loc["FormFamilias", "ButtonEliminar"];
+            btnLimpiar.Text = _loc["FormFamilias", "ButtonLimpiar"];
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            _loc.Unsubscribe(this);
+            base.OnFormClosed(e);
+        }
         // ── Helpers ───────────────────────────────────────────────────────
 
         private void CargarPatentes()
@@ -38,8 +60,8 @@ namespace Proyecto_Ing._Software
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar patentes: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_loc["FormFamilias", "MsgErrorCargarPatentes"] + ex.Message,
+    _loc["FormFamilias", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -76,8 +98,8 @@ namespace Proyecto_Ing._Software
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar familias: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_loc["FormFamilias", "MsgErrorCargarFamilias"] + ex.Message,
+    _loc["FormFamilias", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -148,16 +170,15 @@ namespace Proyecto_Ing._Software
 
                 if (ok)
                 {
-                    MessageBox.Show("Familia creada correctamente.",
-                        "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(_loc["FormFamilias", "MsgFamiliaCreada"],
+    _loc["FormFamilias", "TitleExito"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LimpiarFormulario();
                     ActualizarGrilla();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al crear familia",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, _loc["FormFamilias", "MsgErrorCrearTitle"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -171,14 +192,14 @@ namespace Proyecto_Ing._Software
         {
             if (_idFamiliaSeleccionada == 0)
             {
-                MessageBox.Show("Seleccione una familia de la grilla para eliminar.",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(_loc["FormFamilias", "MsgSeleccionarEliminar"],
+    _loc["FormFamilias", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             DialogResult confirm = MessageBox.Show(
-                "¿Esta seguro de que desea eliminar esta familia?",
-                "Confirmar eliminacion",
+                               _loc["FormFamilias", "MsgConfirmEliminar"],
+                _loc["FormFamilias", "MsgConfirmEliminarTitle"],
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (confirm != DialogResult.Yes) return;
@@ -189,16 +210,15 @@ namespace Proyecto_Ing._Software
 
                 if (ok)
                 {
-                    MessageBox.Show("Familia eliminada.",
-                        "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(_loc["FormFamilias", "MsgFamiliaEliminada"],
+     _loc["FormFamilias", "TitleExito"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LimpiarFormulario();
                     ActualizarGrilla();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al eliminar familia",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, _loc["FormFamilias", "MsgErrorEliminarTitle"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -206,8 +226,8 @@ namespace Proyecto_Ing._Software
         {
             if (_idFamiliaSeleccionada == 0)
             {
-                MessageBox.Show("Seleccione una familia de la grilla para modificar.",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(_loc["FormFamilias", "MsgSeleccionarModificar"],
+     _loc["FormFamilias", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -226,16 +246,15 @@ namespace Proyecto_Ing._Software
 
                 if (ok)
                 {
-                    MessageBox.Show("Familia modificada correctamente.",
-                        "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(_loc["FormFamilias", "MsgFamiliaModificada"],
+    _loc["FormFamilias", "TitleExito"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LimpiarFormulario();
                     ActualizarGrilla();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al modificar familia",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, _loc["FormFamilias", "MsgErrorModificarTitle"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

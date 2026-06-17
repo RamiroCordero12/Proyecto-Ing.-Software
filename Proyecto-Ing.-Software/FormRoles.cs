@@ -9,22 +9,53 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL;
 using Servicios;
+using Servicios.Localization;
 
 namespace Proyecto_Ing._Software
 {
-    public partial class FormRoles : Form
+    public partial class FormRoles : Form, ILocalizationObserver
     {
         private int _idRolSeleccionado = 0;
         private List<PatenteComponent> _todasLasPatentes = new List<PatenteComponent>();
         private List<FamiliaComponent> _todasLasFamilias = new List<FamiliaComponent>();
         private List<RolBE> _todosLosRoles = new List<RolBE>();
+        private readonly LocalizationService _loc = LocalizationService.Instance;
 
         public FormRoles()
         {
             InitializeComponent();
+            _loc.Subscribe(this);
+            ApplyLocalization();
             CargarPatentes();
             CargarFamilias();
             ActualizarGrilla();
+        }
+
+        // ─────────────────────────────────────────
+        //  ILocalizationObserver
+        // ─────────────────────────────────────────
+
+        public void OnLanguageChanged() => ApplyLocalization();
+
+        private void ApplyLocalization()
+        {
+            this.Text = _loc["FormRoles", "Title"];
+            label6.Text = _loc["FormRoles", "Title"];
+            label1.Text = _loc["FormRoles", "LabelNombreRol"];
+            label2.Text = _loc["FormRoles", "LabelDescripcion"];
+            label3.Text = _loc["FormRoles", "LabelPatentes"];
+            label4.Text = _loc["FormRoles", "LabelFamilias"];
+            label5.Text = _loc["FormRoles", "LabelExistentes"];
+            btnCrearRol.Text = _loc["FormRoles", "ButtonCrear"];
+            btnModificar.Text = _loc["FormRoles", "ButtonModificar"];
+            btnEliminar.Text = _loc["FormRoles", "ButtonEliminar"];
+            btnLimpiar.Text = _loc["FormRoles", "ButtonLimpiar"];
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            _loc.Unsubscribe(this);
+            base.OnFormClosed(e);
         }
 
         // ── Helpers ───────────────────────────────────────────────────────
@@ -40,8 +71,8 @@ namespace Proyecto_Ing._Software
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar patentes: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_loc["FormRoles", "MsgErrorCargarPatentes"] + ex.Message,
+                    _loc["FormRoles", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -56,8 +87,8 @@ namespace Proyecto_Ing._Software
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar familias: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               MessageBox.Show(_loc["FormRoles", "MsgErrorCargarFamilias"] + ex.Message,
+                                 _loc["FormRoles", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -97,8 +128,8 @@ namespace Proyecto_Ing._Software
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar roles: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_loc["FormRoles", "MsgErrorCargarRoles"] + ex.Message,
+     _loc["FormRoles", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -168,8 +199,8 @@ namespace Proyecto_Ing._Software
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar los permisos del rol: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(_loc["FormRoles", "MsgErrorCargarPermisos"] + ex.Message,
+    _loc["FormRoles", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -177,8 +208,8 @@ namespace Proyecto_Ing._Software
         {
             if (_idRolSeleccionado == 0)
             {
-                MessageBox.Show("Seleccione un rol de la grilla para eliminar.",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(_loc["FormRoles", "MsgSeleccionarEliminar"],
+     _loc["FormRoles", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -186,8 +217,8 @@ namespace Proyecto_Ing._Software
             // a check against Usuarios; the FK constraint will raise a SqlException
             // if any user still references this role, which we surface below.
             DialogResult confirm = MessageBox.Show(
-                "¿Esta seguro de que desea eliminar este rol?",
-                "Confirmar eliminacion",
+                _loc["FormRoles", "MsgConfirmEliminar"],
+                _loc["FormRoles", "MsgConfirmEliminarTitle"],
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (confirm != DialogResult.Yes) return;
@@ -198,8 +229,8 @@ namespace Proyecto_Ing._Software
 
                 if (ok)
                 {
-                    MessageBox.Show("Rol eliminado.",
-                        "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(_loc["FormRoles", "MsgRolEliminado"],
+    _loc["FormRoles", "TitleExito"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LimpiarFormulario();
                     ActualizarGrilla();
                 }
@@ -207,13 +238,12 @@ namespace Proyecto_Ing._Software
             catch (System.Data.SqlClient.SqlException)
             {
                 MessageBox.Show(
-                    "No se puede eliminar este rol porque hay usuarios asignados a el.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        _loc["FormRoles", "MsgErrorRolEnUso"],
+                    _loc["FormRoles", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al eliminar rol",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, _loc["FormRoles", "MsgErrorEliminarTitle"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -234,16 +264,15 @@ namespace Proyecto_Ing._Software
 
                 if (ok)
                 {
-                    MessageBox.Show("Rol creado correctamente.",
-                        "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(_loc["FormRoles", "MsgRolCreado"],
+                        _loc["FormRoles", "TitleExito"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LimpiarFormulario();
                     ActualizarGrilla();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al crear rol",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, _loc["FormRoles", "MsgErrorCrearTitle"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -251,8 +280,8 @@ namespace Proyecto_Ing._Software
         {
             if (_idRolSeleccionado == 0)
             {
-                MessageBox.Show("Seleccione un rol de la grilla para modificar.",
-                    "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(_loc["FormRoles", "MsgSeleccionarModificar"],
+    _loc["FormRoles", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -272,16 +301,15 @@ namespace Proyecto_Ing._Software
 
                 if (ok)
                 {
-                    MessageBox.Show("Rol modificado correctamente.",
-                        "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(_loc["FormRoles", "MsgRolModificado"],
+    _loc["FormRoles", "TitleExito"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LimpiarFormulario();
                     ActualizarGrilla();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error al modificar rol",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, _loc["FormRoles", "MsgErrorModificarTitle"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
