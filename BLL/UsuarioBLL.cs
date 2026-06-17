@@ -140,7 +140,18 @@ namespace BLL
                 throw new Exception("Usuario o contraseña incorrectos");
             }
 
-           
+            if (!DigitoVerificadorHelper.Validar(usuarioEncontrado))
+            {
+                Bitacora _bitacoraIntegridad = new Bitacora();
+                bitacora.RegistroBitacora(_bitacoraIntegridad.IdBitacora, usuarioEncontrado.DNI,
+                    _bitacoraIntegridad.Accion = "Digito verificador invalido detectado", DateTime.Now,
+                    "FormLogin", _bitacoraIntegridad.Criticidad = "Alta");
+
+                throw new Exception("Los datos del usuario fueron alterados. Contacte al administrador.");
+            }
+
+
+
             if (!usuarioEncontrado.Estado)
             {
                 throw new Exception("Cuenta bloqueada. Contacte al administrador.");
@@ -190,6 +201,7 @@ namespace BLL
                 {
                     throw new Exception("Usuario o contraseña incorrectos");
                 }
+
             }
         }
 

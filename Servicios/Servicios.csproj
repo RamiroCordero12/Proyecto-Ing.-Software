@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bitacora.cs" />
+    <Compile Include="DigitoVerificadorHelper.cs" />
     <Compile Include="Encriptador.cs" />
     <Compile Include="CompositeRoles\IComponentePermiso.cs" />
     <Compile Include="CompositeRoles\FamiliaComponent.cs" />

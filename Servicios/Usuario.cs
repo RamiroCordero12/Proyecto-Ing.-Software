@@ -20,6 +20,7 @@ namespace Servicios
         // nuevo
         public int IntentosFallidos { get; set; }
         public int Lenguaje { get; set; }
+        public int DigitoVerificador { get; set; }
     }
 }
 

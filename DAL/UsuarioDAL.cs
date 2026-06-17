@@ -16,8 +16,8 @@ namespace DAL
         {
             //Consulta SQL
             string consulta = "INSERT INTO Usuarios (DNI, Nombre, Apellido, NombreUsuario, Contrasena, " +
-                "Estado, Email, Rol) " +
-                "VALUES (@DNI, @Nombre, @Apellido, @NombreUsuario, @Contrasena, 1, @Email, @Rol)";
+                               "Estado, Email, Rol, DigitoVerificador) " +
+                "VALUES (@DNI, @Nombre, @Apellido, @NombreUsuario, @Contrasena, 1, @Email, @Rol, @DigitoVerificador)";
 
             //El uso de using hace que la conexion se abra y se cierra 
             using (SqlConnection conexionSql = conexion.ValidarConexion())
@@ -33,6 +33,7 @@ namespace DAL
                     comando.Parameters.AddWithValue("Contrasena", usuario.Contrasena);
                     comando.Parameters.AddWithValue("Email", usuario.Email);
                     comando.Parameters.AddWithValue("Rol", usuario.Rol);
+                    comando.Parameters.AddWithValue("DigitoVerificador", DigitoVerificadorHelper.Calcular(usuario.DNI, usuario.NombreUsuario));
 
                     //Antes de ejecutar abrimos la conexion
                     conexionSql.Open();
@@ -59,9 +60,9 @@ namespace DAL
             //SELECT --> Selecciona 
             //FROM --> De
             //SELECT ..... FROM --> Selecciona ... De
-            string consulta2 = "SELECT DNI, Nombre, Apellido, NombreUsuario, Contrasena, Email, Rol, Estado, IntentosFallidos, Lenguaje FROM dbo.Usuarios";
+            string consulta2 = "SELECT DNI, Nombre, Apellido, NombreUsuario, Contrasena, Email, Rol, Estado, IntentosFallidos, Lenguaje, DigitoVerificador FROM dbo.Usuarios";
 
-            using(SqlConnection conexionSql = conexion.ValidarConexion())
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
             {                         
                     using(SqlCommand comando2 = new SqlCommand(consulta2, conexionSql))
                     {
@@ -85,8 +86,9 @@ namespace DAL
                                 usuario.Estado = bool.Parse(reader["Estado"].ToString());      
                                 usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
                                 usuario.Lenguaje = int.Parse(reader["Lenguaje"].ToString());
+                                usuario.DigitoVerificador = int.Parse(reader["DigitoVerificador"].ToString());
                             //Agrega los datos a la lista
-                                list.Add(usuario);
+                            list.Add(usuario);
                             }
                         }
                     }
@@ -172,9 +174,11 @@ namespace DAL
                 //UPDATE de usuarios el nombre de usuario y la contrasena done el
                 //el Id seleccionado sea el mismo que el de la base de datos
                 string consulta = "UPDATE Usuarios SET DNI = @DniNuevo, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Rol = @Rol, " +
-                    "NombreUsuario = @NombreUsuario, Lenguaje = @Lenguaje, Contrasena = @Contrasena WHERE DNI = @DniViejo";
+                                        "NombreUsuario = @NombreUsuario, Lenguaje = @Lenguaje, Contrasena = @Contrasena, DigitoVerificador = @DigitoVerificador WHERE DNI = @DniViejo";
 
-                using(SqlCommand comando4 = new SqlCommand(consulta, conexionSql))
+
+
+                using (SqlCommand comando4 = new SqlCommand(consulta, conexionSql))
                 {
                     //Agarramos los parametros que los vamos a modificar
                     comando4.Parameters.AddWithValue("@Nombre", usuario.Nombre);
@@ -186,6 +190,7 @@ namespace DAL
                     comando4.Parameters.AddWithValue("@DniNuevo", usuario.DNI);
                     comando4.Parameters.AddWithValue("@DniViejo", dniViejo);
                     comando4.Parameters.AddWithValue("@Lenguaje", usuario.Lenguaje);
+                    comando4.Parameters.AddWithValue("@DigitoVerificador", DigitoVerificadorHelper.Calcular(usuario.DNI, usuario.NombreUsuario));
 
 
                     conexionSql.Open();
@@ -272,8 +277,7 @@ namespace DAL
         public Usuario GetUsuarioByNombreUsuario(string nombreUsuario)
         {
             Usuario usuario = null;
-            string consulta = "SELECT DNI, NombreUsuario, Contrasena, Estado, Email, Rol, IntentosFallidos, Lenguaje FROM dbo.Usuarios WHERE NombreUsuario = @NombreUsuario";
-
+            string consulta = "SELECT DNI, NombreUsuario, Contrasena, Estado, Email, Rol, IntentosFallidos, Lenguaje, DigitoVerificador FROM dbo.Usuarios WHERE NombreUsuario = @NombreUsuario";
             using (SqlConnection conexionSql = conexion.ValidarConexion())
             using (SqlCommand comando = new SqlCommand(consulta, conexionSql))
             {
@@ -293,6 +297,7 @@ namespace DAL
                             Estado = reader["Estado"] != DBNull.Value && (bool)reader["Estado"],
                             IntentosFallidos = reader["IntentosFallidos"] != DBNull.Value ? int.Parse(reader["IntentosFallidos"].ToString()) : 0,
                             Lenguaje = int.Parse(reader["Lenguaje"].ToString()),
+                            DigitoVerificador = int.Parse(reader["DigitoVerificador"].ToString()),
                         };
                     }
                 }
