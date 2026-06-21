@@ -17,6 +17,16 @@ namespace Proyecto_Ing._Software
         public FormFamilias()
         {
             InitializeComponent();
+
+            if (SessionManager.GetInstance.Permisos != null &&
+                !SessionManager.GetInstance.Permisos.Tiene(Patente.GestorUsuarios))
+            {
+                MessageBox.Show("No tiene permisos para acceder a este modulo.",
+                    "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Load += (s, e) => this.Close();
+                return;
+            }
+
             _loc.Subscribe(this);
             ApplyLocalization();
             CargarPatentes();

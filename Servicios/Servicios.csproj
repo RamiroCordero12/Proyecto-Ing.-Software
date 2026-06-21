@@ -48,6 +48,8 @@
     <Compile Include="CompositeRoles\FamiliaComponent.cs" />
     <Compile Include="Localizationservice.cs" />
     <Compile Include="CompositeRoles\PatenteComponent.cs" />
+    <Compile Include="CompositeRoles\Patente.cs" />
+    <Compile Include="Permisos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CompositeRoles\Rol.cs" />
     <Compile Include="SessionManager.cs" />

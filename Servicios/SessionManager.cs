@@ -3,28 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Servicios.Permisos;
 
 namespace Servicios
 {
     public class SessionManager
     {
-        public static SessionManager _instancia;
+        private static volatile SessionManager _instancia;
+        private static readonly object _lock = new object();
 
         public Usuario usuario { get; private set; }
+        public Permisos Permisos { get; private set; }
 
         private SessionManager()
         {
-
         }
 
-        //Singleton
+        //Singleton (thread-safe double-checked locking)
         public static SessionManager GetInstance
         {
             get
             {
-                if(_instancia == null)
+                if (_instancia == null)
                 {
-                    _instancia = new SessionManager();
+                    lock (_lock)
+                    {
+                        if (_instancia == null)
+                        {
+                            _instancia = new SessionManager();
+                        }
+                    }
                 }
 
                 return _instancia;
@@ -36,9 +44,16 @@ namespace Servicios
             usuario = UsuarioLogueado;
         }
 
+        public void SetPermisos(Permisos permisos)
+        {
+            Permisos = permisos;
+        }
+
         public void Logout()
         {
             usuario = null;
+            Permisos = null;
         }
     }
 }
+

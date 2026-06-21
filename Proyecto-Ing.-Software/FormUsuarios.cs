@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using BLL;
 using Servicios;
@@ -10,12 +11,24 @@ namespace Proyecto_Ing._Software
     public partial class FormUsuarios : Form, ILocalizationObserver
     {
         private int _dniUsuario = 0;
+        private List<RolBE> _todosLosRoles = new List<RolBE>();
         private readonly LocalizationService _loc = LocalizationService.Instance;
 
         public FormUsuarios()
         {
             InitializeComponent();
+
+            if (SessionManager.GetInstance.Permisos != null &&
+                !SessionManager.GetInstance.Permisos.Tiene(Patente.GestorUsuarios))
+            {
+                MessageBox.Show("No tiene permisos para acceder a este modulo.",
+                    "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Load += (s, e) => this.Close();
+                return;
+            }
+
             _loc.Subscribe(this);
+            CargarRoles();
             ApplyLocalization();
             ActualizarGrilla();
         }
@@ -39,16 +52,6 @@ namespace Proyecto_Ing._Software
             btnDeshabilitarUsuario.Text = _loc["FormUsuarios", "ButtonDeshabilitar"];
             btnHabilitarUsuario.Text = _loc["FormUsuarios", "ButtonHabilitar"];
             btnModificarUsuario.Text = _loc["FormUsuarios", "ButtonModificar"];
-            label5.Text = _loc["FormUsuarios", "LegendaRol1"];
-            label6.Text = _loc["FormUsuarios", "LegendaRol2"];
-
-            // Refresh role combo items in the active language
-            int rolIndex = cmbRoles.SelectedIndex;
-            cmbRoles.Items.Clear();
-            cmbRoles.Items.Add(_loc["FormUsuarios", "RolAdministrador"]);
-            cmbRoles.Items.Add(_loc["FormUsuarios", "RolEmpleado"]);
-            if (rolIndex >= 0 && rolIndex < cmbRoles.Items.Count)
-                cmbRoles.SelectedIndex = rolIndex;
 
             // Refresh language combo items (keep current selection)
             int langIndex = cmbLenguaje.SelectedIndex;
@@ -56,7 +59,6 @@ namespace Proyecto_Ing._Software
             cmbLenguaje.Items.Add(_loc["Idiomas", "Espanol"]);
             cmbLenguaje.Items.Add(_loc["Idiomas", "Ingles"]);
             cmbLenguaje.Items.Add(_loc["Idiomas", "Portugues"]);
-            // Re-select the current language so the combo stays consistent
             cmbLenguaje.SelectedIndex = (int)_loc.CurrentLanguage;
         }
 
@@ -70,16 +72,38 @@ namespace Proyecto_Ing._Software
         //  Language combo
         // ─────────────────────────────────────────
 
-      //  private void cmbLenguaje_SelectedIndexChanged(object sender, EventArgs e)
+        //  private void cmbLenguaje_SelectedIndexChanged(object sender, EventArgs e)
         //{
-            // Guard: only react to real user interaction, not programmatic refresh
-          //  if (cmbLenguaje.SelectedIndex == (int)_loc.CurrentLanguage) return;
-            //_loc.SetLanguageByIndex(cmbLenguaje.SelectedIndex);
+        // Guard: only react to real user interaction, not programmatic refresh
+        //  if (cmbLenguaje.SelectedIndex == (int)_loc.CurrentLanguage) return;
+        //_loc.SetLanguageByIndex(cmbLenguaje.SelectedIndex);
 
-            // Persist the choice to the logged-in user's profile (DAL not shown
-            // here, but this is the right place to call it)
-            // e.g. new UsuarioBLL().CambiarLenguaje(SessionManager.GetInstance.usuario.DNI, newLang);
-//        }
+        // Persist the choice to the logged-in user's profile (DAL not shown
+        // here, but this is the right place to call it)
+        // e.g. new UsuarioBLL().CambiarLenguaje(SessionManager.GetInstance.usuario.DNI, newLang);
+        //        }
+
+        // ─────────────────────────────────────────
+        //  Roles combo: populated dynamically from DB
+        // ─────────────────────────────────────────
+
+        private void CargarRoles()
+        {
+            try
+            {
+                _todosLosRoles = new RolesBLL().ListarRoles();
+
+                cmbRoles.DisplayMember = "NombreRol";
+                cmbRoles.ValueMember = "IdRol";
+                cmbRoles.DataSource = _todosLosRoles;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar roles: " + ex.Message,
+                    _loc["FormUsuarios", "MsgErrorGrilla"], MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         // ─────────────────────────────────────────
         //  CRUD handlers
@@ -89,13 +113,19 @@ namespace Proyecto_Ing._Software
         {
             try
             {
+                if (cmbRoles.SelectedValue == null)
+                {
+                    MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                    return;
+                }
+
                 Usuario usuario = new Usuario
                 {
                     DNI = int.Parse(txtDNI.Text),
                     Nombre = txtNombre.Text,
                     Apellido = txtApellido.Text,
                     Email = txtEmail.Text,
-                    Rol = cmbRoles.SelectedIndex + 1,
+                    IdRol = Convert.ToInt32(cmbRoles.SelectedValue),
                     Estado = true
                 };
 
@@ -130,10 +160,29 @@ namespace Proyecto_Ing._Software
         {
             try
             {
+                var usuarios = new UsuarioBLL().ListarUsuarios();
+
+                // Project to a display-friendly table so we show the role NAME,
+                // not just the numeric IdRol.
+                var display = new System.Data.DataTable();
+                display.Columns.Add("DNI", typeof(int));
+                display.Columns.Add("Nombre", typeof(string));
+                display.Columns.Add("Apellido", typeof(string));
+                display.Columns.Add("Email", typeof(string));
+                display.Columns.Add("Rol", typeof(string));
+                display.Columns.Add("Estado", typeof(bool));
+
+                foreach (var u in usuarios)
+                {
+                    string nombreRol = _todosLosRoles
+                        .FirstOrDefault(r => r.IdRol == u.IdRol)?.NombreRol
+                        ?? u.IdRol.ToString();
+
+                    display.Rows.Add(u.DNI, u.Nombre, u.Apellido, u.Email, nombreRol, u.Estado);
+                }
+
                 dgvUsuario.DataSource = null;
-                dgvUsuario.DataSource = new UsuarioBLL().ListarUsuarios();
-                if (dgvUsuario.Columns.Contains("Contrasena"))
-                    dgvUsuario.Columns["Contrasena"].Visible = false;
+                dgvUsuario.DataSource = display;
             }
             catch (Exception ex)
             {
@@ -143,6 +192,12 @@ namespace Proyecto_Ing._Software
 
         private void btnDeshabilitarUsuario_Click(object sender, EventArgs e)
         {
+            if (dgvUsuario.SelectedRows.Count == 0)
+            {
+                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                return;
+            }
+
             int dni = Convert.ToInt32(dgvUsuario.SelectedRows[0].Cells["DNI"].Value);
             bool ok = new UsuarioBLL().DeshabilitarUsuario(dni);
 
@@ -155,6 +210,12 @@ namespace Proyecto_Ing._Software
 
         private void btnHabilitarUsuario_Click(object sender, EventArgs e)
         {
+            if (dgvUsuario.SelectedRows.Count == 0)
+            {
+                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                return;
+            }
+
             int dni = Convert.ToInt32(dgvUsuario.SelectedRows[0].Cells["DNI"].Value);
             bool ok = new UsuarioBLL().HabilitarUsuario(dni);
 
@@ -173,13 +234,19 @@ namespace Proyecto_Ing._Software
                 return;
             }
 
+            if (cmbRoles.SelectedValue == null)
+            {
+                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                return;
+            }
+
             Usuario usuario = new Usuario
             {
                 DNI = int.Parse(txtDNI.Text),
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
                 Email = txtEmail.Text,
-                Rol = cmbRoles.SelectedIndex + 1,
+                IdRol = Convert.ToInt32(cmbRoles.SelectedValue),
                 Lenguaje = cmbLenguaje.SelectedIndex
             };
 
@@ -189,8 +256,6 @@ namespace Proyecto_Ing._Software
             {
                 MessageBox.Show(_loc["FormUsuarios", "MsgUsuarioModificado"]);
                 ActualizarGrilla();
-               
-
             }
             else
             {
@@ -208,6 +273,11 @@ namespace Proyecto_Ing._Software
             txtNombre.Text = fila.Cells["Nombre"].Value.ToString();
             txtApellido.Text = fila.Cells["Apellido"].Value.ToString();
             txtEmail.Text = fila.Cells["Email"].Value.ToString();
+
+            string nombreRolFila = fila.Cells["Rol"].Value?.ToString();
+            var rolEncontrado = _todosLosRoles.FirstOrDefault(r => r.NombreRol == nombreRolFila);
+            if (rolEncontrado != null)
+                cmbRoles.SelectedValue = rolEncontrado.IdRol;
         }
 
         private void cmbRoles_SelectedIndexChanged(object sender, EventArgs e) { }

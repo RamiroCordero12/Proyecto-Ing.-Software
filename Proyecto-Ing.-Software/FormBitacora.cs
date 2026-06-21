@@ -16,6 +16,16 @@ namespace Proyecto_Ing._Software
         public FormBitacora()
         {
             InitializeComponent();
+
+            if (SessionManager.GetInstance.Permisos != null &&
+                !SessionManager.GetInstance.Permisos.Tiene(Patente.Bitacora))
+            {
+                MessageBox.Show("No tiene permisos para acceder a este modulo.",
+                    "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Load += (s, e) => this.Close();
+                return;
+            }
+
             _loc.Subscribe(this);
             ApplyLocalization();
         }

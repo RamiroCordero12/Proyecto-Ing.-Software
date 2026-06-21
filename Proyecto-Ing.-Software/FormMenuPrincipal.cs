@@ -48,11 +48,28 @@ namespace Proyecto_Ing._Software
         private void Form1_Load(object sender, EventArgs e)
         {
             Usuario usuarioLogueado = SessionManager.GetInstance.usuario;
+            Permisos permisos = SessionManager.GetInstance.Permisos;
 
-            bool esAdmin = (usuarioLogueado.Rol == 1);
-            usuarioToolStripMenuItem.Visible = esAdmin;
-            bitacoraToolStripMenuItem.Visible = esAdmin;
+            // Defensive fallback: if permissions weren't loaded for some reason
+            // (e.g. relogin path), reload them now instead of crashing or
+            // silently hiding everything.
+            if (permisos == null)
+            {
+                var rolCompleto = new BLL.RolesBLL().ObtenerRolConPermisos(usuarioLogueado.IdRol);
+                permisos = new Permisos(rolCompleto);
+                SessionManager.GetInstance.SetPermisos(permisos);
+            }
 
+            usuarioToolStripMenuItem.Visible = permisos.Tiene(Patente.GestorUsuarios);
+            bitacoraToolStripMenuItem.Visible = permisos.Tiene(Patente.Bitacora);
+            cambiarContrasenaToolStripMenuItem.Visible = permisos.Tiene(Patente.CambiarContrasena);
+            reloginToolStripMenuItem.Visible = permisos.Tiene(Patente.ReiniciarSesion);
+            logoutToolStripMenuItem.Visible = permisos.Tiene(Patente.CerrarSesion);
+
+            // Familias/Roles management is part of the same "Gestor de usuarios" patent family
+            // (administering the permission system itself) — gate it the same way.
+            familiasToolStripMenuItem.Visible = permisos.Tiene(Patente.GestorUsuarios);
+            rolesToolStripMenuItem.Visible = permisos.Tiene(Patente.GestorUsuarios);
         }
 
         // ─────────────────────────────────────────
