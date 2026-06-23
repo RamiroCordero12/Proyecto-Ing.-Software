@@ -226,3 +226,45 @@ INSERT [dbo].[Roles] ([IdRol], [NombreRol], [Descripcion]) VALUES (2, N'Empleado
 INSERT [dbo].[Roles] ([IdRol], [NombreRol], [Descripcion]) VALUES (3, N'Usuario', N'Rol de usuario comun')
 SET IDENTITY_INSERT [dbo].[Roles] OFF
 GO
+
+USE [Fulbito500]
+GO
+
+-- 1) Add the new FK column (nullable at first so we can backfill)
+ALTER TABLE [dbo].[Usuarios]
+ADD [IdRol] INT NULL;
+GO
+
+-- 2) Backfill based on the old integer convention:
+--    1 = Administrador, 2 = Empleado (matches Roles seed data IdRol 1/2)
+UPDATE [dbo].[Usuarios] SET [IdRol] = [Rol] WHERE [Rol] IN (1, 2);
+UPDATE [dbo].[Usuarios] SET [IdRol] = 3 WHERE [Rol] NOT IN (1, 2) OR [Rol] IS NULL; -- fallback: Usuario comun
+GO
+
+-- 3) Enforce NOT NULL now that every row has a value
+ALTER TABLE [dbo].[Usuarios]
+ALTER COLUMN [IdRol] INT NOT NULL;
+GO
+
+-- 4) Add the FK constraint to Roles
+ALTER TABLE [dbo].[Usuarios]
+ADD CONSTRAINT [FK_Usuarios_Roles] FOREIGN KEY ([IdRol])
+REFERENCES [dbo].[Roles] ([IdRol]);
+GO
+
+-- 5) Keep the old [Rol] column for now (avoid breaking legacy reads in one shot),
+--    but it is no longer the source of truth. You can drop it later once
+--    everything is confirmed working:
+-- ALTER TABLE [dbo].[Usuarios] DROP COLUMN [Rol];
+GO
+
+-- 6) Make sure the "Admin" family actually grants every patent that exists,
+--    so "Administrador" really means "all functionality".
+--    (Insert any patents not yet linked to family 1 = Admin)
+INSERT INTO [dbo].[Fam_Pat] (IdFamilia, IdPatente)
+SELECT 1, p.IdPatente
+FROM [dbo].[Patentes] p
+WHERE NOT EXISTS (
+    SELECT 1 FROM [dbo].[Fam_Pat] fp WHERE fp.IdFamilia = 1 AND fp.IdPatente = p.IdPatente
+);
+GO
