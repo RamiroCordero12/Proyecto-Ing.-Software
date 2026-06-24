@@ -28,8 +28,16 @@ namespace Proyecto_Ing._Software
             }
 
             _loc.Subscribe(this);
-            CargarRoles();
             ApplyLocalization();
+            ActualizarGrilla();
+        }
+
+        // Refresh whenever the window regains focus, so roles created in
+        // FormRoles while this window stayed open (non-modal) show up here
+        // without needing to close and reopen the form.
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
             ActualizarGrilla();
         }
 
@@ -160,6 +168,10 @@ namespace Proyecto_Ing._Software
         {
             try
             {
+                // Reload roles first so newly-created roles (and their names)
+                // are reflected both in the grid and in cmbRoles.
+                CargarRoles();
+
                 var usuarios = new UsuarioBLL().ListarUsuarios();
 
                 // Project to a display-friendly table so we show the role NAME,
@@ -171,6 +183,7 @@ namespace Proyecto_Ing._Software
                 display.Columns.Add("Email", typeof(string));
                 display.Columns.Add("Rol", typeof(string));
                 display.Columns.Add("Estado", typeof(bool));
+                display.Columns.Add("Lenguaje", typeof(int));
 
                 foreach (var u in usuarios)
                 {
@@ -178,7 +191,7 @@ namespace Proyecto_Ing._Software
                         .FirstOrDefault(r => r.IdRol == u.IdRol)?.NombreRol
                         ?? u.IdRol.ToString();
 
-                    display.Rows.Add(u.DNI, u.Nombre, u.Apellido, u.Email, nombreRol, u.Estado);
+                    display.Rows.Add(u.DNI, u.Nombre, u.Apellido, u.Email, nombreRol, u.Estado, u.Lenguaje);
                 }
 
                 dgvUsuario.DataSource = null;
@@ -278,6 +291,10 @@ namespace Proyecto_Ing._Software
             var rolEncontrado = _todosLosRoles.FirstOrDefault(r => r.NombreRol == nombreRolFila);
             if (rolEncontrado != null)
                 cmbRoles.SelectedValue = rolEncontrado.IdRol;
+
+            int lenguaje = Convert.ToInt32(fila.Cells["Lenguaje"].Value);
+            if (lenguaje >= 0 && lenguaje < cmbLenguaje.Items.Count)
+                cmbLenguaje.SelectedIndex = lenguaje;
         }
 
         private void cmbRoles_SelectedIndexChanged(object sender, EventArgs e) { }

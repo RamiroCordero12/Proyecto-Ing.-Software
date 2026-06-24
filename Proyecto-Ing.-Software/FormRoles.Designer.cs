@@ -156,6 +156,7 @@
             // 
             // dgvRoles
             // 
+            this.dgvRoles.AllowUserToAddRows = false;
             this.dgvRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRoles.Location = new System.Drawing.Point(254, 52);
             this.dgvRoles.Name = "dgvRoles";

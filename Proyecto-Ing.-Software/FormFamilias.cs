@@ -136,7 +136,10 @@ namespace Proyecto_Ing._Software
             if (e.RowIndex < 0) return;
 
             DataGridViewRow row = dgvFamilias.Rows[e.RowIndex];
-            _idFamiliaSeleccionada = Convert.ToInt32(row.Cells["ID"].Value);
+            object idValue = row.Cells["ID"].Value;
+            if (idValue == null || idValue == DBNull.Value) return;
+
+            _idFamiliaSeleccionada = Convert.ToInt32(idValue);
 
             // Find the FamiliaComponent
             FamiliaComponent fam = _todasLasFamilias.Find(f => f.Id == _idFamiliaSeleccionada);

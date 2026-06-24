@@ -178,7 +178,10 @@ namespace Proyecto_Ing._Software
             if (e.RowIndex < 0) return;
 
             DataGridViewRow row = dgvRoles.Rows[e.RowIndex];
-            _idRolSeleccionado = Convert.ToInt32(row.Cells["ID"].Value);
+            object idValue = row.Cells["ID"].Value;
+            if (idValue == null || idValue == DBNull.Value) return;
+
+            _idRolSeleccionado = Convert.ToInt32(idValue);
 
             RolBE rol = _todosLosRoles.Find(r => r.IdRol == _idRolSeleccionado);
             if (rol == null) return;

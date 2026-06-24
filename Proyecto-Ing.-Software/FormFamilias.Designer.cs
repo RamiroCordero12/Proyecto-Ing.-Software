@@ -126,6 +126,7 @@
             // 
             // dgvFamilias
             // 
+            this.dgvFamilias.AllowUserToAddRows = false;
             this.dgvFamilias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFamilias.Location = new System.Drawing.Point(320, 97);
             this.dgvFamilias.Name = "dgvFamilias";
