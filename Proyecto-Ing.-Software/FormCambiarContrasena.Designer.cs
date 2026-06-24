@@ -36,71 +36,74 @@
             this.lblConfirmar = new System.Windows.Forms.Label();
             this.lblConfirmarContraseña = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // txtContrasenaNueva
-            // 
-            this.txtContrasenaNueva.Location = new System.Drawing.Point(40, 105);
-            this.txtContrasenaNueva.Name = "txtContrasenaNueva";
-            this.txtContrasenaNueva.Size = new System.Drawing.Size(180, 20);
-            this.txtContrasenaNueva.TabIndex = 1;
-            // 
+            //
             // txtContrasenaActual
-            // 
-            this.txtContrasenaActual.Location = new System.Drawing.Point(43, 35);
+            //
+            this.txtContrasenaActual.Location = new System.Drawing.Point(100, 38);
             this.txtContrasenaActual.Name = "txtContrasenaActual";
-            this.txtContrasenaActual.Size = new System.Drawing.Size(180, 20);
-            this.txtContrasenaActual.TabIndex = 2;
-            // 
+            this.txtContrasenaActual.Size = new System.Drawing.Size(300, 20);
+            this.txtContrasenaActual.TabIndex = 1;
+            this.txtContrasenaActual.UseSystemPasswordChar = true;
+            //
+            // txtContrasenaNueva
+            //
+            this.txtContrasenaNueva.Location = new System.Drawing.Point(100, 94);
+            this.txtContrasenaNueva.Name = "txtContrasenaNueva";
+            this.txtContrasenaNueva.Size = new System.Drawing.Size(300, 20);
+            this.txtContrasenaNueva.TabIndex = 2;
+            this.txtContrasenaNueva.UseSystemPasswordChar = true;
+            //
             // txtContrasenaConfirmar
-            // 
-            this.txtContrasenaConfirmar.Location = new System.Drawing.Point(270, 105);
+            //
+            this.txtContrasenaConfirmar.Location = new System.Drawing.Point(100, 150);
             this.txtContrasenaConfirmar.Name = "txtContrasenaConfirmar";
-            this.txtContrasenaConfirmar.Size = new System.Drawing.Size(180, 20);
+            this.txtContrasenaConfirmar.Size = new System.Drawing.Size(300, 20);
             this.txtContrasenaConfirmar.TabIndex = 3;
-            // 
+            this.txtContrasenaConfirmar.UseSystemPasswordChar = true;
+            //
             // btnCambiarContrasena
-            // 
-            this.btnCambiarContrasena.Location = new System.Drawing.Point(191, 152);
+            //
+            this.btnCambiarContrasena.Location = new System.Drawing.Point(185, 190);
             this.btnCambiarContrasena.Name = "btnCambiarContrasena";
-            this.btnCambiarContrasena.Size = new System.Drawing.Size(112, 37);
+            this.btnCambiarContrasena.Size = new System.Drawing.Size(130, 37);
             this.btnCambiarContrasena.TabIndex = 4;
             this.btnCambiarContrasena.Text = "Confirmar";
             this.btnCambiarContrasena.UseVisualStyleBackColor = true;
             this.btnCambiarContrasena.Click += new System.EventHandler(this.btnCambiarContrasena_Click);
-            // 
+            //
             // lblContraseñaActual
-            // 
+            //
             this.lblContraseñaActual.AutoSize = true;
-            this.lblContraseñaActual.Location = new System.Drawing.Point(40, 19);
+            this.lblContraseñaActual.Location = new System.Drawing.Point(100, 20);
             this.lblContraseñaActual.Name = "lblContraseñaActual";
             this.lblContraseñaActual.Size = new System.Drawing.Size(100, 13);
             this.lblContraseñaActual.TabIndex = 7;
             this.lblContraseñaActual.Text = "Contrasena (Actual)";
-            // 
+            //
             // lblConfirmar
-            // 
+            //
             this.lblConfirmar.AutoSize = true;
-            this.lblConfirmar.Location = new System.Drawing.Point(40, 86);
+            this.lblConfirmar.Location = new System.Drawing.Point(100, 76);
             this.lblConfirmar.Name = "lblConfirmar";
             this.lblConfirmar.Size = new System.Drawing.Size(94, 13);
             this.lblConfirmar.TabIndex = 8;
             this.lblConfirmar.Text = "Contrasena nueva";
-            // 
+            //
             // lblConfirmarContraseña
-            // 
+            //
             this.lblConfirmarContraseña.AutoSize = true;
-            this.lblConfirmarContraseña.Location = new System.Drawing.Point(270, 86);
+            this.lblConfirmarContraseña.Location = new System.Drawing.Point(100, 132);
             this.lblConfirmarContraseña.Name = "lblConfirmarContraseña";
             this.lblConfirmarContraseña.Size = new System.Drawing.Size(107, 13);
             this.lblConfirmarContraseña.TabIndex = 9;
             this.lblConfirmarContraseña.Text = "Confirmar contrasena";
-            // 
+            //
             // FormCambiarContrasena
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
-            this.ClientSize = new System.Drawing.Size(500, 230);
+            this.ClientSize = new System.Drawing.Size(500, 250);
             this.Controls.Add(this.lblConfirmarContraseña);
             this.Controls.Add(this.lblConfirmar);
             this.Controls.Add(this.lblContraseñaActual);

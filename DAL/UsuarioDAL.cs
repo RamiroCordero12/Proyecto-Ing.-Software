@@ -15,9 +15,13 @@ namespace DAL
         public bool CrearUsuario(Usuario usuario)
         {
             //Consulta SQL
+            // "Rol" is a legacy NOT NULL column left over from before the
+            // Composite Pattern migration to IdRol; nothing reads it anymore,
+            // but it still has to be populated to satisfy the constraint, so
+            // it's kept mirroring IdRol.
             string consulta = "INSERT INTO Usuarios (DNI, Nombre, Apellido, NombreUsuario, Contrasena, " +
-                               "Estado, Email, IdRol, DigitoVerificador) " +
-                "VALUES (@DNI, @Nombre, @Apellido, @NombreUsuario, @Contrasena, 1, @Email, @IdRol, @DigitoVerificador)";
+                               "Estado, Email, IdRol, Rol, DigitoVerificador) " +
+                "VALUES (@DNI, @Nombre, @Apellido, @NombreUsuario, @Contrasena, 1, @Email, @IdRol, @Rol, @DigitoVerificador)";
 
             using (SqlConnection conexionSql = conexion.ValidarConexion())
             {
@@ -30,6 +34,7 @@ namespace DAL
                     comando.Parameters.AddWithValue("@Contrasena", usuario.Contrasena);
                     comando.Parameters.AddWithValue("@Email", usuario.Email);
                     comando.Parameters.AddWithValue("@IdRol", usuario.IdRol);
+                    comando.Parameters.AddWithValue("@Rol", usuario.IdRol);
                     comando.Parameters.AddWithValue("@DigitoVerificador", DigitoVerificadorHelper.Calcular(usuario.DNI, usuario.NombreUsuario));
 
                     conexionSql.Open();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using Servicios;
 using Servicios.Localization;
@@ -8,6 +9,16 @@ namespace Proyecto_Ing._Software
     public partial class FormMenuPrincipal : Form, ILocalizationObserver
     {
         private readonly LocalizationService _loc = LocalizationService.Instance;
+
+        // Fixed test-user identity shared across all "Prueba ..." buttons, so
+        // they can run as a connected lifecycle: crear -> login -> desbloquear
+        // -> modificar -> cambiar clave -> logout.
+        private const int DniPrueba = 90000001;
+        private const string NombrePrueba = "Prueba";
+        private const string ApellidoPrueba = "Apellido";
+        private const string EmailPrueba = "prueba@test.com";
+        private static readonly string NombreUsuarioPrueba = NombrePrueba + DniPrueba;
+        private static readonly string ClavePrueba = ApellidoPrueba + DniPrueba;
 
         public FormMenuPrincipal()
         {
@@ -34,6 +45,12 @@ namespace Proyecto_Ing._Software
             familiasToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuFamilias"];
             rolesToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuRoles"];
             btnProbarDigito.Text = _loc["FormMenuPrincipal", "ButtonProbarDigito"];
+            btnPruebaCrearUsuario.Text = _loc["FormMenuPrincipal", "ButtonPruebaCrearUsuario"];
+            btnPruebaLogin.Text = _loc["FormMenuPrincipal", "ButtonPruebaLogin"];
+            btnPruebaDesbloquearUsuario.Text = _loc["FormMenuPrincipal", "ButtonPruebaDesbloquearUsuario"];
+            btnPruebaModificarUsuario.Text = _loc["FormMenuPrincipal", "ButtonPruebaModificarUsuario"];
+            btnPruebaCambiarClave.Text = _loc["FormMenuPrincipal", "ButtonPruebaCambiarClave"];
+            btnPruebaLogout.Text = _loc["FormMenuPrincipal", "ButtonPruebaLogout"];
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -82,8 +99,15 @@ namespace Proyecto_Ing._Software
             familiasToolStripMenuItem.Visible = permisos.Tiene(Patente.GestorUsuarios);
             rolesToolStripMenuItem.Visible = permisos.Tiene(Patente.GestorUsuarios);
 
-            // Integrity-check tool: same admin-only gate as user management.
+            // Integrity-check tool and "Prueba ..." smoke-test buttons: same
+            // admin-only gate as user management.
             btnProbarDigito.Visible = permisos.Tiene(Patente.GestorUsuarios);
+            btnPruebaCrearUsuario.Visible = permisos.Tiene(Patente.GestorUsuarios);
+            btnPruebaLogin.Visible = permisos.Tiene(Patente.GestorUsuarios);
+            btnPruebaDesbloquearUsuario.Visible = permisos.Tiene(Patente.GestorUsuarios);
+            btnPruebaModificarUsuario.Visible = permisos.Tiene(Patente.GestorUsuarios);
+            btnPruebaCambiarClave.Visible = permisos.Tiene(Patente.GestorUsuarios);
+            btnPruebaLogout.Visible = permisos.Tiene(Patente.CerrarSesion);
         }
 
         // ─────────────────────────────────────────
@@ -235,6 +259,227 @@ namespace Proyecto_Ing._Software
 
                 return int.TryParse(txt.Text.Trim(), out dni);
             }
+        }
+
+        // ─────────────────────────────────────────
+        //  "Prueba ..." smoke-test buttons
+        //
+        //  All six exercise the real BLL/SessionManager functions already
+        //  used elsewhere in this form, against one fixed test account
+        //  (DniPrueba), so they form a connected lifecycle: crear -> login ->
+        //  desbloquear -> modificar -> cambiar clave -> logout.
+        // ─────────────────────────────────────────
+
+        // Runs accion() without leaving the real admin's session altered —
+        // some tests call UsuarioBLL.Login(), which (like the real login flow)
+        // overwrites the active SessionManager session on success.
+        private static void EjecutarSinAfectarSesion(Action accion)
+        {
+            Usuario usuarioOriginal = SessionManager.GetInstance.usuario;
+            Permisos permisosOriginal = SessionManager.GetInstance.Permisos;
+            try
+            {
+                accion();
+            }
+            finally
+            {
+                SessionManager.GetInstance.Login(usuarioOriginal);
+                SessionManager.GetInstance.SetPermisos(permisosOriginal);
+            }
+        }
+
+        private void btnPruebaCrearUsuario_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bool yaExiste = new BLL.UsuarioBLL().ListarUsuarios().Any(u => u.DNI == DniPrueba);
+                if (yaExiste)
+                {
+                    MessageBox.Show(
+                        "El usuario de prueba '" + NombreUsuarioPrueba + "' ya existe (de una corrida anterior). " +
+                        "Las demás pruebas pueden ejecutarse igual sobre él.",
+                        "Prueba: Crear usuario", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                var roles = new BLL.RolesBLL().ListarRoles();
+                if (roles.Count == 0)
+                    throw new Exception("No hay roles creados; cree un rol antes de ejecutar esta prueba.");
+
+                var usuario = new Usuario
+                {
+                    DNI = DniPrueba,
+                    Nombre = NombrePrueba,
+                    Apellido = ApellidoPrueba,
+                    Email = EmailPrueba,
+                    IdRol = roles[0].IdRol
+                };
+
+                bool ok = new BLL.UsuarioBLL().CrearUsuario(usuario, SessionManager.GetInstance.usuario.DNI);
+
+                MessageBox.Show(
+                    ok ? "PRUEBA OK: usuario de prueba '" + NombreUsuarioPrueba + "' creado."
+                       : "PRUEBA FALLIDA: no se pudo crear el usuario de prueba.",
+                    "Prueba: Crear usuario", MessageBoxButtons.OK,
+                    ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("PRUEBA FALLIDA: " + ex.Message, "Prueba: Crear usuario",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnPruebaLogin_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Usuario logueado = null;
+                EjecutarSinAfectarSesion(() =>
+                {
+                    logueado = new BLL.UsuarioBLL().Login(NombreUsuarioPrueba, ClavePrueba);
+                });
+
+                MessageBox.Show("PRUEBA OK: login exitoso para '" + logueado.NombreUsuario + "'.",
+                    "Prueba: Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("PRUEBA FALLIDA: " + ex.Message, "Prueba: Login",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnPruebaDesbloquearUsuario_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Force a lockout: 3 wrong attempts in a row (mirrors the real
+                // lockout behaviour exercised by the login form).
+                EjecutarSinAfectarSesion(() =>
+                {
+                    var bll = new BLL.UsuarioBLL();
+                    for (int i = 0; i < 3; i++)
+                    {
+                        try { bll.Login(NombreUsuarioPrueba, "claveincorrecta"); }
+                        catch { /* expected: wrong password, account locks on the 3rd try */ }
+                    }
+                });
+
+                var usuarioBloqueado = new BLL.UsuarioBLL().ListarUsuarios().FirstOrDefault(u => u.DNI == DniPrueba);
+                if (usuarioBloqueado == null)
+                    throw new Exception("Primero ejecute la prueba de Crear usuario.");
+                if (usuarioBloqueado.Estado)
+                    throw new Exception("No se logró bloquear la cuenta antes de probar el desbloqueo.");
+
+                bool desbloqueado = new BLL.UsuarioBLL().HabilitarUsuario(DniPrueba);
+
+                bool puedeLoguear = false;
+                EjecutarSinAfectarSesion(() =>
+                {
+                    try
+                    {
+                        new BLL.UsuarioBLL().Login(NombreUsuarioPrueba, ClavePrueba);
+                        puedeLoguear = true;
+                    }
+                    catch { puedeLoguear = false; }
+                });
+
+                bool ok = desbloqueado && puedeLoguear;
+                MessageBox.Show(
+                    ok ? "PRUEBA OK: la cuenta se bloqueó tras 3 intentos fallidos y se desbloqueó correctamente; el login vuelve a funcionar."
+                       : "PRUEBA FALLIDA: no se pudo desbloquear la cuenta o el login posterior falló.",
+                    "Prueba: Desbloquear usuario", MessageBoxButtons.OK,
+                    ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("PRUEBA FALLIDA: " + ex.Message, "Prueba: Desbloquear usuario",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnPruebaModificarUsuario_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var usuarioActual = new BLL.UsuarioBLL().ListarUsuarios().FirstOrDefault(u => u.DNI == DniPrueba);
+                if (usuarioActual == null)
+                    throw new Exception("Primero ejecute la prueba de Crear usuario.");
+
+                string nuevoEmail = "modificado" + (DateTime.Now.Ticks % 10000) + "@test.com";
+
+                var usuarioModificado = new Usuario
+                {
+                    DNI = DniPrueba,
+                    Nombre = usuarioActual.Nombre,
+                    Apellido = usuarioActual.Apellido,
+                    Email = nuevoEmail,
+                    IdRol = usuarioActual.IdRol,
+                    Lenguaje = usuarioActual.Lenguaje
+                };
+
+                bool ok = new BLL.UsuarioBLL().ModificarUsuario(usuarioModificado, DniPrueba);
+
+                var verificacion = new BLL.UsuarioBLL().ListarUsuarios().FirstOrDefault(u => u.DNI == DniPrueba);
+                bool persistido = verificacion != null && verificacion.Email == nuevoEmail;
+
+                bool exito = ok && persistido;
+                MessageBox.Show(
+                    exito ? "PRUEBA OK: usuario modificado; email actualizado a " + nuevoEmail + "."
+                          : "PRUEBA FALLIDA: la modificación no se aplicó correctamente.",
+                    "Prueba: Modificar usuario", MessageBoxButtons.OK,
+                    exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("PRUEBA FALLIDA: " + ex.Message, "Prueba: Modificar usuario",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnPruebaCambiarClave_Click(object sender, EventArgs e)
+        {
+            string claveNueva = "ClaveNueva" + DniPrueba;
+            try
+            {
+                bool ok = new BLL.UsuarioBLL().CambiarContrasena(DniPrueba, ClavePrueba, claveNueva, claveNueva);
+
+                bool puedeLoguearConNueva = false;
+                EjecutarSinAfectarSesion(() =>
+                {
+                    try
+                    {
+                        new BLL.UsuarioBLL().Login(NombreUsuarioPrueba, claveNueva);
+                        puedeLoguearConNueva = true;
+                    }
+                    catch { puedeLoguearConNueva = false; }
+                });
+
+                // Revert back to the known test password so the other "Prueba ..."
+                // buttons keep working afterward.
+                if (puedeLoguearConNueva)
+                    new BLL.UsuarioBLL().CambiarContrasena(DniPrueba, claveNueva, ClavePrueba, ClavePrueba);
+
+                bool exito = ok && puedeLoguearConNueva;
+                MessageBox.Show(
+                    exito ? "PRUEBA OK: la contraseña se cambió y el login con la nueva clave funcionó (luego se revirtió)."
+                          : "PRUEBA FALLIDA: el cambio de contraseña no funcionó como se esperaba.",
+                    "Prueba: Cambiar clave", MessageBoxButtons.OK,
+                    exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("PRUEBA FALLIDA: " + ex.Message, "Prueba: Cambiar clave",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Reuses the real logout flow verbatim — this *is* the same function
+        // wired to the Logout menu item, just triggered from a test button.
+        private void btnPruebaLogout_Click(object sender, EventArgs e)
+        {
+            logoutToolStripMenuItem_Click(sender, e);
         }
     }
 }

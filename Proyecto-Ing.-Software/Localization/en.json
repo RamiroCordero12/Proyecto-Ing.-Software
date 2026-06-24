@@ -29,7 +29,13 @@
     "TestDigitoOkTitle": "Valid user",
     "TestDigitoAlertaTitle": "Tampered user",
     "SimularAlteracionTitle": "Simulate tampering",
-    "SimularAlteracionConfirm": "Do you want to simulate tampering with this user before testing? This will deliberately corrupt their verification digit (you can repair it afterward from User Manager)."
+    "SimularAlteracionConfirm": "Do you want to simulate tampering with this user before testing? This will deliberately corrupt their verification digit (you can repair it afterward from User Manager).",
+    "ButtonPruebaCrearUsuario": "Test create user",
+    "ButtonPruebaLogin": "Test login",
+    "ButtonPruebaDesbloquearUsuario": "Test unlock user",
+    "ButtonPruebaModificarUsuario": "Test modify user",
+    "ButtonPruebaCambiarClave": "Test change password",
+    "ButtonPruebaLogout": "Test logout"
   },
   "FormUsuarios": {
     "Title": "User Manager",

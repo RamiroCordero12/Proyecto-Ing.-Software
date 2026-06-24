@@ -38,6 +38,12 @@
             this.familiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnProbarDigito = new System.Windows.Forms.Button();
+            this.btnPruebaCrearUsuario = new System.Windows.Forms.Button();
+            this.btnPruebaLogin = new System.Windows.Forms.Button();
+            this.btnPruebaDesbloquearUsuario = new System.Windows.Forms.Button();
+            this.btnPruebaModificarUsuario = new System.Windows.Forms.Button();
+            this.btnPruebaCambiarClave = new System.Windows.Forms.Button();
+            this.btnPruebaLogout = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,12 +130,78 @@
             this.btnProbarDigito.UseVisualStyleBackColor = true;
             this.btnProbarDigito.Click += new System.EventHandler(this.btnProbarDigito_Click);
             //
+            // btnPruebaCrearUsuario
+            //
+            this.btnPruebaCrearUsuario.Location = new System.Drawing.Point(250, 40);
+            this.btnPruebaCrearUsuario.Name = "btnPruebaCrearUsuario";
+            this.btnPruebaCrearUsuario.Size = new System.Drawing.Size(220, 30);
+            this.btnPruebaCrearUsuario.TabIndex = 2;
+            this.btnPruebaCrearUsuario.Text = "Prueba crear usuario";
+            this.btnPruebaCrearUsuario.UseVisualStyleBackColor = true;
+            this.btnPruebaCrearUsuario.Click += new System.EventHandler(this.btnPruebaCrearUsuario_Click);
+            //
+            // btnPruebaLogin
+            //
+            this.btnPruebaLogin.Location = new System.Drawing.Point(12, 80);
+            this.btnPruebaLogin.Name = "btnPruebaLogin";
+            this.btnPruebaLogin.Size = new System.Drawing.Size(220, 30);
+            this.btnPruebaLogin.TabIndex = 3;
+            this.btnPruebaLogin.Text = "Prueba login";
+            this.btnPruebaLogin.UseVisualStyleBackColor = true;
+            this.btnPruebaLogin.Click += new System.EventHandler(this.btnPruebaLogin_Click);
+            //
+            // btnPruebaDesbloquearUsuario
+            //
+            this.btnPruebaDesbloquearUsuario.Location = new System.Drawing.Point(250, 80);
+            this.btnPruebaDesbloquearUsuario.Name = "btnPruebaDesbloquearUsuario";
+            this.btnPruebaDesbloquearUsuario.Size = new System.Drawing.Size(220, 30);
+            this.btnPruebaDesbloquearUsuario.TabIndex = 4;
+            this.btnPruebaDesbloquearUsuario.Text = "Prueba desbloquear usuario";
+            this.btnPruebaDesbloquearUsuario.UseVisualStyleBackColor = true;
+            this.btnPruebaDesbloquearUsuario.Click += new System.EventHandler(this.btnPruebaDesbloquearUsuario_Click);
+            //
+            // btnPruebaModificarUsuario
+            //
+            this.btnPruebaModificarUsuario.Location = new System.Drawing.Point(12, 120);
+            this.btnPruebaModificarUsuario.Name = "btnPruebaModificarUsuario";
+            this.btnPruebaModificarUsuario.Size = new System.Drawing.Size(220, 30);
+            this.btnPruebaModificarUsuario.TabIndex = 5;
+            this.btnPruebaModificarUsuario.Text = "Prueba modificar usuario";
+            this.btnPruebaModificarUsuario.UseVisualStyleBackColor = true;
+            this.btnPruebaModificarUsuario.Click += new System.EventHandler(this.btnPruebaModificarUsuario_Click);
+            //
+            // btnPruebaCambiarClave
+            //
+            this.btnPruebaCambiarClave.Location = new System.Drawing.Point(250, 120);
+            this.btnPruebaCambiarClave.Name = "btnPruebaCambiarClave";
+            this.btnPruebaCambiarClave.Size = new System.Drawing.Size(220, 30);
+            this.btnPruebaCambiarClave.TabIndex = 6;
+            this.btnPruebaCambiarClave.Text = "Pruebas cambiar clave";
+            this.btnPruebaCambiarClave.UseVisualStyleBackColor = true;
+            this.btnPruebaCambiarClave.Click += new System.EventHandler(this.btnPruebaCambiarClave_Click);
+            //
+            // btnPruebaLogout
+            //
+            this.btnPruebaLogout.Location = new System.Drawing.Point(12, 160);
+            this.btnPruebaLogout.Name = "btnPruebaLogout";
+            this.btnPruebaLogout.Size = new System.Drawing.Size(220, 30);
+            this.btnPruebaLogout.TabIndex = 7;
+            this.btnPruebaLogout.Text = "Pruebas logout";
+            this.btnPruebaLogout.UseVisualStyleBackColor = true;
+            this.btnPruebaLogout.Click += new System.EventHandler(this.btnPruebaLogout_Click);
+            //
             // FormMenuPrincipal
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
             this.ClientSize = new System.Drawing.Size(762, 248);
+            this.Controls.Add(this.btnPruebaLogout);
+            this.Controls.Add(this.btnPruebaCambiarClave);
+            this.Controls.Add(this.btnPruebaModificarUsuario);
+            this.Controls.Add(this.btnPruebaDesbloquearUsuario);
+            this.Controls.Add(this.btnPruebaLogin);
+            this.Controls.Add(this.btnPruebaCrearUsuario);
             this.Controls.Add(this.btnProbarDigito);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -155,6 +227,12 @@
         private System.Windows.Forms.ToolStripMenuItem familiasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rolesToolStripMenuItem;
         private System.Windows.Forms.Button btnProbarDigito;
+        private System.Windows.Forms.Button btnPruebaCrearUsuario;
+        private System.Windows.Forms.Button btnPruebaLogin;
+        private System.Windows.Forms.Button btnPruebaDesbloquearUsuario;
+        private System.Windows.Forms.Button btnPruebaModificarUsuario;
+        private System.Windows.Forms.Button btnPruebaCambiarClave;
+        private System.Windows.Forms.Button btnPruebaLogout;
     }
 }
 

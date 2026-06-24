@@ -29,7 +29,13 @@
     "TestDigitoOkTitle": "Usuário válido",
     "TestDigitoAlertaTitle": "Usuário alterado",
     "SimularAlteracionTitle": "Simular alteração",
-    "SimularAlteracionConfirm": "Deseja simular uma alteração deste usuário antes de testar? Isso corromperá propositalmente seu dígito verificador (você pode restaurá-lo depois no Gestor de usuários)."
+    "SimularAlteracionConfirm": "Deseja simular uma alteração deste usuário antes de testar? Isso corromperá propositalmente seu dígito verificador (você pode restaurá-lo depois no Gestor de usuários).",
+    "ButtonPruebaCrearUsuario": "Testar criar usuário",
+    "ButtonPruebaLogin": "Testar login",
+    "ButtonPruebaDesbloquearUsuario": "Testar desbloquear usuário",
+    "ButtonPruebaModificarUsuario": "Testar modificar usuário",
+    "ButtonPruebaCambiarClave": "Testar alterar senha",
+    "ButtonPruebaLogout": "Testar logout"
   },
   "FormUsuarios": {
     "Title": "Gestor de Usuários",
