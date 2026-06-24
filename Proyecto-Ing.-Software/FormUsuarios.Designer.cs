@@ -221,6 +221,7 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
+            this.ShowIcon = false;
             this.Controls.Add(this.lblTotalUsuarios);
             this.Controls.Add(this.btnRegenerarDigito);
             this.Controls.Add(this.cmbFiltroEstado);

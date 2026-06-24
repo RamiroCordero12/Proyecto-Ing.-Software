@@ -43,6 +43,7 @@ namespace Proyecto_Ing._Software
             lblDesde.Text = _loc["FormBitacora", "LabelDesde"];
             lblHasta.Text = _loc["FormBitacora", "LabelHasta"];
             btnFiltrar.Text = _loc["FormBitacora", "ButtonFiltrar"];
+            btnLimpiarBitacora.Text = _loc["FormBitacora", "ButtonLimpiar"];
 
             lblCmbUsuario.Text = _loc["FormBitacora", "LabelPorUsuario"];
             label2.Text = _loc["FormBitacora", "LabelPorEvento"];
@@ -103,7 +104,8 @@ namespace Proyecto_Ing._Software
             }
             catch (Exception ex)
             {
-                MessageBox.Show(_loc["FormBitacora", "MsgErrorCargar"] + ex.Message);
+                MessageBox.Show(_loc["FormBitacora", "MsgErrorCargar"] + ex.Message,
+                    _loc["FormBitacora", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -190,6 +192,27 @@ namespace Proyecto_Ing._Software
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
             AplicarFiltros();
+        }
+
+        private void btnLimpiarBitacora_Click(object sender, EventArgs e)
+        {
+            var confirmar = MessageBox.Show(
+                _loc["FormBitacora", "MsgConfirmLimpiar"],
+                _loc["FormBitacora", "MsgConfirmLimpiarTitle"],
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (confirmar != DialogResult.Yes) return;
+
+            try
+            {
+                new BitacoraBLL().LimpiarBitacora(SessionManager.GetInstance.usuario.DNI);
+                ActualizarDataGridView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(_loc["FormBitacora", "MsgErrorLimpiar"] + ex.Message,
+                    _loc["FormBitacora", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

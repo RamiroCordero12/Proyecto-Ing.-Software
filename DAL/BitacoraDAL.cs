@@ -103,5 +103,19 @@ namespace DAL
             }
             return listBitacora;
         }
+
+        public bool LimpiarBitacora()
+        {
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
+            {
+                string consulta = "DELETE FROM Bitacora";
+                using (SqlCommand comando = new SqlCommand(consulta, conexionSql))
+                {
+                    conexionSql.Open();
+                    comando.ExecuteNonQuery();
+                    return true;
+                }
+            }
+        }
     }
 }

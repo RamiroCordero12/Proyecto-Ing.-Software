@@ -43,6 +43,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblModulo = new System.Windows.Forms.Label();
             this.cmbModulo = new System.Windows.Forms.ComboBox();
+            this.btnLimpiarBitacora = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DgvBitacora)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,7 +110,17 @@
             this.btnFiltrar.Text = "Filtrar";
             this.btnFiltrar.UseVisualStyleBackColor = true;
             this.btnFiltrar.Click += new System.EventHandler(this.btnFiltrar_Click);
-            // 
+            //
+            // btnLimpiarBitacora
+            //
+            this.btnLimpiarBitacora.Location = new System.Drawing.Point(809, 368);
+            this.btnLimpiarBitacora.Name = "btnLimpiarBitacora";
+            this.btnLimpiarBitacora.Size = new System.Drawing.Size(112, 23);
+            this.btnLimpiarBitacora.TabIndex = 15;
+            this.btnLimpiarBitacora.Text = "Limpiar bitácora";
+            this.btnLimpiarBitacora.UseVisualStyleBackColor = true;
+            this.btnLimpiarBitacora.Click += new System.EventHandler(this.btnLimpiarBitacora_Click);
+            //
             // cmbUsuario
             // 
             this.cmbUsuario.FormattingEnabled = true;
@@ -183,6 +194,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
+            this.ShowIcon = false;
             this.ClientSize = new System.Drawing.Size(933, 439);
             this.Controls.Add(this.lblModulo);
             this.Controls.Add(this.cmbModulo);
@@ -192,6 +204,7 @@
             this.Controls.Add(this.cmbCriticidad);
             this.Controls.Add(this.cmbEvento);
             this.Controls.Add(this.cmbUsuario);
+            this.Controls.Add(this.btnLimpiarBitacora);
             this.Controls.Add(this.btnFiltrar);
             this.Controls.Add(this.lblHasta);
             this.Controls.Add(this.lblDesde);
@@ -225,5 +238,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblModulo;
         private System.Windows.Forms.ComboBox cmbModulo;
+        private System.Windows.Forms.Button btnLimpiarBitacora;
     }
 }

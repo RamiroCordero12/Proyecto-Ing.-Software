@@ -156,7 +156,7 @@ namespace Proyecto_Ing._Software
             var confirmar = MessageBox.Show(
                 _loc["FormMenuPrincipal", "LogoutConfirm"],
                 _loc["FormMenuPrincipal", "LogoutTitle"],
-                MessageBoxButtons.YesNo);
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (confirmar != DialogResult.Yes) return;
 

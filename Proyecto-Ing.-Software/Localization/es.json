@@ -5,6 +5,7 @@
     "LabelPassword": "Contraseña",
     "ButtonLogin": "Ingresar",
     "WelcomeMessage": "Bienvenido {0}.",
+    "WelcomeTitle": "Bienvenido",
     "ErrorTitle": "Error al iniciar sesión"
   },
   "FormMenuPrincipal": {
@@ -83,13 +84,20 @@
     "ColEmail": "Email",
     "ColRol": "Rol",
     "ColEstado": "Estado",
-    "ColLenguaje": "Lenguaje"
+    "ColLenguaje": "Lenguaje",
+    "TitleAviso": "Aviso",
+    "TitleExito": "Éxito",
+    "TitleError": "Error"
   },
   "FormBitacora": {
     "Title": "Bitácora de eventos",
     "LabelDesde": "Filtrar desde:",
     "LabelHasta": "Hasta",
     "ButtonFiltrar": "Filtrar",
+    "ButtonLimpiar": "Limpiar bitácora",
+    "MsgConfirmLimpiar": "¿Seguro desea eliminar todas las entradas de la bitácora? Esta acción no se puede deshacer.",
+    "MsgConfirmLimpiarTitle": "Confirmar eliminación",
+    "MsgErrorLimpiar": "Error al limpiar la bitácora: ",
     "LabelPorUsuario": "Por usuario:",
     "LabelPorEvento": "Por evento:",
     "LabelPorCriticidad": "Por criticidad:",
@@ -108,7 +116,8 @@
     "ColAccion": "Acción",
     "ColFechaHora": "Fecha y hora",
     "ColModulo": "Módulo",
-    "ColCriticidad": "Criticidad"
+    "ColCriticidad": "Criticidad",
+    "TitleError": "Error"
   },
   "FormCambiarContrasena": {
     "Title": "Cambiar contraseña",

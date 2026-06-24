@@ -5,6 +5,7 @@
     "LabelPassword": "Password",
     "ButtonLogin": "Login",
     "WelcomeMessage": "Welcome {0}.",
+    "WelcomeTitle": "Welcome",
     "ErrorTitle": "Login error"
   },
   "FormMenuPrincipal": {
@@ -83,13 +84,20 @@
     "ColEmail": "Email",
     "ColRol": "Role",
     "ColEstado": "Status",
-    "ColLenguaje": "Language"
+    "ColLenguaje": "Language",
+    "TitleAviso": "Notice",
+    "TitleExito": "Success",
+    "TitleError": "Error"
   },
   "FormBitacora": {
     "Title": "Event log",
     "LabelDesde": "Filter from:",
     "LabelHasta": "To",
     "ButtonFiltrar": "Filter",
+    "ButtonLimpiar": "Clear log",
+    "MsgConfirmLimpiar": "Are you sure you want to delete all entries in the audit log? This action cannot be undone.",
+    "MsgConfirmLimpiarTitle": "Confirm deletion",
+    "MsgErrorLimpiar": "Error clearing the audit log: ",
     "LabelPorUsuario": "By user:",
     "LabelPorEvento": "By event:",
     "LabelPorCriticidad": "By severity:",
@@ -108,7 +116,8 @@
     "ColAccion": "Action",
     "ColFechaHora": "Date/time",
     "ColModulo": "Module",
-    "ColCriticidad": "Severity"
+    "ColCriticidad": "Severity",
+    "TitleError": "Error"
   },
   "FormCambiarContrasena": {
     "Title": "Change password",

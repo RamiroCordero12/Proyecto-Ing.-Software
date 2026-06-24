@@ -5,6 +5,7 @@
     "LabelPassword": "Senha",
     "ButtonLogin": "Entrar",
     "WelcomeMessage": "Bem-vindo {0}.",
+    "WelcomeTitle": "Bem-vindo",
     "ErrorTitle": "Erro ao iniciar sessão"
   },
   "FormMenuPrincipal": {
@@ -83,13 +84,20 @@
     "ColEmail": "Email",
     "ColRol": "Perfil",
     "ColEstado": "Status",
-    "ColLenguaje": "Idioma"
+    "ColLenguaje": "Idioma",
+    "TitleAviso": "Aviso",
+    "TitleExito": "Sucesso",
+    "TitleError": "Erro"
   },
   "FormBitacora": {
     "Title": "Registro de eventos",
     "LabelDesde": "Filtrar de:",
     "LabelHasta": "Até",
     "ButtonFiltrar": "Filtrar",
+    "ButtonLimpiar": "Limpar registro",
+    "MsgConfirmLimpiar": "Tem certeza que deseja excluir todas as entradas do registro de eventos? Esta ação não pode ser desfeita.",
+    "MsgConfirmLimpiarTitle": "Confirmar exclusão",
+    "MsgErrorLimpiar": "Erro ao limpar o registro de eventos: ",
     "LabelPorUsuario": "Por usuário:",
     "LabelPorEvento": "Por evento:",
     "LabelPorCriticidad": "Por criticidade:",
@@ -108,7 +116,8 @@
     "ColAccion": "Ação",
     "ColFechaHora": "Data/hora",
     "ColModulo": "Módulo",
-    "ColCriticidad": "Criticidade"
+    "ColCriticidad": "Criticidade",
+    "TitleError": "Erro"
   },
   "FormCambiarContrasena": {
     "Title": "Alterar senha",

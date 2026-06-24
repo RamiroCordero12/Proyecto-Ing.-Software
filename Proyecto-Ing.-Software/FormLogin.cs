@@ -65,17 +65,17 @@ namespace Proyecto_Ing._Software
 
                 _loc.SetLanguageByIndex(usuarioLogueado.Lenguaje);
                 MessageBox.Show(
-                    string.Format(_loc["FormLogin", "WelcomeMessage"],
-                                  txtNombreUsuario.Text));
+                    string.Format(_loc["FormLogin", "WelcomeMessage"], txtNombreUsuario.Text),
+                    _loc["FormLogin", "WelcomeTitle"], MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.DialogResult = DialogResult.OK;
-                
 
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, _loc["FormLogin", "ErrorTitle"]);
+                MessageBox.Show(ex.Message, _loc["FormLogin", "ErrorTitle"],
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

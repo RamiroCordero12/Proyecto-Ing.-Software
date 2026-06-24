@@ -161,7 +161,8 @@ namespace Proyecto_Ing._Software
             {
                 if (cmbRoles.SelectedValue == null)
                 {
-                    MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                    MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"],
+                        _loc["FormUsuarios", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -180,7 +181,8 @@ namespace Proyecto_Ing._Software
 
                 if (exito)
                 {
-                    MessageBox.Show(_loc["FormUsuarios", "MsgUsuarioCreado"]);
+                    MessageBox.Show(_loc["FormUsuarios", "MsgUsuarioCreado"],
+                        _loc["FormUsuarios", "TitleExito"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ActualizarGrilla();
                 }
             }
@@ -268,7 +270,8 @@ namespace Proyecto_Ing._Software
             }
             catch (Exception ex)
             {
-                MessageBox.Show(_loc["FormUsuarios", "MsgErrorGrilla"] + ex.Message);
+                MessageBox.Show(_loc["FormUsuarios", "MsgErrorGrilla"] + ex.Message,
+                    _loc["FormUsuarios", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -276,16 +279,18 @@ namespace Proyecto_Ing._Software
         {
             if (dgvUsuario.SelectedRows.Count == 0)
             {
-                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"],
+                    _loc["FormUsuarios", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             int dni = Convert.ToInt32(dgvUsuario.SelectedRows[0].Cells["DNI"].Value);
             bool ok = new UsuarioBLL().DeshabilitarUsuario(dni);
 
-            MessageBox.Show(ok
-                ? _loc["FormUsuarios", "MsgUsuarioDeshabilitado"]
-                : _loc["FormUsuarios", "MsgErrorDeshabilitar"]);
+            MessageBox.Show(
+                ok ? _loc["FormUsuarios", "MsgUsuarioDeshabilitado"] : _loc["FormUsuarios", "MsgErrorDeshabilitar"],
+                ok ? _loc["FormUsuarios", "TitleExito"] : _loc["FormUsuarios", "TitleError"],
+                MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
             ActualizarGrilla();
         }
@@ -294,16 +299,18 @@ namespace Proyecto_Ing._Software
         {
             if (dgvUsuario.SelectedRows.Count == 0)
             {
-                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"],
+                    _loc["FormUsuarios", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             int dni = Convert.ToInt32(dgvUsuario.SelectedRows[0].Cells["DNI"].Value);
             bool ok = new UsuarioBLL().HabilitarUsuario(dni);
 
-            MessageBox.Show(ok
-                ? _loc["FormUsuarios", "MsgUsuarioHabilitado"]
-                : _loc["FormUsuarios", "MsgErrorHabilitar"]);
+            MessageBox.Show(
+                ok ? _loc["FormUsuarios", "MsgUsuarioHabilitado"] : _loc["FormUsuarios", "MsgErrorHabilitar"],
+                ok ? _loc["FormUsuarios", "TitleExito"] : _loc["FormUsuarios", "TitleError"],
+                MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
             ActualizarGrilla();
         }
@@ -316,7 +323,8 @@ namespace Proyecto_Ing._Software
         {
             if (_dniUsuario == 0)
             {
-                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"],
+                    _loc["FormUsuarios", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -331,9 +339,10 @@ namespace Proyecto_Ing._Software
             {
                 bool ok = new UsuarioBLL().RegenerarDigitoVerificador(_dniUsuario);
 
-                MessageBox.Show(ok
-                    ? _loc["FormUsuarios", "MsgDigitoRegenerado"]
-                    : _loc["FormUsuarios", "MsgErrorRegenerarDigito"]);
+                MessageBox.Show(
+                    ok ? _loc["FormUsuarios", "MsgDigitoRegenerado"] : _loc["FormUsuarios", "MsgErrorRegenerarDigito"],
+                    ok ? _loc["FormUsuarios", "TitleExito"] : _loc["FormUsuarios", "TitleError"],
+                    MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
                 ActualizarGrilla();
             }
@@ -348,13 +357,15 @@ namespace Proyecto_Ing._Software
         {
             if (_dniUsuario == 0)
             {
-                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"],
+                    _loc["FormUsuarios", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (cmbRoles.SelectedValue == null)
             {
-                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"],
+                    _loc["FormUsuarios", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -372,12 +383,14 @@ namespace Proyecto_Ing._Software
 
             if (exito)
             {
-                MessageBox.Show(_loc["FormUsuarios", "MsgUsuarioModificado"]);
+                MessageBox.Show(_loc["FormUsuarios", "MsgUsuarioModificado"],
+                    _loc["FormUsuarios", "TitleExito"], MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ActualizarGrilla();
             }
             else
             {
-                MessageBox.Show(_loc["FormUsuarios", "MsgErrorModificar"]);
+                MessageBox.Show(_loc["FormUsuarios", "MsgErrorModificar"],
+                    _loc["FormUsuarios", "TitleError"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
