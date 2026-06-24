@@ -161,6 +161,7 @@
             this.dgvRoles.Name = "dgvRoles";
             this.dgvRoles.Size = new System.Drawing.Size(508, 363);
             this.dgvRoles.TabIndex = 12;
+            this.dgvRoles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvRoles_CellClick);
             // 
             // label5
             // 

@@ -131,7 +131,8 @@
             this.dgvFamilias.Name = "dgvFamilias";
             this.dgvFamilias.Size = new System.Drawing.Size(609, 436);
             this.dgvFamilias.TabIndex = 12;
-            // 
+            this.dgvFamilias.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFamilias_CellClick);
+            //
             // btnModificar
             // 
             this.btnModificar.Location = new System.Drawing.Point(122, 423);
