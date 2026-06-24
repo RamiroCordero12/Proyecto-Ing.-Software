@@ -61,6 +61,8 @@ namespace Proyecto_Ing._Software
             btnHabilitarUsuario.Text = _loc["FormUsuarios", "ButtonHabilitar"];
             btnModificarUsuario.Text = _loc["FormUsuarios", "ButtonModificar"];
 
+            AplicarEncabezadosGrilla();
+
             // Refresh language combo items (keep current selection)
             int langIndex = cmbLenguaje.SelectedIndex;
             cmbLenguaje.Items.Clear();
@@ -68,6 +70,21 @@ namespace Proyecto_Ing._Software
             cmbLenguaje.Items.Add(_loc["Idiomas", "Ingles"]);
             cmbLenguaje.Items.Add(_loc["Idiomas", "Portugues"]);
             cmbLenguaje.SelectedIndex = (int)_loc.CurrentLanguage;
+        }
+
+        // Column names stay fixed (used by Cells["..."] lookups elsewhere);
+        // only the displayed HeaderText is localized.
+        private void AplicarEncabezadosGrilla()
+        {
+            if (!dgvUsuario.Columns.Contains("DNI")) return;
+
+            dgvUsuario.Columns["DNI"].HeaderText = _loc["FormUsuarios", "ColDNI"];
+            dgvUsuario.Columns["Nombre"].HeaderText = _loc["FormUsuarios", "ColNombre"];
+            dgvUsuario.Columns["Apellido"].HeaderText = _loc["FormUsuarios", "ColApellido"];
+            dgvUsuario.Columns["Email"].HeaderText = _loc["FormUsuarios", "ColEmail"];
+            dgvUsuario.Columns["Rol"].HeaderText = _loc["FormUsuarios", "ColRol"];
+            dgvUsuario.Columns["Estado"].HeaderText = _loc["FormUsuarios", "ColEstado"];
+            dgvUsuario.Columns["Lenguaje"].HeaderText = _loc["FormUsuarios", "ColLenguaje"];
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -174,8 +191,16 @@ namespace Proyecto_Ing._Software
 
                 var usuarios = new UsuarioBLL().ListarUsuarios();
 
-                // Project to a display-friendly table so we show the role NAME,
-                // not just the numeric IdRol.
+                // Names for each Lenguaje index, in the same order as cmbLenguaje's items.
+                string[] nombresLenguaje =
+                {
+                    _loc["Idiomas", "Espanol"],
+                    _loc["Idiomas", "Ingles"],
+                    _loc["Idiomas", "Portugues"]
+                };
+
+                // Project to a display-friendly table so we show the role NAME
+                // and language NAME, not just their numeric IDs.
                 var display = new System.Data.DataTable();
                 display.Columns.Add("DNI", typeof(int));
                 display.Columns.Add("Nombre", typeof(string));
@@ -183,7 +208,8 @@ namespace Proyecto_Ing._Software
                 display.Columns.Add("Email", typeof(string));
                 display.Columns.Add("Rol", typeof(string));
                 display.Columns.Add("Estado", typeof(bool));
-                display.Columns.Add("Lenguaje", typeof(int));
+                display.Columns.Add("Lenguaje", typeof(string));
+                display.Columns.Add("LenguajeId", typeof(int));
 
                 foreach (var u in usuarios)
                 {
@@ -191,11 +217,26 @@ namespace Proyecto_Ing._Software
                         .FirstOrDefault(r => r.IdRol == u.IdRol)?.NombreRol
                         ?? u.IdRol.ToString();
 
-                    display.Rows.Add(u.DNI, u.Nombre, u.Apellido, u.Email, nombreRol, u.Estado, u.Lenguaje);
+                    string nombreLenguaje = u.Lenguaje >= 0 && u.Lenguaje < nombresLenguaje.Length
+                        ? nombresLenguaje[u.Lenguaje]
+                        : u.Lenguaje.ToString();
+
+                    display.Rows.Add(u.DNI, u.Nombre, u.Apellido, u.Email, nombreRol, u.Estado, nombreLenguaje, u.Lenguaje);
                 }
 
                 dgvUsuario.DataSource = null;
                 dgvUsuario.DataSource = display;
+
+                if (dgvUsuario.Columns.Contains("LenguajeId"))
+                    dgvUsuario.Columns["LenguajeId"].Visible = false;
+
+                AplicarEncabezadosGrilla();
+
+                // Binding a new DataSource auto-selects the first row, which looks
+                // like a real selection but isn't (CellClick never fired for it).
+                // Clear it so a single click on the intended row is enough.
+                dgvUsuario.ClearSelection();
+                dgvUsuario.CurrentCell = null;
             }
             catch (Exception ex)
             {
@@ -292,7 +333,7 @@ namespace Proyecto_Ing._Software
             if (rolEncontrado != null)
                 cmbRoles.SelectedValue = rolEncontrado.IdRol;
 
-            int lenguaje = Convert.ToInt32(fila.Cells["Lenguaje"].Value);
+            int lenguaje = Convert.ToInt32(fila.Cells["LenguajeId"].Value);
             if (lenguaje >= 0 && lenguaje < cmbLenguaje.Items.Count)
                 cmbLenguaje.SelectedIndex = lenguaje;
         }

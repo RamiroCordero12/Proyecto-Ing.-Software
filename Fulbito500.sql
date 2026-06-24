@@ -202,11 +202,11 @@ SET IDENTITY_INSERT [dbo].[Familias] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Patentes] ON
 
-INSERT [dbo].[Patentes] ([IdPatente], [NombrePatente], [Descripcion]) VALUES (1, N'Gestor de Usuarios', N'Gestin de usuarios del sistema')
-INSERT [dbo].[Patentes] ([IdPatente], [NombrePatente], [Descripcion]) VALUES (2, N'Bitcora', N'Visualizacin del registro de eventos')
-INSERT [dbo].[Patentes] ([IdPatente], [NombrePatente], [Descripcion]) VALUES (3, N'Cambiar Contrasea', N'Cambio de contrasea del usuario actual')
-INSERT [dbo].[Patentes] ([IdPatente], [NombrePatente], [Descripcion]) VALUES (4, N'Cerrar Sesin', N'Cierre de sesin actual')
-INSERT [dbo].[Patentes] ([IdPatente], [NombrePatente], [Descripcion]) VALUES (5, N'Reiniciar Sesin', N'Inicio de nueva sesin sin cerrar el men')
+INSERT [dbo].[Patentes] ([IdPatente], [NombrePatente], [Descripcion]) VALUES (1, N'Gestor de Usuarios', N'Gestión de usuarios del sistema')
+INSERT [dbo].[Patentes] ([IdPatente], [NombrePatente], [Descripcion]) VALUES (2, N'Bitácora', N'Visualización del registro de eventos')
+INSERT [dbo].[Patentes] ([IdPatente], [NombrePatente], [Descripcion]) VALUES (3, N'Cambiar Contraseña', N'Cambio de contraseña del usuario actual')
+INSERT [dbo].[Patentes] ([IdPatente], [NombrePatente], [Descripcion]) VALUES (4, N'Cerrar Sesión', N'Cierre de sesión actual')
+INSERT [dbo].[Patentes] ([IdPatente], [NombrePatente], [Descripcion]) VALUES (5, N'Reiniciar Sesión', N'Inicio de nueva sesión sin cerrar el menú')
 SET IDENTITY_INSERT [dbo].[Patentes] OFF
 GO
 INSERT [dbo].[Rol_Pat] ([IdRol], [IdPatente]) VALUES (1, 1)
@@ -223,7 +223,7 @@ SET IDENTITY_INSERT [dbo].[Roles] ON
 
 INSERT [dbo].[Roles] ([IdRol], [NombreRol], [Descripcion]) VALUES (1, N'Administrador', N'Acceso total al sistema')
 INSERT [dbo].[Roles] ([IdRol], [NombreRol], [Descripcion]) VALUES (2, N'Empleado', N'Acceso limitado al sistema')
-INSERT [dbo].[Roles] ([IdRol], [NombreRol], [Descripcion]) VALUES (3, N'Usuario', N'Rol de usuario comun')
+INSERT [dbo].[Roles] ([IdRol], [NombreRol], [Descripcion]) VALUES (3, N'Usuario', N'Rol de usuario común')
 SET IDENTITY_INSERT [dbo].[Roles] OFF
 GO
 

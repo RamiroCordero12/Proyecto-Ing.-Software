@@ -57,6 +57,23 @@ namespace Proyecto_Ing._Software
                 PopularCombo(cmbModulo, _todasLasEntradas.Select(b => b.Modulo).Distinct().OrderBy(x => x));
                 PopularCombo(cmbCriticidad, _todasLasEntradas.Select(b => b.Criticidad).Distinct().OrderBy(x => x));
             }
+
+            AplicarEncabezadosGrilla();
+        }
+
+        // Column names stay fixed (auto-generated from Bitacora's properties);
+        // only the displayed HeaderText is localized.
+        private void AplicarEncabezadosGrilla()
+        {
+            if (!DgvBitacora.Columns.Contains("IdBitacora")) return;
+
+            DgvBitacora.Columns["IdBitacora"].HeaderText = _loc["FormBitacora", "ColIdBitacora"];
+            DgvBitacora.Columns["DNI"].HeaderText = _loc["FormBitacora", "ColDNI"];
+            DgvBitacora.Columns["Usuario"].HeaderText = _loc["FormBitacora", "ColUsuario"];
+            DgvBitacora.Columns["Accion"].HeaderText = _loc["FormBitacora", "ColAccion"];
+            DgvBitacora.Columns["FechaHora"].HeaderText = _loc["FormBitacora", "ColFechaHora"];
+            DgvBitacora.Columns["Modulo"].HeaderText = _loc["FormBitacora", "ColModulo"];
+            DgvBitacora.Columns["Criticidad"].HeaderText = _loc["FormBitacora", "ColCriticidad"];
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -82,6 +99,7 @@ namespace Proyecto_Ing._Software
 
                 DgvBitacora.DataSource = null;
                 DgvBitacora.DataSource = _todasLasEntradas;
+                AplicarEncabezadosGrilla();
             }
             catch (Exception ex)
             {
@@ -141,6 +159,7 @@ namespace Proyecto_Ing._Software
 
             DgvBitacora.DataSource = null;
             DgvBitacora.DataSource = resultado;
+            AplicarEncabezadosGrilla();
 
             if (resultado.Count == 0)
             {

@@ -60,6 +60,51 @@ namespace Proyecto_Ing._Software
             btnModificar.Text = _loc["FormRoles", "ButtonModificar"];
             btnEliminar.Text = _loc["FormRoles", "ButtonEliminar"];
             btnLimpiar.Text = _loc["FormRoles", "ButtonLimpiar"];
+
+            AplicarEncabezadosGrilla();
+            RefrescarTextosPatentes();
+        }
+
+        // Column names stay fixed (used by Cells["..."] lookups elsewhere);
+        // only the displayed HeaderText is localized.
+        private void AplicarEncabezadosGrilla()
+        {
+            if (!dgvRoles.Columns.Contains("ID")) return;
+
+            dgvRoles.Columns["ID"].HeaderText = _loc["FormRoles", "ColID"];
+            dgvRoles.Columns["Nombre"].HeaderText = _loc["FormRoles", "ColNombre"];
+            dgvRoles.Columns["Descripcion"].HeaderText = _loc["FormRoles", "ColDescripcion"];
+            dgvRoles.Columns["Permisos"].HeaderText = _loc["FormRoles", "ColPermisos"];
+        }
+
+        // Patentes are fixed system permissions (unlike Familias/Roles names,
+        // which are admin-entered and must NOT be translated).
+        private string NombreLocalizadoPatente(int idPatente) => _loc["Patentes", idPatente.ToString()];
+
+        // Re-label existing clbPatentes items in place (by index) so a language
+        // switch doesn't reset the user's current checkbox selections.
+        private void RefrescarTextosPatentes()
+        {
+            for (int i = 0; i < clbPatentes.Items.Count; i++)
+            {
+                var item = (PatenteItem)clbPatentes.Items[i];
+                clbPatentes.Items[i] = new PatenteItem(item.Patente, NombreLocalizadoPatente(item.Patente.Id));
+            }
+        }
+
+        // Wraps a PatenteComponent so the checklist displays its localized
+        // name while CargarPatentes()/CellClick code can still get back to
+        // the underlying entity (and its DB-stable Id) for selection logic.
+        private sealed class PatenteItem
+        {
+            public PatenteComponent Patente { get; }
+            private readonly string _texto;
+            public PatenteItem(PatenteComponent patente, string texto)
+            {
+                Patente = patente;
+                _texto = texto;
+            }
+            public override string ToString() => _texto;
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -77,7 +122,7 @@ namespace Proyecto_Ing._Software
                 _todasLasPatentes = new PatentesBLL().ListarPatentes();
                 clbPatentes.Items.Clear();
                 foreach (var p in _todasLasPatentes)
-                    clbPatentes.Items.Add(p, false);
+                    clbPatentes.Items.Add(new PatenteItem(p, NombreLocalizadoPatente(p.Id)), false);
             }
             catch (Exception ex)
             {
@@ -122,7 +167,11 @@ namespace Proyecto_Ing._Software
                     RolBE completo = rolesBLL.ObtenerRolConPermisos(r.IdRol);
                     var nombres = new List<string>();
                     foreach (var c in completo.Componentes)
-                        nombres.Add(c.Nombre);
+                    {
+                        // Patentes are fixed system permissions (localize them);
+                        // Familias are admin-named (show their name as-is).
+                        nombres.Add(c is PatenteComponent pc ? NombreLocalizadoPatente(pc.Id) : c.Nombre);
+                    }
 
                     display.Rows.Add(
                         r.IdRol,
@@ -135,6 +184,13 @@ namespace Proyecto_Ing._Software
 
                 if (dgvRoles.Columns.Contains("ID"))
                     dgvRoles.Columns["ID"].Width = 40;
+
+                AplicarEncabezadosGrilla();
+
+                // Binding a new DataSource auto-selects the first row, which looks
+                // like a real selection but isn't (CellClick never fired for it).
+                dgvRoles.ClearSelection();
+                dgvRoles.CurrentCell = null;
             }
             catch (Exception ex)
             {
@@ -200,8 +256,8 @@ namespace Proyecto_Ing._Software
 
                 for (int i = 0; i < clbPatentes.Items.Count; i++)
                 {
-                    var p = (PatenteComponent)clbPatentes.Items[i];
-                    clbPatentes.SetItemChecked(i, setPatentes.Contains(p.Id));
+                    var item = (PatenteItem)clbPatentes.Items[i];
+                    clbPatentes.SetItemChecked(i, setPatentes.Contains(item.Patente.Id));
                 }
 
                 for (int i = 0; i < clbFamilias.Items.Count; i++)

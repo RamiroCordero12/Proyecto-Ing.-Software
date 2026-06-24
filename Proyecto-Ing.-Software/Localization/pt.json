@@ -51,7 +51,14 @@
     "MsgErrorModificar": "Erro ao modificar usuário",
     "MsgErrorGrilla": "Erro ao carregar a grade: ",
     "MsgAccesoDenegado": "Você não tem permissão para acessar este módulo.",
-    "MsgAccesoDenegadoTitle": "Acesso negado"
+    "MsgAccesoDenegadoTitle": "Acesso negado",
+    "ColDNI": "DNI",
+    "ColNombre": "Nome",
+    "ColApellido": "Sobrenome",
+    "ColEmail": "Email",
+    "ColRol": "Perfil",
+    "ColEstado": "Status",
+    "ColLenguaje": "Idioma"
   },
   "FormBitacora": {
     "Title": "Registro de eventos",
@@ -69,7 +76,14 @@
     "ErrorSinResultadosTitle": "Sem resultados",
     "MsgErrorCargar": "Erro ao carregar a lista: ",
     "MsgAccesoDenegado": "Você não tem permissão para acessar este módulo.",
-    "MsgAccesoDenegadoTitle": "Acesso negado"
+    "MsgAccesoDenegadoTitle": "Acesso negado",
+    "ColIdBitacora": "ID",
+    "ColDNI": "DNI",
+    "ColUsuario": "Usuário",
+    "ColAccion": "Ação",
+    "ColFechaHora": "Data/hora",
+    "ColModulo": "Módulo",
+    "ColCriticidad": "Criticidade"
   },
   "FormCambiarContrasena": {
     "Title": "Alterar senha",
@@ -113,7 +127,11 @@
     "TitleExito": "Sucesso",
     "TitleAviso": "Aviso",
     "MsgAccesoDenegado": "Você não tem permissão para acessar este módulo.",
-    "MsgAccesoDenegadoTitle": "Acesso negado"
+    "MsgAccesoDenegadoTitle": "Acesso negado",
+    "ColID": "ID",
+    "ColNombre": "Nome",
+    "ColDescripcion": "Descrição",
+    "ColPatentes": "Permissões"
   },
   "FormRoles": {
     "Title": "Gestão de Perfis",
@@ -145,11 +163,22 @@
     "TitleExito": "Sucesso",
     "TitleAviso": "Aviso",
     "MsgAccesoDenegado": "Você não tem permissão para acessar este módulo.",
-    "MsgAccesoDenegadoTitle": "Acesso negado"
+    "MsgAccesoDenegadoTitle": "Acesso negado",
+    "ColID": "ID",
+    "ColNombre": "Nome",
+    "ColDescripcion": "Descrição",
+    "ColPermisos": "Permissões"
   },
   "Idiomas": {
     "Espanol": "Español",
     "Ingles": "English",
     "Portugues": "Português"
+  },
+  "Patentes": {
+    "1": "Gestor de Usuários",
+    "2": "Registro de eventos",
+    "3": "Alterar senha",
+    "4": "Sair",
+    "5": "Reiniciar sessão"
   }
 }

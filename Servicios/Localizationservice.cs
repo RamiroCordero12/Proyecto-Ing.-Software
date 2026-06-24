@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace Servicios.Localization
 {
@@ -73,6 +75,7 @@ namespace Servicios.Localization
 
             // Load the default language immediately
             LoadLanguage(AppLanguage.Espanol);
+            ApplyThreadCulture(AppLanguage.Espanol);
         }
 
         // ─────────────────────────────────────────
@@ -135,7 +138,28 @@ namespace Servicios.Localization
             if (language == _currentLanguage) return;
             LoadLanguage(language);
             _currentLanguage = language;
+            ApplyThreadCulture(language);
             NotifyAll();
+        }
+
+        /// <summary>
+        /// Sets the calling (UI) thread's culture so that stock .NET dialogs —
+        /// most importantly MessageBox's Yes/No/OK/Cancel button captions —
+        /// render in the selected app language instead of whatever the OS
+        /// install language happens to be.
+        /// </summary>
+        private static void ApplyThreadCulture(AppLanguage lang)
+        {
+            CultureInfo culture;
+            switch (lang)
+            {
+                case AppLanguage.English: culture = new CultureInfo("en-US"); break;
+                case AppLanguage.Portugues: culture = new CultureInfo("pt-BR"); break;
+                default: culture = new CultureInfo("es-ES"); break;
+            }
+
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
         }
 
         /// <summary>Convenience overload that maps the combo-box index

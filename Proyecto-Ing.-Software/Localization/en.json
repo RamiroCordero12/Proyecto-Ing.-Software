@@ -51,7 +51,14 @@
     "MsgErrorModificar": "Error modifying user",
     "MsgErrorGrilla": "Error loading grid: ",
     "MsgAccesoDenegado": "You do not have permission to access this module.",
-    "MsgAccesoDenegadoTitle": "Access denied"
+    "MsgAccesoDenegadoTitle": "Access denied",
+    "ColDNI": "DNI",
+    "ColNombre": "First name",
+    "ColApellido": "Last name",
+    "ColEmail": "Email",
+    "ColRol": "Role",
+    "ColEstado": "Status",
+    "ColLenguaje": "Language"
   },
   "FormBitacora": {
     "Title": "Event log",
@@ -69,7 +76,14 @@
     "ErrorSinResultadosTitle": "No results",
     "MsgErrorCargar": "Error loading list: ",
     "MsgAccesoDenegado": "You do not have permission to access this module.",
-    "MsgAccesoDenegadoTitle": "Access denied"
+    "MsgAccesoDenegadoTitle": "Access denied",
+    "ColIdBitacora": "ID",
+    "ColDNI": "DNI",
+    "ColUsuario": "User",
+    "ColAccion": "Action",
+    "ColFechaHora": "Date/time",
+    "ColModulo": "Module",
+    "ColCriticidad": "Severity"
   },
   "FormCambiarContrasena": {
     "Title": "Change password",
@@ -113,7 +127,11 @@
     "TitleExito": "Success",
     "TitleAviso": "Notice",
     "MsgAccesoDenegado": "You do not have permission to access this module.",
-    "MsgAccesoDenegadoTitle": "Access denied"
+    "MsgAccesoDenegadoTitle": "Access denied",
+    "ColID": "ID",
+    "ColNombre": "Name",
+    "ColDescripcion": "Description",
+    "ColPatentes": "Permissions"
   },
   "FormRoles": {
     "Title": "Role Management",
@@ -145,11 +163,22 @@
     "TitleExito": "Success",
     "TitleAviso": "Notice",
     "MsgAccesoDenegado": "You do not have permission to access this module.",
-    "MsgAccesoDenegadoTitle": "Access denied"
+    "MsgAccesoDenegadoTitle": "Access denied",
+    "ColID": "ID",
+    "ColNombre": "Name",
+    "ColDescripcion": "Description",
+    "ColPermisos": "Permissions"
   },
   "Idiomas": {
     "Espanol": "Español",
     "Ingles": "English",
     "Portugues": "Português"
+  },
+  "Patentes": {
+    "1": "User Manager",
+    "2": "Audit Log",
+    "3": "Change Password",
+    "4": "Logout",
+    "5": "Re-login"
   }
 }

@@ -51,7 +51,14 @@
     "MsgErrorModificar": "Error al modificar un usuario",
     "MsgErrorGrilla": "Error al cargar la grilla: ",
     "MsgAccesoDenegado": "No tiene permisos para acceder a este modulo.",
-    "MsgAccesoDenegadoTitle": "Acceso denegado"
+    "MsgAccesoDenegadoTitle": "Acceso denegado",
+    "ColDNI": "DNI",
+    "ColNombre": "Nombre",
+    "ColApellido": "Apellido",
+    "ColEmail": "Email",
+    "ColRol": "Rol",
+    "ColEstado": "Estado",
+    "ColLenguaje": "Lenguaje"
   },
   "FormBitacora": {
     "Title": "Bitácora de eventos",
@@ -69,7 +76,14 @@
     "ErrorSinResultadosTitle": "Sin resultados",
     "MsgErrorCargar": "Error al cargar la lista: ",
     "MsgAccesoDenegado": "No tiene permisos para acceder a este modulo.",
-    "MsgAccesoDenegadoTitle": "Acceso denegado"
+    "MsgAccesoDenegadoTitle": "Acceso denegado",
+    "ColIdBitacora": "ID",
+    "ColDNI": "DNI",
+    "ColUsuario": "Usuario",
+    "ColAccion": "Acción",
+    "ColFechaHora": "Fecha y hora",
+    "ColModulo": "Módulo",
+    "ColCriticidad": "Criticidad"
   },
   "FormCambiarContrasena": {
     "Title": "Cambiar contraseña",
@@ -113,7 +127,11 @@
     "TitleExito": "Exito",
     "TitleAviso": "Aviso",
     "MsgAccesoDenegado": "No tiene permisos para acceder a este modulo.",
-    "MsgAccesoDenegadoTitle": "Acceso denegado"
+    "MsgAccesoDenegadoTitle": "Acceso denegado",
+    "ColID": "ID",
+    "ColNombre": "Nombre",
+    "ColDescripcion": "Descripción",
+    "ColPatentes": "Patentes"
   },
   "FormRoles": {
     "Title": "Gestion de roles",
@@ -145,11 +163,22 @@
     "TitleExito": "Exito",
     "TitleAviso": "Aviso",
     "MsgAccesoDenegado": "No tiene permisos para acceder a este modulo.",
-    "MsgAccesoDenegadoTitle": "Acceso denegado"
+    "MsgAccesoDenegadoTitle": "Acceso denegado",
+    "ColID": "ID",
+    "ColNombre": "Nombre",
+    "ColDescripcion": "Descripción",
+    "ColPermisos": "Permisos"
   },
   "Idiomas": {
     "Espanol": "Español",
     "Ingles": "English",
     "Portugues": "Português"
+  },
+  "Patentes": {
+    "1": "Gestor de Usuarios",
+    "2": "Bitácora",
+    "3": "Cambiar Contraseña",
+    "4": "Cerrar Sesión",
+    "5": "Reiniciar Sesión"
   }
 }

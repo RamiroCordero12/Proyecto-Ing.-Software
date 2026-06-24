@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Servicios.Localization;
 using static Servicios.Permisos;
 
 namespace Servicios
@@ -53,6 +54,10 @@ namespace Servicios
         {
             usuario = null;
             Permisos = null;
+
+            // The login screen must always show in the default language,
+            // regardless of which language the previous user had selected.
+            LocalizationService.Instance.SetLanguage(AppLanguage.Espanol);
         }
     }
 }
