@@ -49,7 +49,9 @@
     "MsgErrorHabilitar": "Error para habilitar usuario",
     "MsgErrorDeshabilitar": "Error para deshabilitar usuario",
     "MsgErrorModificar": "Error al modificar un usuario",
-    "MsgErrorGrilla": "Error al cargar la grilla: "
+    "MsgErrorGrilla": "Error al cargar la grilla: ",
+    "MsgAccesoDenegado": "No tiene permisos para acceder a este modulo.",
+    "MsgAccesoDenegadoTitle": "Acceso denegado"
   },
   "FormBitacora": {
     "Title": "Bitácora de eventos",
@@ -107,7 +109,9 @@
     "MsgErrorModificarTitle": "Error al modificar familia",
     "TitleError": "Error",
     "TitleExito": "Exito",
-    "TitleAviso": "Aviso"
+    "TitleAviso": "Aviso",
+    "MsgAccesoDenegado": "No tiene permisos para acceder a este modulo.",
+    "MsgAccesoDenegadoTitle": "Acceso denegado"
   },
   "FormRoles": {
     "Title": "Gestion de roles",
@@ -137,7 +141,9 @@
     "MsgErrorModificarTitle": "Error al modificar rol",
     "TitleError": "Error",
     "TitleExito": "Exito",
-    "TitleAviso": "Aviso"
+    "TitleAviso": "Aviso",
+    "MsgAccesoDenegado": "No tiene permisos para acceder a este modulo.",
+    "MsgAccesoDenegadoTitle": "Acceso denegado"
   },
   "Idiomas": {
     "Espanol": "Español",

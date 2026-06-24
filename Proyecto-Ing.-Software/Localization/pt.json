@@ -49,7 +49,9 @@
     "MsgErrorHabilitar": "Erro ao ativar usuário",
     "MsgErrorDeshabilitar": "Erro ao desativar usuário",
     "MsgErrorModificar": "Erro ao modificar usuário",
-    "MsgErrorGrilla": "Erro ao carregar a grade: "
+    "MsgErrorGrilla": "Erro ao carregar a grade: ",
+    "MsgAccesoDenegado": "Você não tem permissão para acessar este módulo.",
+    "MsgAccesoDenegadoTitle": "Acesso negado"
   },
   "FormBitacora": {
     "Title": "Registro de eventos",
@@ -107,7 +109,9 @@
     "MsgErrorModificarTitle": "Erro ao modificar família",
     "TitleError": "Erro",
     "TitleExito": "Sucesso",
-    "TitleAviso": "Aviso"
+    "TitleAviso": "Aviso",
+    "MsgAccesoDenegado": "Você não tem permissão para acessar este módulo.",
+    "MsgAccesoDenegadoTitle": "Acesso negado"
   },
   "FormRoles": {
     "Title": "Gestão de Perfis",
@@ -137,7 +141,9 @@
     "MsgErrorModificarTitle": "Erro ao modificar perfil",
     "TitleError": "Erro",
     "TitleExito": "Sucesso",
-    "TitleAviso": "Aviso"
+    "TitleAviso": "Aviso",
+    "MsgAccesoDenegado": "Você não tem permissão para acessar este módulo.",
+    "MsgAccesoDenegadoTitle": "Acesso negado"
   },
   "Idiomas": {
     "Espanol": "Español",

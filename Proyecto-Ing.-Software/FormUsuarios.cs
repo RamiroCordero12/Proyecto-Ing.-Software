@@ -21,8 +21,8 @@ namespace Proyecto_Ing._Software
             if (SessionManager.GetInstance.Permisos != null &&
                 !SessionManager.GetInstance.Permisos.Tiene(Patente.GestorUsuarios))
             {
-                MessageBox.Show("No tiene permisos para acceder a este modulo.",
-                    "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(_loc["FormUsuarios", "MsgAccesoDenegado"],
+                    _loc["FormUsuarios", "MsgAccesoDenegadoTitle"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Load += (s, e) => this.Close();
                 return;
             }
@@ -99,7 +99,7 @@ namespace Proyecto_Ing._Software
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar roles: " + ex.Message,
+                MessageBox.Show(_loc["FormUsuarios", "MsgErrorCargarRoles"] + ex.Message,
                     _loc["FormUsuarios", "MsgErrorGrilla"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

@@ -49,7 +49,9 @@
     "MsgErrorHabilitar": "Error enabling user",
     "MsgErrorDeshabilitar": "Error disabling user",
     "MsgErrorModificar": "Error modifying user",
-    "MsgErrorGrilla": "Error loading grid: "
+    "MsgErrorGrilla": "Error loading grid: ",
+    "MsgAccesoDenegado": "You do not have permission to access this module.",
+    "MsgAccesoDenegadoTitle": "Access denied"
   },
   "FormBitacora": {
     "Title": "Event log",
@@ -107,7 +109,9 @@
     "MsgErrorModificarTitle": "Error modifying family",
     "TitleError": "Error",
     "TitleExito": "Success",
-    "TitleAviso": "Notice"
+    "TitleAviso": "Notice",
+    "MsgAccesoDenegado": "You do not have permission to access this module.",
+    "MsgAccesoDenegadoTitle": "Access denied"
   },
   "FormRoles": {
     "Title": "Role Management",
@@ -137,7 +141,9 @@
     "MsgErrorModificarTitle": "Error modifying role",
     "TitleError": "Error",
     "TitleExito": "Success",
-    "TitleAviso": "Notice"
+    "TitleAviso": "Notice",
+    "MsgAccesoDenegado": "You do not have permission to access this module.",
+    "MsgAccesoDenegadoTitle": "Access denied"
   },
   "Idiomas": {
     "Espanol": "Español",

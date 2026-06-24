@@ -28,8 +28,8 @@ namespace Proyecto_Ing._Software
             if (SessionManager.GetInstance.Permisos != null &&
                 !SessionManager.GetInstance.Permisos.Tiene(Patente.GestorUsuarios))
             {
-                MessageBox.Show("No tiene permisos para acceder a este modulo.",
-                    "Acceso denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(_loc["FormRoles", "MsgAccesoDenegado"],
+                    _loc["FormRoles", "MsgAccesoDenegadoTitle"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Load += (s, e) => this.Close();
                 return;
             }
