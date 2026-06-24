@@ -27,7 +27,9 @@
     "PromptDniOk": "OK",
     "PromptDniCancel": "Cancel",
     "TestDigitoOkTitle": "Valid user",
-    "TestDigitoAlertaTitle": "Tampered user"
+    "TestDigitoAlertaTitle": "Tampered user",
+    "SimularAlteracionTitle": "Simulate tampering",
+    "SimularAlteracionConfirm": "Do you want to simulate tampering with this user before testing? This will deliberately corrupt their verification digit (you can repair it afterward from User Manager)."
   },
   "FormUsuarios": {
     "Title": "User Manager",
@@ -44,6 +46,11 @@
     "ButtonDeshabilitar": "Disable user",
     "ButtonHabilitar": "Enable user",
     "ButtonModificar": "Modify user",
+    "ButtonRegenerarDigito": "Regenerate verification digit",
+    "MsgConfirmRegenerarDigito": "This will recalculate the selected user's verification digit from their current DNI and username. Continue?",
+    "MsgConfirmRegenerarDigitoTitle": "Regenerate verification digit",
+    "MsgDigitoRegenerado": "Verification digit regenerated. The user can now log in normally.",
+    "MsgErrorRegenerarDigito": "Error regenerating the verification digit",
     "RolAdministrador": "Administrator",
     "RolEmpleado": "Employee",
     "LegendaRol1": "Administrator = Role = 1",

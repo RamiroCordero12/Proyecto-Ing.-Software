@@ -27,7 +27,9 @@
     "PromptDniOk": "Aceptar",
     "PromptDniCancel": "Cancelar",
     "TestDigitoOkTitle": "Usuario válido",
-    "TestDigitoAlertaTitle": "Usuario alterado"
+    "TestDigitoAlertaTitle": "Usuario alterado",
+    "SimularAlteracionTitle": "Simular alteración",
+    "SimularAlteracionConfirm": "¿Desea simular una alteración de este usuario antes de probar? Esto corromperá su dígito verificador a propósito (puede recuperarlo luego desde Gestor de usuarios)."
   },
   "FormUsuarios": {
     "Title": "Gestor de Usuarios",
@@ -44,6 +46,11 @@
     "ButtonDeshabilitar": "Deshabilitar usuario",
     "ButtonHabilitar": "Habilitar usuario",
     "ButtonModificar": "Modificar usuario",
+    "ButtonRegenerarDigito": "Regenerar dígito verificador",
+    "MsgConfirmRegenerarDigito": "Esto recalculará el dígito verificador del usuario seleccionado usando su DNI y nombre de usuario actuales. ¿Continuar?",
+    "MsgConfirmRegenerarDigitoTitle": "Regenerar dígito verificador",
+    "MsgDigitoRegenerado": "Dígito verificador regenerado. El usuario ya puede iniciar sesión normalmente.",
+    "MsgErrorRegenerarDigito": "Error al regenerar el dígito verificador",
     "RolAdministrador": "Administrador",
     "RolEmpleado": "Empleado",
     "LegendaRol1": "Administrador = Rol = 1",

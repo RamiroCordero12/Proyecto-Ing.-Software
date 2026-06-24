@@ -50,6 +50,7 @@
             this.lblCambiarLenguaje = new System.Windows.Forms.Label();
             this.lblFiltroEstado = new System.Windows.Forms.Label();
             this.cmbFiltroEstado = new System.Windows.Forms.ComboBox();
+            this.btnRegenerarDigito = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuario)).BeginInit();
             this.SuspendLayout();
             // 
@@ -195,11 +196,22 @@
             this.cmbFiltroEstado.TabIndex = 17;
             this.cmbFiltroEstado.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroEstado_SelectedIndexChanged);
             //
+            // btnRegenerarDigito
+            //
+            this.btnRegenerarDigito.Location = new System.Drawing.Point(243, 390);
+            this.btnRegenerarDigito.Name = "btnRegenerarDigito";
+            this.btnRegenerarDigito.Size = new System.Drawing.Size(349, 36);
+            this.btnRegenerarDigito.TabIndex = 18;
+            this.btnRegenerarDigito.Text = "Regenerar digito verificador";
+            this.btnRegenerarDigito.UseVisualStyleBackColor = true;
+            this.btnRegenerarDigito.Click += new System.EventHandler(this.btnRegenerarDigito_Click);
+            //
             // FormUsuarios
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
+            this.Controls.Add(this.btnRegenerarDigito);
             this.Controls.Add(this.cmbFiltroEstado);
             this.Controls.Add(this.lblFiltroEstado);
             this.Controls.Add(this.cmbLenguaje);
@@ -252,5 +264,6 @@
         private System.Windows.Forms.Label lblCambiarLenguaje;
         private System.Windows.Forms.Label lblFiltroEstado;
         private System.Windows.Forms.ComboBox cmbFiltroEstado;
+        private System.Windows.Forms.Button btnRegenerarDigito;
     }
 }

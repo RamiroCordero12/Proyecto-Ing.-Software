@@ -173,8 +173,29 @@ namespace Proyecto_Ing._Software
                           _loc["FormMenuPrincipal", "PromptDniCancel"], out int dni))
                 return;
 
+            var simular = MessageBox.Show(
+                _loc["FormMenuPrincipal", "SimularAlteracionConfirm"],
+                _loc["FormMenuPrincipal", "SimularAlteracionTitle"],
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            var usuarioBLL = new BLL.UsuarioBLL();
+
+            if (simular == DialogResult.Yes)
+            {
+                try
+                {
+                    usuarioBLL.SimularAlteracion(dni);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, _loc["FormMenuPrincipal", "TestDigitoAlertaTitle"],
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
             string detalle;
-            bool valido = new BLL.UsuarioBLL().VerificarIntegridad(dni, out detalle);
+            bool valido = usuarioBLL.VerificarIntegridad(dni, out detalle);
 
             MessageBox.Show(detalle,
                 valido ? _loc["FormMenuPrincipal", "TestDigitoOkTitle"] : _loc["FormMenuPrincipal", "TestDigitoAlertaTitle"],

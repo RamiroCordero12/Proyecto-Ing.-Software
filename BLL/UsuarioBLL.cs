@@ -275,6 +275,27 @@ namespace BLL
             return valido;
         }
 
+        // Test helper: deliberately corrupts the stored DigitoVerificador so
+        // VerificarIntegridad has something real to catch, without needing to
+        // hand-edit the database. Always produces a value different from the
+        // correct one (wraps 9 -> 0).
+        public void SimularAlteracion(int dni)
+        {
+            UsuarioDAL usuarioDAL = new UsuarioDAL();
+            Usuario usuario = usuarioDAL.ObtenerPorDNI(dni);
+            if (usuario == null)
+                throw new Exception("No existe un usuario con ese DNI.");
+
+            int correcto = DigitoVerificadorHelper.Calcular(usuario.DNI, usuario.NombreUsuario);
+            int alterado = (correcto + 1) % 10;
+            usuarioDAL.ActualizarDigitoVerificador(dni, alterado);
+
+            Bitacora _bitacora = new Bitacora();
+            bitacora.RegistroBitacora(_bitacora.IdBitacora, dni,
+                _bitacora.Accion = "Simulacion de alteracion (prueba)",
+                DateTime.Now, "Gestor de usuarios", _bitacora.Criticidad = "Media");
+        }
+
         // Recalculates and persists the DigitoVerificador for a user, restoring
         // their ability to log in after a direct database edit broke the check.
         public bool RegenerarDigitoVerificador(int dni)
@@ -292,7 +313,7 @@ namespace BLL
                 Bitacora _bitacora = new Bitacora();
 
                 bitacora.RegistroBitacora(_bitacora.IdBitacora, dni,
-                    _bitacora.Accion = "Digito verificador regenerado (recuperacion de usuario alterado)",
+                    _bitacora.Accion = "Digito verificador regenerado",
                     DateTime.Now, "Gestor de usuarios", _bitacora.Criticidad = "Alta");
             }
 

@@ -60,6 +60,7 @@ namespace Proyecto_Ing._Software
             btnDeshabilitarUsuario.Text = _loc["FormUsuarios", "ButtonDeshabilitar"];
             btnHabilitarUsuario.Text = _loc["FormUsuarios", "ButtonHabilitar"];
             btnModificarUsuario.Text = _loc["FormUsuarios", "ButtonModificar"];
+            btnRegenerarDigito.Text = _loc["FormUsuarios", "ButtonRegenerarDigito"];
 
             AplicarEncabezadosGrilla();
 
@@ -292,6 +293,42 @@ namespace Proyecto_Ing._Software
                 : _loc["FormUsuarios", "MsgErrorHabilitar"]);
 
             ActualizarGrilla();
+        }
+
+        // Recovery tool: recalculates and persists the DigitoVerificador for
+        // the selected user, restoring their ability to log in after a
+        // direct database edit (e.g. changed NombreUsuario or DNI by hand)
+        // broke the integrity check.
+        private void btnRegenerarDigito_Click(object sender, EventArgs e)
+        {
+            if (_dniUsuario == 0)
+            {
+                MessageBox.Show(_loc["FormUsuarios", "MsgSeleccionarUsuario"]);
+                return;
+            }
+
+            var confirmar = MessageBox.Show(
+                _loc["FormUsuarios", "MsgConfirmRegenerarDigito"],
+                _loc["FormUsuarios", "MsgConfirmRegenerarDigitoTitle"],
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (confirmar != DialogResult.Yes) return;
+
+            try
+            {
+                bool ok = new UsuarioBLL().RegenerarDigitoVerificador(_dniUsuario);
+
+                MessageBox.Show(ok
+                    ? _loc["FormUsuarios", "MsgDigitoRegenerado"]
+                    : _loc["FormUsuarios", "MsgErrorRegenerarDigito"]);
+
+                ActualizarGrilla();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, _loc["FormUsuarios", "MsgErrorRegenerarDigito"],
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnModificarUsuario_Click(object sender, EventArgs e)
