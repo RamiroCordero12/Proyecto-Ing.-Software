@@ -66,10 +66,10 @@ namespace DAL
                             usuario.Contrasena = reader["Contrasena"].ToString();
                             usuario.Email = reader["Email"].ToString();
                             usuario.IdRol = int.Parse(reader["IdRol"].ToString());
-                            usuario.Estado = bool.Parse(reader["Estado"].ToString());
-                            usuario.IntentosFallidos = int.Parse(reader["IntentosFallidos"].ToString());
-                            usuario.Lenguaje = int.Parse(reader["Lenguaje"].ToString());
-                            usuario.DigitoVerificador = int.Parse(reader["DigitoVerificador"].ToString());
+                            usuario.Estado = reader["Estado"] != DBNull.Value && (bool)reader["Estado"];
+                            usuario.IntentosFallidos = reader["IntentosFallidos"] != DBNull.Value ? int.Parse(reader["IntentosFallidos"].ToString()) : 0;
+                            usuario.Lenguaje = reader["Lenguaje"] != DBNull.Value ? int.Parse(reader["Lenguaje"].ToString()) : 0;
+                            usuario.DigitoVerificador = reader["DigitoVerificador"] != DBNull.Value ? int.Parse(reader["DigitoVerificador"].ToString()) : 0;
 
                             list.Add(usuario);
                         }
@@ -189,7 +189,7 @@ namespace DAL
                                 NombreUsuario = reader["NombreUsuario"].ToString(),
                                 Contrasena = reader["Contrasena"].ToString(),
                                 Email = reader["Email"].ToString(),
-                                IdRol = int.Parse(reader["IdRol"].ToString()),
+                                IdRol = reader["IdRol"] != DBNull.Value ? int.Parse(reader["IdRol"].ToString()) : 0,
                             };
                         }
                     }

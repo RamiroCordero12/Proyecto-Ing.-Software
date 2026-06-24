@@ -67,7 +67,9 @@
     "ErrorFechaInvalidaTitle": "Filtro inválido",
     "ErrorSinResultados": "No se encontraron registros con los filtros seleccionados.",
     "ErrorSinResultadosTitle": "Sin resultados",
-    "MsgErrorCargar": "Error al cargar la lista: "
+    "MsgErrorCargar": "Error al cargar la lista: ",
+    "MsgAccesoDenegado": "No tiene permisos para acceder a este modulo.",
+    "MsgAccesoDenegadoTitle": "Acceso denegado"
   },
   "FormCambiarContrasena": {
     "Title": "Cambiar contraseña",

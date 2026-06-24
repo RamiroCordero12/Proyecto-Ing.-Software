@@ -67,7 +67,9 @@
     "ErrorFechaInvalidaTitle": "Invalid filter",
     "ErrorSinResultados": "No records found matching the selected filters.",
     "ErrorSinResultadosTitle": "No results",
-    "MsgErrorCargar": "Error loading list: "
+    "MsgErrorCargar": "Error loading list: ",
+    "MsgAccesoDenegado": "You do not have permission to access this module.",
+    "MsgAccesoDenegadoTitle": "Access denied"
   },
   "FormCambiarContrasena": {
     "Title": "Change password",

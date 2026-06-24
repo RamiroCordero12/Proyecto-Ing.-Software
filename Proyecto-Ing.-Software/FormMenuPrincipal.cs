@@ -130,12 +130,6 @@ namespace Proyecto_Ing._Software
             this.Show();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e) { }
-
-        // Designer-generated empty handler kept for compatibility
-        private void bitacoraToolStripMenuItem_Click(object sender, EventArgs e) { }
-        private void button1_Click(object sender, EventArgs e) { }
-
         private void cambiarLenguajeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new FormCambiarLenguaje().Show();
