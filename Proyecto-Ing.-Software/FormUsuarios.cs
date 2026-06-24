@@ -11,6 +11,7 @@ namespace Proyecto_Ing._Software
     public partial class FormUsuarios : Form, ILocalizationObserver
     {
         private int _dniUsuario = 0;
+        private int _conteoUsuarios = 0;
         private List<RolBE> _todosLosRoles = new List<RolBE>();
         private readonly LocalizationService _loc = LocalizationService.Instance;
 
@@ -81,6 +82,15 @@ namespace Proyecto_Ing._Software
             cmbFiltroEstado.Items.Add(_loc["FormUsuarios", "FiltroTodos"]);
             cmbFiltroEstado.Items.Add(_loc["FormUsuarios", "FiltroHabilitados"]);
             cmbFiltroEstado.SelectedIndex = filtroIndex >= 0 ? filtroIndex : 0;
+
+            ActualizarLabelConteo();
+        }
+
+        // Reflects whatever is currently shown in the grid (i.e. respects the
+        // Todos/Habilitados filter), not the unfiltered total in the database.
+        private void ActualizarLabelConteo()
+        {
+            lblTotalUsuarios.Text = _loc["FormUsuarios", "LabelTotalUsuarios"] + " " + _conteoUsuarios;
         }
 
         // Column names stay fixed (used by Cells["..."] lookups elsewhere);
@@ -246,6 +256,9 @@ namespace Proyecto_Ing._Software
                     dgvUsuario.Columns["LenguajeId"].Visible = false;
 
                 AplicarEncabezadosGrilla();
+
+                _conteoUsuarios = display.Rows.Count;
+                ActualizarLabelConteo();
 
                 // Binding a new DataSource auto-selects the first row, which looks
                 // like a real selection but isn't (CellClick never fired for it).

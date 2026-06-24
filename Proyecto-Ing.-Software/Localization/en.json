@@ -35,7 +35,8 @@
     "ButtonPruebaDesbloquearUsuario": "Test unlock user",
     "ButtonPruebaModificarUsuario": "Test modify user",
     "ButtonPruebaCambiarClave": "Test change password",
-    "ButtonPruebaLogout": "Test logout"
+    "ButtonPruebaLogout": "Test logout",
+    "ChkMostrarPruebas": "Show tests"
   },
   "FormUsuarios": {
     "Title": "User Manager",
@@ -48,6 +49,7 @@
     "LabelFiltroEstado": "Show:",
     "FiltroTodos": "All",
     "FiltroHabilitados": "Enabled",
+    "LabelTotalUsuarios": "Total users:",
     "ButtonCrear": "Create user",
     "ButtonDeshabilitar": "Disable user",
     "ButtonHabilitar": "Enable user",

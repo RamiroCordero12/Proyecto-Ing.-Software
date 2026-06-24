@@ -51,6 +51,7 @@
             this.lblFiltroEstado = new System.Windows.Forms.Label();
             this.cmbFiltroEstado = new System.Windows.Forms.ComboBox();
             this.btnRegenerarDigito = new System.Windows.Forms.Button();
+            this.lblTotalUsuarios = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuario)).BeginInit();
             this.SuspendLayout();
             // 
@@ -206,11 +207,21 @@
             this.btnRegenerarDigito.UseVisualStyleBackColor = true;
             this.btnRegenerarDigito.Click += new System.EventHandler(this.btnRegenerarDigito_Click);
             //
+            // lblTotalUsuarios
+            //
+            this.lblTotalUsuarios.AutoSize = true;
+            this.lblTotalUsuarios.Location = new System.Drawing.Point(760, 9);
+            this.lblTotalUsuarios.Name = "lblTotalUsuarios";
+            this.lblTotalUsuarios.Size = new System.Drawing.Size(100, 13);
+            this.lblTotalUsuarios.TabIndex = 19;
+            this.lblTotalUsuarios.Text = "Total: 0";
+            //
             // FormUsuarios
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
+            this.Controls.Add(this.lblTotalUsuarios);
             this.Controls.Add(this.btnRegenerarDigito);
             this.Controls.Add(this.cmbFiltroEstado);
             this.Controls.Add(this.lblFiltroEstado);
@@ -265,5 +276,6 @@
         private System.Windows.Forms.Label lblFiltroEstado;
         private System.Windows.Forms.ComboBox cmbFiltroEstado;
         private System.Windows.Forms.Button btnRegenerarDigito;
+        private System.Windows.Forms.Label lblTotalUsuarios;
     }
 }

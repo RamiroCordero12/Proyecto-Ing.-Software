@@ -44,6 +44,7 @@
             this.btnPruebaModificarUsuario = new System.Windows.Forms.Button();
             this.btnPruebaCambiarClave = new System.Windows.Forms.Button();
             this.btnPruebaLogout = new System.Windows.Forms.Button();
+            this.chkMostrarPruebas = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,7 +123,7 @@
             //
             // btnProbarDigito
             //
-            this.btnProbarDigito.Location = new System.Drawing.Point(12, 40);
+            this.btnProbarDigito.Location = new System.Drawing.Point(12, 48);
             this.btnProbarDigito.Name = "btnProbarDigito";
             this.btnProbarDigito.Size = new System.Drawing.Size(220, 30);
             this.btnProbarDigito.TabIndex = 1;
@@ -132,7 +133,7 @@
             //
             // btnPruebaCrearUsuario
             //
-            this.btnPruebaCrearUsuario.Location = new System.Drawing.Point(250, 40);
+            this.btnPruebaCrearUsuario.Location = new System.Drawing.Point(250, 48);
             this.btnPruebaCrearUsuario.Name = "btnPruebaCrearUsuario";
             this.btnPruebaCrearUsuario.Size = new System.Drawing.Size(220, 30);
             this.btnPruebaCrearUsuario.TabIndex = 2;
@@ -142,7 +143,7 @@
             //
             // btnPruebaLogin
             //
-            this.btnPruebaLogin.Location = new System.Drawing.Point(12, 80);
+            this.btnPruebaLogin.Location = new System.Drawing.Point(12, 88);
             this.btnPruebaLogin.Name = "btnPruebaLogin";
             this.btnPruebaLogin.Size = new System.Drawing.Size(220, 30);
             this.btnPruebaLogin.TabIndex = 3;
@@ -152,7 +153,7 @@
             //
             // btnPruebaDesbloquearUsuario
             //
-            this.btnPruebaDesbloquearUsuario.Location = new System.Drawing.Point(250, 80);
+            this.btnPruebaDesbloquearUsuario.Location = new System.Drawing.Point(250, 88);
             this.btnPruebaDesbloquearUsuario.Name = "btnPruebaDesbloquearUsuario";
             this.btnPruebaDesbloquearUsuario.Size = new System.Drawing.Size(220, 30);
             this.btnPruebaDesbloquearUsuario.TabIndex = 4;
@@ -162,7 +163,7 @@
             //
             // btnPruebaModificarUsuario
             //
-            this.btnPruebaModificarUsuario.Location = new System.Drawing.Point(12, 120);
+            this.btnPruebaModificarUsuario.Location = new System.Drawing.Point(12, 128);
             this.btnPruebaModificarUsuario.Name = "btnPruebaModificarUsuario";
             this.btnPruebaModificarUsuario.Size = new System.Drawing.Size(220, 30);
             this.btnPruebaModificarUsuario.TabIndex = 5;
@@ -172,7 +173,7 @@
             //
             // btnPruebaCambiarClave
             //
-            this.btnPruebaCambiarClave.Location = new System.Drawing.Point(250, 120);
+            this.btnPruebaCambiarClave.Location = new System.Drawing.Point(250, 128);
             this.btnPruebaCambiarClave.Name = "btnPruebaCambiarClave";
             this.btnPruebaCambiarClave.Size = new System.Drawing.Size(220, 30);
             this.btnPruebaCambiarClave.TabIndex = 6;
@@ -182,7 +183,7 @@
             //
             // btnPruebaLogout
             //
-            this.btnPruebaLogout.Location = new System.Drawing.Point(12, 160);
+            this.btnPruebaLogout.Location = new System.Drawing.Point(12, 168);
             this.btnPruebaLogout.Name = "btnPruebaLogout";
             this.btnPruebaLogout.Size = new System.Drawing.Size(220, 30);
             this.btnPruebaLogout.TabIndex = 7;
@@ -190,12 +191,24 @@
             this.btnPruebaLogout.UseVisualStyleBackColor = true;
             this.btnPruebaLogout.Click += new System.EventHandler(this.btnPruebaLogout_Click);
             //
+            // chkMostrarPruebas
+            //
+            this.chkMostrarPruebas.AutoSize = true;
+            this.chkMostrarPruebas.Location = new System.Drawing.Point(12, 27);
+            this.chkMostrarPruebas.Name = "chkMostrarPruebas";
+            this.chkMostrarPruebas.Size = new System.Drawing.Size(120, 17);
+            this.chkMostrarPruebas.TabIndex = 8;
+            this.chkMostrarPruebas.Text = "Mostrar pruebas";
+            this.chkMostrarPruebas.UseVisualStyleBackColor = true;
+            this.chkMostrarPruebas.CheckedChanged += new System.EventHandler(this.chkMostrarPruebas_CheckedChanged);
+            //
             // FormMenuPrincipal
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
             this.ClientSize = new System.Drawing.Size(762, 248);
+            this.Controls.Add(this.chkMostrarPruebas);
             this.Controls.Add(this.btnPruebaLogout);
             this.Controls.Add(this.btnPruebaCambiarClave);
             this.Controls.Add(this.btnPruebaModificarUsuario);
@@ -233,6 +246,7 @@
         private System.Windows.Forms.Button btnPruebaModificarUsuario;
         private System.Windows.Forms.Button btnPruebaCambiarClave;
         private System.Windows.Forms.Button btnPruebaLogout;
+        private System.Windows.Forms.CheckBox chkMostrarPruebas;
     }
 }
 

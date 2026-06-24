@@ -9,6 +9,7 @@ namespace Proyecto_Ing._Software
     public partial class FormMenuPrincipal : Form, ILocalizationObserver
     {
         private readonly LocalizationService _loc = LocalizationService.Instance;
+        private bool _esAdmin = false;
 
         // Fixed test-user identity shared across all "Prueba ..." buttons, so
         // they can run as a connected lifecycle: crear -> login -> desbloquear
@@ -51,6 +52,7 @@ namespace Proyecto_Ing._Software
             btnPruebaModificarUsuario.Text = _loc["FormMenuPrincipal", "ButtonPruebaModificarUsuario"];
             btnPruebaCambiarClave.Text = _loc["FormMenuPrincipal", "ButtonPruebaCambiarClave"];
             btnPruebaLogout.Text = _loc["FormMenuPrincipal", "ButtonPruebaLogout"];
+            chkMostrarPruebas.Text = _loc["FormMenuPrincipal", "ChkMostrarPruebas"];
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -99,15 +101,35 @@ namespace Proyecto_Ing._Software
             familiasToolStripMenuItem.Visible = permisos.Tiene(Patente.GestorUsuarios);
             rolesToolStripMenuItem.Visible = permisos.Tiene(Patente.GestorUsuarios);
 
-            // Integrity-check tool and "Prueba ..." smoke-test buttons: same
-            // admin-only gate as user management.
-            btnProbarDigito.Visible = permisos.Tiene(Patente.GestorUsuarios);
-            btnPruebaCrearUsuario.Visible = permisos.Tiene(Patente.GestorUsuarios);
-            btnPruebaLogin.Visible = permisos.Tiene(Patente.GestorUsuarios);
-            btnPruebaDesbloquearUsuario.Visible = permisos.Tiene(Patente.GestorUsuarios);
-            btnPruebaModificarUsuario.Visible = permisos.Tiene(Patente.GestorUsuarios);
-            btnPruebaCambiarClave.Visible = permisos.Tiene(Patente.GestorUsuarios);
-            btnPruebaLogout.Visible = permisos.Tiene(Patente.CerrarSesion);
+            // Integrity-check tool and "Prueba ..." smoke-test buttons: admin-only,
+            // and only shown at all when chkMostrarPruebas is checked — non-admins
+            // never see the checkbox or any test button, regardless of its state.
+            _esAdmin = permisos.Tiene(Patente.GestorUsuarios);
+            chkMostrarPruebas.Visible = _esAdmin;
+            if (!_esAdmin)
+                chkMostrarPruebas.Checked = false;
+
+            ActualizarVisibilidadPruebas();
+        }
+
+        // Single chokepoint for the test buttons' Visible state: on whenever
+        // the user is an admin AND has the toggle checked, off otherwise.
+        private void ActualizarVisibilidadPruebas()
+        {
+            bool mostrar = _esAdmin && chkMostrarPruebas.Checked;
+
+            btnProbarDigito.Visible = mostrar;
+            btnPruebaCrearUsuario.Visible = mostrar;
+            btnPruebaLogin.Visible = mostrar;
+            btnPruebaDesbloquearUsuario.Visible = mostrar;
+            btnPruebaModificarUsuario.Visible = mostrar;
+            btnPruebaCambiarClave.Visible = mostrar;
+            btnPruebaLogout.Visible = mostrar;
+        }
+
+        private void chkMostrarPruebas_CheckedChanged(object sender, EventArgs e)
+        {
+            ActualizarVisibilidadPruebas();
         }
 
         // ─────────────────────────────────────────

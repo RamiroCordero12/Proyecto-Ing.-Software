@@ -35,7 +35,8 @@
     "ButtonPruebaDesbloquearUsuario": "Testar desbloquear usuário",
     "ButtonPruebaModificarUsuario": "Testar modificar usuário",
     "ButtonPruebaCambiarClave": "Testar alterar senha",
-    "ButtonPruebaLogout": "Testar logout"
+    "ButtonPruebaLogout": "Testar logout",
+    "ChkMostrarPruebas": "Mostrar testes"
   },
   "FormUsuarios": {
     "Title": "Gestor de Usuários",
@@ -48,6 +49,7 @@
     "LabelFiltroEstado": "Mostrar:",
     "FiltroTodos": "Todos",
     "FiltroHabilitados": "Habilitados",
+    "LabelTotalUsuarios": "Total de usuários:",
     "ButtonCrear": "Criar usuário",
     "ButtonDeshabilitar": "Desativar usuário",
     "ButtonHabilitar": "Ativar usuário",
