@@ -298,6 +298,29 @@ namespace DAL
             }
             return resultado;
         }
+
+        public Usuario ObtenerPorDNI(int dni)
+        {
+            return ListarUsuario().FirstOrDefault(u => u.DNI == dni);
+        }
+
+        public bool ActualizarDigitoVerificador(int dni, int nuevoDigito)
+        {
+            bool resultado = false;
+            using (SqlConnection conexionSql = conexion.ValidarConexion())
+            {
+                string consulta = "UPDATE Usuarios SET DigitoVerificador = @DigitoVerificador WHERE DNI = @DNI";
+                using (SqlCommand cmd = new SqlCommand(consulta, conexionSql))
+                {
+                    cmd.Parameters.AddWithValue("@DigitoVerificador", nuevoDigito);
+                    cmd.Parameters.AddWithValue("@DNI", dni);
+                    conexionSql.Open();
+                    int filas = cmd.ExecuteNonQuery();
+                    resultado = filas > 0;
+                }
+            }
+            return resultado;
+        }
     }
 
 }

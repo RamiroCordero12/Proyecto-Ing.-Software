@@ -20,7 +20,14 @@
     "LogoutConfirm": "¿Estás seguro de cerrar sesión?",
     "LogoutTitle": "Cerrar sesión",
     "ReloginConfirm": "Iniciar una nueva sesión va a terminar la actual. ¿Continuar?",
-    "ReloginTitle": "Confirmar reinicio de sesión"
+    "ReloginTitle": "Confirmar reinicio de sesión",
+    "ButtonProbarDigito": "Probar dígito verificador",
+    "PromptDniTitle": "Probar dígito verificador",
+    "PromptDniLabel": "Ingrese el DNI del usuario a verificar:",
+    "PromptDniOk": "Aceptar",
+    "PromptDniCancel": "Cancelar",
+    "TestDigitoOkTitle": "Usuario válido",
+    "TestDigitoAlertaTitle": "Usuario alterado"
   },
   "FormUsuarios": {
     "Title": "Gestor de Usuarios",
@@ -30,6 +37,9 @@
     "LabelEmail": "Email",
     "LabelCambiarRol": "Cambiar rol:",
     "LabelCambiarLenguaje": "Cambiar lenguaje:",
+    "LabelFiltroEstado": "Mostrar:",
+    "FiltroTodos": "Todos",
+    "FiltroHabilitados": "Habilitados",
     "ButtonCrear": "Crear usuario",
     "ButtonDeshabilitar": "Deshabilitar usuario",
     "ButtonHabilitar": "Habilitar usuario",

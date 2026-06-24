@@ -70,6 +70,16 @@ namespace Proyecto_Ing._Software
             cmbLenguaje.Items.Add(_loc["Idiomas", "Ingles"]);
             cmbLenguaje.Items.Add(_loc["Idiomas", "Portugues"]);
             cmbLenguaje.SelectedIndex = (int)_loc.CurrentLanguage;
+
+            lblFiltroEstado.Text = _loc["FormUsuarios", "LabelFiltroEstado"];
+
+            // Refresh filter combo items (keep current selection; index meaning
+            // — 0 = Todos, 1 = Habilitados — stays fixed across language switches)
+            int filtroIndex = cmbFiltroEstado.SelectedIndex;
+            cmbFiltroEstado.Items.Clear();
+            cmbFiltroEstado.Items.Add(_loc["FormUsuarios", "FiltroTodos"]);
+            cmbFiltroEstado.Items.Add(_loc["FormUsuarios", "FiltroHabilitados"]);
+            cmbFiltroEstado.SelectedIndex = filtroIndex >= 0 ? filtroIndex : 0;
         }
 
         // Column names stay fixed (used by Cells["..."] lookups elsewhere);
@@ -190,6 +200,10 @@ namespace Proyecto_Ing._Software
                 CargarRoles();
 
                 var usuarios = new UsuarioBLL().ListarUsuarios();
+
+                // FiltroEstado: 0 = Todos, 1 = Habilitados only.
+                if (cmbFiltroEstado.SelectedIndex == 1)
+                    usuarios = usuarios.Where(u => u.Estado).ToList();
 
                 // Names for each Lenguaje index, in the same order as cmbLenguaje's items.
                 string[] nombresLenguaje =
@@ -339,6 +353,11 @@ namespace Proyecto_Ing._Software
         }
 
         private void cmbRoles_SelectedIndexChanged(object sender, EventArgs e) { }
+
+        private void cmbFiltroEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ActualizarGrilla();
+        }
 
         private void FormUsuarios_Load(object sender, EventArgs e) { }
     }

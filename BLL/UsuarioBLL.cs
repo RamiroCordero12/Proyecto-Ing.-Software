@@ -248,6 +248,56 @@ namespace BLL
 
             return verificar;
         }
+
+        // Tests whether the stored DigitoVerificador for a user still matches
+        // what would be calculated now from their current DNI + NombreUsuario.
+        // A mismatch means the row was altered directly in the database,
+        // bypassing the app (DigitoVerificadorHelper.Validar enforces this at login).
+        public bool VerificarIntegridad(int dni, out string detalle)
+        {
+            UsuarioDAL usuarioDAL = new UsuarioDAL();
+            Usuario usuario = usuarioDAL.ObtenerPorDNI(dni);
+
+            if (usuario == null)
+            {
+                detalle = "No existe un usuario con ese DNI.";
+                return false;
+            }
+
+            int esperado = DigitoVerificadorHelper.Calcular(usuario.DNI, usuario.NombreUsuario);
+            bool valido = usuario.DigitoVerificador == esperado;
+
+            detalle = valido
+                ? "El usuario '" + usuario.NombreUsuario + "' es valido. Digito verificador: " + usuario.DigitoVerificador + "."
+                : "¡Alerta! El usuario '" + usuario.NombreUsuario + "' fue alterado. Digito almacenado: " +
+                  usuario.DigitoVerificador + ", esperado: " + esperado + ".";
+
+            return valido;
+        }
+
+        // Recalculates and persists the DigitoVerificador for a user, restoring
+        // their ability to log in after a direct database edit broke the check.
+        public bool RegenerarDigitoVerificador(int dni)
+        {
+            UsuarioDAL usuarioDAL = new UsuarioDAL();
+            Usuario usuario = usuarioDAL.ObtenerPorDNI(dni);
+            if (usuario == null)
+                throw new Exception("No existe un usuario con ese DNI.");
+
+            int nuevoDigito = DigitoVerificadorHelper.Calcular(usuario.DNI, usuario.NombreUsuario);
+            bool exito = usuarioDAL.ActualizarDigitoVerificador(dni, nuevoDigito);
+
+            if (exito)
+            {
+                Bitacora _bitacora = new Bitacora();
+
+                bitacora.RegistroBitacora(_bitacora.IdBitacora, dni,
+                    _bitacora.Accion = "Digito verificador regenerado (recuperacion de usuario alterado)",
+                    DateTime.Now, "Gestor de usuarios", _bitacora.Criticidad = "Alta");
+            }
+
+            return exito;
+        }
     }
 }
 

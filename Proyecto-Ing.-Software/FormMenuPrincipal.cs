@@ -33,6 +33,7 @@ namespace Proyecto_Ing._Software
             reloginToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuRelogin"];
             familiasToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuFamilias"];
             rolesToolStripMenuItem.Text = _loc["FormMenuPrincipal", "MenuRoles"];
+            btnProbarDigito.Text = _loc["FormMenuPrincipal", "ButtonProbarDigito"];
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -47,12 +48,22 @@ namespace Proyecto_Ing._Software
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            AplicarVisibilidadPermisos();
+        }
+
+        // Re-applies menu visibility for whichever user is currently logged in.
+        // Must be called not just on first load but also after every relogin/
+        // logout-then-login, since FormMenuPrincipal is reused (Hide/Show)
+        // across sessions rather than recreated — otherwise a user who logs
+        // out and a different user who logs back in would still see the
+        // previous user's menu items.
+        private void AplicarVisibilidadPermisos()
+        {
             Usuario usuarioLogueado = SessionManager.GetInstance.usuario;
             Permisos permisos = SessionManager.GetInstance.Permisos;
 
-            // Defensive fallback: if permissions weren't loaded for some reason
-            // (e.g. relogin path), reload them now instead of crashing or
-            // silently hiding everything.
+            // Defensive fallback: if permissions weren't loaded for some reason,
+            // reload them now instead of crashing or silently hiding everything.
             if (permisos == null)
             {
                 var rolCompleto = new BLL.RolesBLL().ObtenerRolConPermisos(usuarioLogueado.IdRol);
@@ -70,6 +81,9 @@ namespace Proyecto_Ing._Software
             // (administering the permission system itself) — gate it the same way.
             familiasToolStripMenuItem.Visible = permisos.Tiene(Patente.GestorUsuarios);
             rolesToolStripMenuItem.Visible = permisos.Tiene(Patente.GestorUsuarios);
+
+            // Integrity-check tool: same admin-only gate as user management.
+            btnProbarDigito.Visible = permisos.Tiene(Patente.GestorUsuarios);
         }
 
         // ─────────────────────────────────────────
@@ -107,6 +121,7 @@ namespace Proyecto_Ing._Software
             {
                 if (login.ShowDialog() != DialogResult.OK) return;
             }
+            AplicarVisibilidadPermisos();
             this.Show();
         }
 
@@ -127,6 +142,7 @@ namespace Proyecto_Ing._Software
             {
                 if (login.ShowDialog() != DialogResult.OK) return;
             }
+            AplicarVisibilidadPermisos();
             this.Show();
         }
 
@@ -143,6 +159,61 @@ namespace Proyecto_Ing._Software
         private void rolesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new FormRoles().Show();
+        }
+
+        // ─────────────────────────────────────────
+        //  Integrity-check tool (DigitoVerificador)
+        // ─────────────────────────────────────────
+
+        private void btnProbarDigito_Click(object sender, EventArgs e)
+        {
+            if (!PedirDni(_loc["FormMenuPrincipal", "PromptDniTitle"],
+                          _loc["FormMenuPrincipal", "PromptDniLabel"],
+                          _loc["FormMenuPrincipal", "PromptDniOk"],
+                          _loc["FormMenuPrincipal", "PromptDniCancel"], out int dni))
+                return;
+
+            string detalle;
+            bool valido = new BLL.UsuarioBLL().VerificarIntegridad(dni, out detalle);
+
+            MessageBox.Show(detalle,
+                valido ? _loc["FormMenuPrincipal", "TestDigitoOkTitle"] : _loc["FormMenuPrincipal", "TestDigitoAlertaTitle"],
+                MessageBoxButtons.OK,
+                valido ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+        }
+
+        // Minimal inline prompt dialog (no separate Designer-backed Form needed)
+        // for entering a DNI to test/repair.
+        private static bool PedirDni(string titulo, string etiqueta, string textoOk, string textoCancel, out int dni)
+        {
+            dni = 0;
+
+            using (var prompt = new Form())
+            {
+                prompt.Text = titulo;
+                prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                prompt.StartPosition = FormStartPosition.CenterParent;
+                prompt.ClientSize = new System.Drawing.Size(300, 110);
+                prompt.MaximizeBox = false;
+                prompt.MinimizeBox = false;
+
+                var lbl = new Label { Left = 12, Top = 15, Width = 270, Text = etiqueta };
+                var txt = new TextBox { Left = 12, Top = 38, Width = 270 };
+                var btnOk = new Button { Text = textoOk, Left = 120, Width = 75, Top = 70, DialogResult = DialogResult.OK };
+                var btnCancel = new Button { Text = textoCancel, Left = 200, Width = 80, Top = 70, DialogResult = DialogResult.Cancel };
+
+                prompt.Controls.Add(lbl);
+                prompt.Controls.Add(txt);
+                prompt.Controls.Add(btnOk);
+                prompt.Controls.Add(btnCancel);
+                prompt.AcceptButton = btnOk;
+                prompt.CancelButton = btnCancel;
+
+                if (prompt.ShowDialog() != DialogResult.OK)
+                    return false;
+
+                return int.TryParse(txt.Text.Trim(), out dni);
+            }
         }
     }
 }

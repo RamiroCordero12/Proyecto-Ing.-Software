@@ -48,6 +48,8 @@
             this.txtDNI = new System.Windows.Forms.TextBox();
             this.cmbLenguaje = new System.Windows.Forms.ComboBox();
             this.lblCambiarLenguaje = new System.Windows.Forms.Label();
+            this.lblFiltroEstado = new System.Windows.Forms.Label();
+            this.cmbFiltroEstado = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuario)).BeginInit();
             this.SuspendLayout();
             // 
@@ -170,15 +172,36 @@
             this.cmbLenguaje.Name = "cmbLenguaje";
             // 
             // lblCambiarLenguaje
-            // 
+            //
             resources.ApplyResources(this.lblCambiarLenguaje, "lblCambiarLenguaje");
             this.lblCambiarLenguaje.Name = "lblCambiarLenguaje";
-            // 
+            //
+            // lblFiltroEstado
+            //
+            this.lblFiltroEstado.AutoSize = true;
+            this.lblFiltroEstado.Location = new System.Drawing.Point(23, 9);
+            this.lblFiltroEstado.Name = "lblFiltroEstado";
+            this.lblFiltroEstado.Size = new System.Drawing.Size(48, 13);
+            this.lblFiltroEstado.TabIndex = 16;
+            this.lblFiltroEstado.Text = "Mostrar:";
+            //
+            // cmbFiltroEstado
+            //
+            this.cmbFiltroEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFiltroEstado.FormattingEnabled = true;
+            this.cmbFiltroEstado.Location = new System.Drawing.Point(90, 5);
+            this.cmbFiltroEstado.Name = "cmbFiltroEstado";
+            this.cmbFiltroEstado.Size = new System.Drawing.Size(160, 21);
+            this.cmbFiltroEstado.TabIndex = 17;
+            this.cmbFiltroEstado.SelectedIndexChanged += new System.EventHandler(this.cmbFiltroEstado_SelectedIndexChanged);
+            //
             // FormUsuarios
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.ForestGreen;
+            this.Controls.Add(this.cmbFiltroEstado);
+            this.Controls.Add(this.lblFiltroEstado);
             this.Controls.Add(this.cmbLenguaje);
             this.Controls.Add(this.lblCambiarLenguaje);
             this.Controls.Add(this.lblDNI);
@@ -227,5 +250,7 @@
         private System.Windows.Forms.TextBox txtDNI;
         private System.Windows.Forms.ComboBox cmbLenguaje;
         private System.Windows.Forms.Label lblCambiarLenguaje;
+        private System.Windows.Forms.Label lblFiltroEstado;
+        private System.Windows.Forms.ComboBox cmbFiltroEstado;
     }
 }

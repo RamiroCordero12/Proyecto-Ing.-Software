@@ -20,7 +20,14 @@
     "LogoutConfirm": "Are you sure you want to log out?",
     "LogoutTitle": "Log out",
     "ReloginConfirm": "Starting a new session will end the current one. Continue?",
-    "ReloginTitle": "Confirm re-login"
+    "ReloginTitle": "Confirm re-login",
+    "ButtonProbarDigito": "Test verification digit",
+    "PromptDniTitle": "Test verification digit",
+    "PromptDniLabel": "Enter the DNI of the user to check:",
+    "PromptDniOk": "OK",
+    "PromptDniCancel": "Cancel",
+    "TestDigitoOkTitle": "Valid user",
+    "TestDigitoAlertaTitle": "Tampered user"
   },
   "FormUsuarios": {
     "Title": "User Manager",
@@ -30,6 +37,9 @@
     "LabelEmail": "Email",
     "LabelCambiarRol": "Change role:",
     "LabelCambiarLenguaje": "Change language:",
+    "LabelFiltroEstado": "Show:",
+    "FiltroTodos": "All",
+    "FiltroHabilitados": "Enabled",
     "ButtonCrear": "Create user",
     "ButtonDeshabilitar": "Disable user",
     "ButtonHabilitar": "Enable user",
