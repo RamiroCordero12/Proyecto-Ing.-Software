@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using BE;
 using Servicios;
 using Servicios.Localization;
 

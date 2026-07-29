@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
-namespace Servicios
+namespace BE
 {
     public class Usuario
     {
@@ -19,13 +15,10 @@ namespace Servicios
         [Obsolete("Use IdRol with the Composite permission system instead.")]
         public int Rol { get; set; }
 
-        // New: FK to Roles (composite pattern) table.
         public int IdRol { get; set; }
 
-        // nuevo
         public int IntentosFallidos { get; set; }
         public int Lenguaje { get; set; }
         public int DigitoVerificador { get; set; }
     }
 }
-

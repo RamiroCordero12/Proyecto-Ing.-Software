@@ -30,8 +30,8 @@ namespace Proyecto_Ing._Software
         private void ApplyLocalization()
         {
             this.Text = _loc["FormCambiarLenguaje", "Title"];
-            lblCambiarLenguaje.Text = _loc["FormUsuarios", "LabelCambiarLenguaje"];
-            btnCambiarLenguaje.Text = _loc["FormCambiarContrasena", "ButtonConfirmar"];
+            lblCambiarLenguaje.Text = _loc["FormCambiarLenguaje", "LabelCambiarLenguaje"];
+            btnCambiarLenguaje.Text = _loc["FormCambiarLenguaje", "ButtonConfirmar"];
             int langIndex = cmbLenguaje.SelectedIndex;
             cmbLenguaje.Items.Clear();
             cmbLenguaje.Items.Add(_loc["Idiomas", "Espanol"]);

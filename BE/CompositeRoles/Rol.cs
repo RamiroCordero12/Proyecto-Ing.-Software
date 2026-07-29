@@ -1,10 +1,7 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Servicios
+namespace BE
 {
     public class RolBE
     {
@@ -14,7 +11,6 @@ namespace Servicios
 
         private readonly List<IComponentePermiso> _componentes = new List<IComponentePermiso>();
 
-        // ── Component management ──────────────────────────────────────────
         public void AgregarComponente(IComponentePermiso componente)
         {
             if (componente != null && !_componentes.Contains(componente))
@@ -28,17 +24,9 @@ namespace Servicios
 
         public IReadOnlyList<IComponentePermiso> Componentes => _componentes.AsReadOnly();
 
-        // ── Permission queries ────────────────────────────────────────────
-        /// <summary>
-        /// Returns the flat set of all patent IDs this role grants,
-        /// traversing the full composite tree (patents + families).
-        /// </summary>
         public HashSet<int> ObtenerTodasLasPatentes()
             => new HashSet<int>(_componentes.SelectMany(c => c.ObtenerPatentes()));
 
-        /// <summary>
-        /// Returns true if the role grants the specified patent.
-        /// </summary>
         public bool TienePatente(int idPatente)
             => ObtenerTodasLasPatentes().Contains(idPatente);
 

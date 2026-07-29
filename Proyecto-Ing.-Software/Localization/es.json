@@ -87,7 +87,8 @@
     "ColLenguaje": "Lenguaje",
     "TitleAviso": "Aviso",
     "TitleExito": "Éxito",
-    "TitleError": "Error"
+    "TitleError": "Error",
+    "MsgErrorDNIInvalido": "El DNI debe ser un número válido."
   },
   "FormBitacora": {
     "Title": "Bitácora de eventos",
@@ -133,7 +134,9 @@
     "MsgErrorBase": "Error al cambiar la contraseña: "
   },
   "FormCambiarLenguaje": {
-    "Title": "Cambiar lenguaje"
+    "Title": "Cambiar lenguaje",
+    "LabelCambiarLenguaje": "Seleccionar idioma",
+    "ButtonConfirmar": "Cambiar"
   },
   "FormFamilias": {
     "Title": "Familias",

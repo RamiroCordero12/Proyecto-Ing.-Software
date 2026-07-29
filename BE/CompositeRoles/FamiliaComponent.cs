@@ -1,10 +1,7 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Servicios
+namespace BE
 {
     public class FamiliaComponent : IComponentePermiso
     {
@@ -14,7 +11,6 @@ namespace Servicios
 
         private readonly List<IComponentePermiso> _hijos = new List<IComponentePermiso>();
 
-        // ── Child management ──────────────────────────────────────────────
         public void Agregar(IComponentePermiso hijo)
         {
             if (hijo != null && !_hijos.Contains(hijo))
@@ -28,10 +24,6 @@ namespace Servicios
 
         public IReadOnlyList<IComponentePermiso> Hijos => _hijos.AsReadOnly();
 
-        // ── Composite operation ───────────────────────────────────────────
-        /// <summary>
-        /// Delegates to all children and merges their patent IDs (distinct).
-        /// </summary>
         public IEnumerable<int> ObtenerPatentes()
             => _hijos.SelectMany(h => h.ObtenerPatentes()).Distinct();
 

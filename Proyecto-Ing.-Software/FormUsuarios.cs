@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using BLL;
+using BE;
 using Servicios;
 using Servicios.Localization;
 
@@ -166,9 +167,16 @@ namespace Proyecto_Ing._Software
                     return;
                 }
 
+                if (!int.TryParse(txtDNI.Text.Trim(), out int dni))
+                {
+                    MessageBox.Show(_loc["FormUsuarios", "MsgErrorDNIInvalido"],
+                        _loc["FormUsuarios", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 Usuario usuario = new Usuario
                 {
-                    DNI = int.Parse(txtDNI.Text),
+                    DNI = dni,
                     Nombre = txtNombre.Text,
                     Apellido = txtApellido.Text,
                     Email = txtEmail.Text,
@@ -369,9 +377,16 @@ namespace Proyecto_Ing._Software
                 return;
             }
 
+            if (!int.TryParse(txtDNI.Text.Trim(), out int dniMod))
+            {
+                MessageBox.Show(_loc["FormUsuarios", "MsgErrorDNIInvalido"],
+                    _loc["FormUsuarios", "TitleAviso"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Usuario usuario = new Usuario
             {
-                DNI = int.Parse(txtDNI.Text),
+                DNI = dniMod,
                 Nombre = txtNombre.Text,
                 Apellido = txtApellido.Text,
                 Email = txtEmail.Text,

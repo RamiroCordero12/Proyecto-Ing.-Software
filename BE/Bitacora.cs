@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
-namespace Servicios
+namespace BE
 {
     public class Bitacora
     {
@@ -15,7 +11,5 @@ namespace Servicios
         public DateTime FechaHora { get; set; }
         public string Modulo { get; set; }
         public string Criticidad { get; set; }
-
-
     }
 }

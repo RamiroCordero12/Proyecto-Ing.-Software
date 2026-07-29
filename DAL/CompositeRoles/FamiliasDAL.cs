@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Servicios;
+using BE;
 
 namespace DAL
 {
@@ -230,12 +230,33 @@ namespace DAL
         public bool EliminarFamilia(int idFamilia)
         {
             using (SqlConnection con = _cx.ValidarConexion())
-            using (SqlCommand cmd = new SqlCommand(
-                "DELETE FROM Familias WHERE IdFamilia = @Id", con))
             {
-                cmd.Parameters.AddWithValue("@Id", idFamilia);
                 con.Open();
-                return cmd.ExecuteNonQuery() > 0;
+                using (SqlTransaction tx = con.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(
+                            "DELETE FROM Fam_Pat WHERE IdFamilia = @Id", con, tx))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", idFamilia);
+                            cmd.ExecuteNonQuery();
+                        }
+                        using (SqlCommand cmd = new SqlCommand(
+                            "DELETE FROM Familias WHERE IdFamilia = @Id", con, tx))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", idFamilia);
+                            int filas = cmd.ExecuteNonQuery();
+                            tx.Commit();
+                            return filas > 0;
+                        }
+                    }
+                    catch
+                    {
+                        tx.Rollback();
+                        throw;
+                    }
+                }
             }
         }
 

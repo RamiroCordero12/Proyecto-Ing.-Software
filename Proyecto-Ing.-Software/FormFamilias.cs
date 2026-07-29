@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using BLL;
+using BE;
 using Servicios;
 using Servicios.Localization;
 

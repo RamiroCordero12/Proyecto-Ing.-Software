@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Servicios;
+using BE;
 
 namespace DAL
 {
@@ -110,109 +110,108 @@ namespace DAL
         {
             RolBE rol = null;
 
-            // Step 1: get role header
-            string sqlHeader = "SELECT IdRol, NombreRol, Descripcion FROM Roles WHERE IdRol = @Id";
             using (SqlConnection con = _cx.ValidarConexion())
-            using (SqlCommand cmd = new SqlCommand(sqlHeader, con))
             {
-                cmd.Parameters.AddWithValue("@Id", idRol);
                 con.Open();
-                using (SqlDataReader r = cmd.ExecuteReader())
+
+                // Step 1: get role header
+                string sqlHeader = "SELECT IdRol, NombreRol, Descripcion FROM Roles WHERE IdRol = @Id";
+                using (SqlCommand cmd = new SqlCommand(sqlHeader, con))
                 {
-                    if (r.Read())
+                    cmd.Parameters.AddWithValue("@Id", idRol);
+                    using (SqlDataReader r = cmd.ExecuteReader())
                     {
-                        rol = new RolBE
+                        if (r.Read())
                         {
-                            IdRol = (int)r["IdRol"],
-                            NombreRol = r["NombreRol"].ToString(),
-                            Descripcion = r["Descripcion"] != DBNull.Value
-                                          ? r["Descripcion"].ToString()
-                                          : string.Empty
-                        };
-                    }
-                }
-            }
-
-            if (rol == null) return null;
-
-            // Step 2: attach patents assigned directly to the role
-            string sqlPatentes =
-                "SELECT p.IdPatente, p.NombrePatente, p.Descripcion " +
-                "FROM Patentes p " +
-                "INNER JOIN Rol_Pat rp ON p.IdPatente = rp.IdPatente " +
-                "WHERE rp.IdRol = @Id";
-
-            using (SqlConnection con = _cx.ValidarConexion())
-            using (SqlCommand cmd = new SqlCommand(sqlPatentes, con))
-            {
-                cmd.Parameters.AddWithValue("@Id", idRol);
-                con.Open();
-                using (SqlDataReader r = cmd.ExecuteReader())
-                {
-                    while (r.Read())
-                    {
-                        rol.AgregarComponente(new PatenteComponent
-                        {
-                            Id = (int)r["IdPatente"],
-                            Nombre = r["NombrePatente"].ToString(),
-                            Descripcion = r["Descripcion"] != DBNull.Value
-                                          ? r["Descripcion"].ToString()
-                                          : string.Empty
-                        });
-                    }
-                }
-            }
-
-            // Step 3: attach families (each family already contains its patents)
-            string sqlFamilias =
-                "SELECT f.IdFamilia, f.NombreFamilia, f.Descripcion AS DescFam, " +
-                "       p.IdPatente, p.NombrePatente, p.Descripcion AS DescPat " +
-                "FROM Familias f " +
-                "INNER JOIN Rol_Fam rf ON f.IdFamilia = rf.IdFamilia " +
-                "LEFT  JOIN Fam_Pat fp ON f.IdFamilia = fp.IdFamilia " +
-                "LEFT  JOIN Patentes p ON fp.IdPatente = p.IdPatente " +
-                "WHERE rf.IdRol = @Id " +
-                "ORDER BY f.IdFamilia";
-
-            var familiaDict = new Dictionary<int, FamiliaComponent>();
-            using (SqlConnection con = _cx.ValidarConexion())
-            using (SqlCommand cmd = new SqlCommand(sqlFamilias, con))
-            {
-                cmd.Parameters.AddWithValue("@Id", idRol);
-                con.Open();
-                using (SqlDataReader r = cmd.ExecuteReader())
-                {
-                    while (r.Read())
-                    {
-                        int idF = (int)r["IdFamilia"];
-                        if (!familiaDict.ContainsKey(idF))
-                        {
-                            familiaDict[idF] = new FamiliaComponent
+                            rol = new RolBE
                             {
-                                Id = idF,
-                                Nombre = r["NombreFamilia"].ToString(),
-                                Descripcion = r["DescFam"] != DBNull.Value
-                                              ? r["DescFam"].ToString()
+                                IdRol = (int)r["IdRol"],
+                                NombreRol = r["NombreRol"].ToString(),
+                                Descripcion = r["Descripcion"] != DBNull.Value
+                                              ? r["Descripcion"].ToString()
                                               : string.Empty
                             };
                         }
-                        if (r["IdPatente"] != DBNull.Value)
+                    }
+                }
+
+                if (rol == null) return null;
+
+                // Step 2: attach patents assigned directly to the role
+                string sqlPatentes =
+                    "SELECT p.IdPatente, p.NombrePatente, p.Descripcion " +
+                    "FROM Patentes p " +
+                    "INNER JOIN Rol_Pat rp ON p.IdPatente = rp.IdPatente " +
+                    "WHERE rp.IdRol = @Id";
+
+                using (SqlCommand cmd = new SqlCommand(sqlPatentes, con))
+                {
+                    cmd.Parameters.AddWithValue("@Id", idRol);
+                    using (SqlDataReader r = cmd.ExecuteReader())
+                    {
+                        while (r.Read())
                         {
-                            familiaDict[idF].Agregar(new PatenteComponent
+                            rol.AgregarComponente(new PatenteComponent
                             {
                                 Id = (int)r["IdPatente"],
                                 Nombre = r["NombrePatente"].ToString(),
-                                Descripcion = r["DescPat"] != DBNull.Value
-                                              ? r["DescPat"].ToString()
+                                Descripcion = r["Descripcion"] != DBNull.Value
+                                              ? r["Descripcion"].ToString()
                                               : string.Empty
                             });
                         }
                     }
                 }
-            }
 
-            foreach (var fam in familiaDict.Values)
-                rol.AgregarComponente(fam);
+                // Step 3: attach families
+                string sqlFamilias =
+                    "SELECT f.IdFamilia, f.NombreFamilia, f.Descripcion AS DescFam, " +
+                    "       p.IdPatente, p.NombrePatente, p.Descripcion AS DescPat " +
+                    "FROM Familias f " +
+                    "INNER JOIN Rol_Fam rf ON f.IdFamilia = rf.IdFamilia " +
+                    "LEFT  JOIN Fam_Pat fp ON f.IdFamilia = fp.IdFamilia " +
+                    "LEFT  JOIN Patentes p ON fp.IdPatente = p.IdPatente " +
+                    "WHERE rf.IdRol = @Id " +
+                    "ORDER BY f.IdFamilia";
+
+                var familiaDict = new Dictionary<int, FamiliaComponent>();
+                using (SqlCommand cmd = new SqlCommand(sqlFamilias, con))
+                {
+                    cmd.Parameters.AddWithValue("@Id", idRol);
+                    using (SqlDataReader r = cmd.ExecuteReader())
+                    {
+                        while (r.Read())
+                        {
+                            int idF = (int)r["IdFamilia"];
+                            if (!familiaDict.ContainsKey(idF))
+                            {
+                                familiaDict[idF] = new FamiliaComponent
+                                {
+                                    Id = idF,
+                                    Nombre = r["NombreFamilia"].ToString(),
+                                    Descripcion = r["DescFam"] != DBNull.Value
+                                                  ? r["DescFam"].ToString()
+                                                  : string.Empty
+                                };
+                            }
+                            if (r["IdPatente"] != DBNull.Value)
+                            {
+                                familiaDict[idF].Agregar(new PatenteComponent
+                                {
+                                    Id = (int)r["IdPatente"],
+                                    Nombre = r["NombrePatente"].ToString(),
+                                    Descripcion = r["DescPat"] != DBNull.Value
+                                                  ? r["DescPat"].ToString()
+                                                  : string.Empty
+                                });
+                            }
+                        }
+                    }
+                }
+
+                foreach (var fam in familiaDict.Values)
+                    rol.AgregarComponente(fam);
+            }
 
             return rol;
         }
@@ -299,12 +298,39 @@ namespace DAL
         public bool EliminarRol(int idRol)
         {
             using (SqlConnection con = _cx.ValidarConexion())
-            using (SqlCommand cmd = new SqlCommand(
-                "DELETE FROM Roles WHERE IdRol = @Id", con))
             {
-                cmd.Parameters.AddWithValue("@Id", idRol);
                 con.Open();
-                return cmd.ExecuteNonQuery() > 0;
+                using (SqlTransaction tx = con.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(
+                            "DELETE FROM Rol_Pat WHERE IdRol = @Id", con, tx))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", idRol);
+                            cmd.ExecuteNonQuery();
+                        }
+                        using (SqlCommand cmd = new SqlCommand(
+                            "DELETE FROM Rol_Fam WHERE IdRol = @Id", con, tx))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", idRol);
+                            cmd.ExecuteNonQuery();
+                        }
+                        using (SqlCommand cmd = new SqlCommand(
+                            "DELETE FROM Roles WHERE IdRol = @Id", con, tx))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", idRol);
+                            int filas = cmd.ExecuteNonQuery();
+                            tx.Commit();
+                            return filas > 0;
+                        }
+                    }
+                    catch
+                    {
+                        tx.Rollback();
+                        throw;
+                    }
+                }
             }
         }
 

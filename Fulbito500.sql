@@ -187,8 +187,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
--- parte meada:
-
 INSERT [dbo].[Fam_Pat] ([IdFamilia], [IdPatente]) VALUES (1, 1)
 INSERT [dbo].[Fam_Pat] ([IdFamilia], [IdPatente]) VALUES (1, 2)
 INSERT [dbo].[Fam_Pat] ([IdFamilia], [IdPatente]) VALUES (1, 3)
