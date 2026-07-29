@@ -1,0 +1,407 @@
+﻿T04. Gestión de Roles
+
+T04.1 - Crear rol
+
+Descomposición funcional "Crear rol"
+1. El administrador selecciona el botón "Roles" en el menú principal.
+2. El sistema abre la pantalla de gestión de roles mostrando todos los roles existentes en una grilla.
+3. El administrador completa los campos de Nombre del rol, Descripción y selecciona las patentes y/o familias que desea asignar.
+4. El administrador presiona el botón "Crear rol".
+5. El sistema valida que el nombre no esté vacío y que tenga al menos una patente o familia asignada.
+6. El sistema guarda el rol en la base de datos insertando sus vínculos con patentes y familias mediante una transacción.
+7. El sistema registra la acción en la bitácora con criticidad "Alta".
+8. El sistema actualiza la grilla y muestra el rol nuevo en pantalla.
+
+Diagrama de caso de uso "Crear rol"
+
+Especificación de caso de uso "Crear rol"
+
+Id y Nombre: CU06 "Crear rol"
+Estado: -
+Descripción: Le va a permitir al administrador crear roles con un conjunto de patentes y familias que definen los permisos del rol.
+Actor principal: Administrador
+Actor secundario: -
+Precondiciones: El administrador abrió el apartado de gestión de roles.
+Puntos de extensión: -
+Condición: -
+Escenario principal:
+1. El administrador presiona el botón "Roles" en el menú principal.
+2. El sistema muestra la pantalla de gestión con la lista de roles.
+3. El administrador ingresa el nombre del rol y una descripción opcional.
+4. El administrador selecciona las patentes y/o familias del rol en las listas de verificación.
+5. El administrador presiona el botón "Crear rol".
+6. El sistema valida que el nombre no esté vacío y que tenga al menos un permiso asignado.
+7. El sistema guarda el rol, sus patentes directas y sus familias en la base de datos mediante una transacción.
+8. El sistema registra la creación en la bitácora.
+9. El sistema actualiza la grilla.
+Flujos secundarios:
+6.1 - El nombre está vacío: el sistema muestra un mensaje de error.
+6.2 - No se seleccionó ninguna patente ni familia: el sistema muestra un mensaje de error indicando que debe asignar al menos un permiso.
+Postcondiciones: El rol fue creado y está disponible para asignar a usuarios.
+
+Diagrama de secuencia "Crear rol"
+
+Diagrama de clases "Crear rol"
+
+DER "Crear rol"
+
+GUI "Crear rol"
+
+
+T04.2 - Modificar rol
+
+Descomposición funcional "Modificar rol"
+1. El administrador selecciona un rol de la grilla de roles existentes.
+2. El sistema carga los datos del rol seleccionado (nombre, descripción, patentes y familias asignadas).
+3. El administrador modifica los datos que desee cambiar.
+4. El administrador presiona el botón "Modificar rol".
+5. El sistema valida los datos.
+6. El sistema actualiza el encabezado del rol y reemplaza todos los vínculos de patentes y familias en una transacción.
+7. El sistema registra la acción en la bitácora.
+8. El sistema actualiza la grilla.
+
+Diagrama de caso de uso "Modificar rol"
+
+Especificación de caso de uso "Modificar rol"
+
+Id y Nombre: CU07 "Modificar rol"
+Estado: -
+Descripción: El administrador va a poder modificar el nombre, descripción y permisos de un rol existente.
+Actor principal: Administrador
+Actor secundario: -
+Precondiciones: El administrador abrió el apartado de gestión de roles y existe al menos un rol.
+Puntos de extensión: -
+Condición: -
+Escenario principal:
+1. El administrador selecciona un rol de la grilla.
+2. El sistema carga los datos del rol en los campos de texto y las listas de verificación (patentes y familias tildadas según corresponda).
+3. El administrador modifica los campos deseados.
+4. El administrador presiona "Modificar rol".
+5. El sistema valida los datos.
+6. El sistema elimina los vínculos antiguos y crea los nuevos en una transacción.
+7. El sistema registra la modificación en la bitácora.
+8. El sistema actualiza la grilla.
+Flujos secundarios:
+5.1 - Nombre vacío o sin permisos: el sistema muestra error y no modifica nada.
+Postcondiciones: El rol fue modificado correctamente.
+
+Diagrama de secuencia "Modificar rol"
+
+Diagrama de clases "Modificar rol"
+
+DER "Modificar rol"
+
+GUI "Modificar rol"
+
+
+T04.3 - Eliminar rol
+
+Descomposición funcional "Eliminar rol"
+1. El administrador selecciona un rol de la grilla.
+2. El administrador presiona el botón "Eliminar rol".
+3. El sistema confirma si desea eliminar el rol.
+4. El sistema elimina los vínculos del rol con patentes y familias, y luego elimina el rol mediante una transacción.
+5. El sistema registra la acción en la bitácora.
+6. El sistema actualiza la grilla.
+
+Diagrama de caso de uso "Eliminar rol"
+
+Especificación de caso de uso "Eliminar rol"
+
+Id y Nombre: CU08 "Eliminar rol"
+Estado: -
+Descripción: El administrador va a poder eliminar un rol del sistema.
+Actor principal: Administrador
+Actor secundario: -
+Precondiciones: El administrador abrió el apartado de gestión de roles y existe al menos un rol.
+Puntos de extensión: -
+Condición: -
+Escenario principal:
+1. El administrador selecciona un rol de la grilla.
+2. El administrador presiona "Eliminar rol".
+3. El sistema muestra un cuadro de confirmación.
+4. El administrador confirma la eliminación.
+5. El sistema elimina los registros en las tablas Rol_Pat, Rol_Fam y Roles mediante una transacción.
+6. El sistema registra la eliminación en la bitácora.
+7. El sistema actualiza la grilla.
+Flujos secundarios:
+3.1 - El administrador cancela la confirmación: no se realiza ninguna acción.
+Postcondiciones: El rol fue eliminado del sistema.
+
+Diagrama de secuencia "Eliminar rol"
+
+Diagrama de clases "Eliminar rol"
+
+DER "Eliminar rol"
+
+GUI "Eliminar rol"
+
+
+T05. Gestión de Familias
+
+T05.1 - Crear familia
+
+Descomposición funcional "Crear familia"
+1. El administrador selecciona el botón "Familias" en el menú principal.
+2. El sistema abre la pantalla de gestión de familias mostrando las familias existentes.
+3. El administrador ingresa nombre de la familia, descripción y selecciona las patentes que la componen.
+4. El administrador presiona "Crear familia".
+5. El sistema valida que el nombre no esté vacío y que tenga al menos una patente asignada.
+6. El sistema guarda la familia y sus vínculos con patentes en la base de datos mediante una transacción.
+7. El sistema registra la acción en la bitácora.
+8. El sistema actualiza la lista de familias.
+
+Diagrama de caso de uso "Crear familia"
+
+Especificación de caso de uso "Crear familia"
+
+Id y Nombre: CU09 "Crear familia"
+Estado: -
+Descripción: El administrador va a poder crear familias que agrupan un conjunto de patentes, para luego asignarlas a roles como un grupo de permisos.
+Actor principal: Administrador
+Actor secundario: -
+Precondiciones: El administrador abrió el apartado de gestión de familias.
+Puntos de extensión: -
+Condición: -
+Escenario principal:
+1. El administrador presiona "Familias" en el menú principal.
+2. El sistema muestra la lista de familias y las patentes disponibles.
+3. El administrador ingresa nombre, descripción y selecciona patentes.
+4. El administrador presiona "Crear familia".
+5. El sistema valida que el nombre no esté vacío y que haya al menos una patente seleccionada.
+6. El sistema inserta la familia y sus vínculos en las tablas Familias y Fam_Pat mediante una transacción.
+7. El sistema registra la creación en la bitácora.
+8. El sistema actualiza la lista.
+Flujos secundarios:
+5.1 - Nombre vacío o sin patentes: el sistema muestra un mensaje de error.
+Postcondiciones: La familia fue creada y puede asignarse a roles.
+
+Diagrama de secuencia "Crear familia"
+
+Diagrama de clases "Crear familia"
+
+DER "Crear familia"
+
+GUI "Crear familia"
+
+
+T05.2 - Modificar familia
+
+Descomposición funcional "Modificar familia"
+1. El administrador selecciona una familia de la lista.
+2. El sistema carga los datos y las patentes asignadas.
+3. El administrador modifica los datos o cambia las patentes seleccionadas.
+4. El administrador presiona "Modificar familia".
+5. El sistema valida los datos y reemplaza los vínculos de patentes.
+6. El sistema registra la modificación en la bitácora.
+7. El sistema actualiza la lista.
+
+Diagrama de caso de uso "Modificar familia"
+
+Especificación de caso de uso "Modificar familia"
+
+Id y Nombre: CU10 "Modificar familia"
+Estado: -
+Descripción: El administrador va a poder modificar el nombre, descripción y patentes de una familia existente.
+Actor principal: Administrador
+Actor secundario: -
+Precondiciones: El administrador abrió el apartado de gestión de familias y existe al menos una familia.
+Puntos de extensión: -
+Condición: -
+Escenario principal:
+1. El administrador selecciona una familia de la lista.
+2. El sistema carga sus datos en los campos correspondientes.
+3. El administrador modifica los datos o cambia las patentes seleccionadas.
+4. El administrador presiona "Modificar familia".
+5. El sistema valida los datos.
+6. El sistema actualiza el encabezado y reemplaza los vínculos en Fam_Pat mediante una transacción.
+7. El sistema registra la modificación en la bitácora.
+8. El sistema actualiza la lista.
+Flujos secundarios:
+5.1 - Nombre vacío o sin patentes: error, no se modifica nada.
+Postcondiciones: La familia fue modificada correctamente.
+
+Diagrama de secuencia "Modificar familia"
+
+Diagrama de clases "Modificar familia"
+
+DER "Modificar familia"
+
+GUI "Modificar familia"
+
+
+T05.3 - Eliminar familia
+
+Descomposición funcional "Eliminar familia"
+1. El administrador selecciona una familia de la lista.
+2. El administrador presiona "Eliminar familia".
+3. El sistema confirma la eliminación.
+4. El sistema elimina los vínculos en Fam_Pat y luego la familia mediante una transacción.
+5. El sistema registra la eliminación en la bitácora.
+6. El sistema actualiza la lista.
+
+Diagrama de caso de uso "Eliminar familia"
+
+Especificación de caso de uso "Eliminar familia"
+
+Id y Nombre: CU11 "Eliminar familia"
+Estado: -
+Descripción: El administrador va a poder eliminar una familia del sistema.
+Actor principal: Administrador
+Actor secundario: -
+Precondiciones: El administrador abrió el apartado de gestión de familias y existe al menos una familia.
+Puntos de extensión: -
+Condición: -
+Escenario principal:
+1. El administrador selecciona una familia de la lista.
+2. El administrador presiona "Eliminar familia".
+3. El sistema muestra un cuadro de confirmación.
+4. El administrador confirma.
+5. El sistema elimina los registros en Fam_Pat y Familias mediante una transacción.
+6. El sistema registra la eliminación en la bitácora.
+7. El sistema actualiza la lista.
+Flujos secundarios:
+3.1 - Cancelación: no se realiza ninguna acción.
+Postcondiciones: La familia fue eliminada. Los roles que la tenían asignada pierden los permisos que esa familia otorgaba.
+
+Diagrama de secuencia "Eliminar familia"
+
+Diagrama de clases "Eliminar familia"
+
+DER "Eliminar familia"
+
+GUI "Eliminar familia"
+
+
+T06. Cambio de Contraseña
+
+Descomposición funcional "Cambiar contraseña"
+1. El usuario inicia sesión en el sistema.
+2. El usuario selecciona el menú "Cambiar contraseña".
+3. El sistema abre un formulario donde debe ingresar la contraseña actual, la nueva contraseña y la confirmación.
+4. El usuario completa los campos y presiona "Confirmar".
+5. El sistema valida que la nueva contraseña tenga al menos 8 caracteres, que la confirmación coincida y que la contraseña actual sea correcta.
+6. El sistema encripta la nueva contraseña con SHA256 y la actualiza en la base de datos.
+7. El sistema registra el cambio en la bitácora.
+8. El sistema muestra un mensaje de éxito.
+
+Diagrama de caso de uso "Cambiar contraseña"
+
+Especificación de caso de uso "Cambiar contraseña"
+
+Id y Nombre: CU12 "Cambiar contraseña"
+Estado: -
+Descripción: El usuario va a poder cambiar su propia contraseña. Requiere conocer la contraseña actual.
+Actor principal: Usuario (cualquier rol autenticado)
+Actor secundario: -
+Precondiciones: El usuario inició sesión en el sistema.
+Puntos de extensión: -
+Condición: -
+Escenario principal:
+1. El usuario selecciona "Cambiar contraseña" en el menú.
+2. El sistema muestra el formulario con tres campos: contraseña actual, nueva contraseña y confirmación.
+3. El usuario ingresa los datos.
+4. El usuario presiona el botón "Confirmar".
+5. El sistema valida que la nueva contraseña tenga al menos 8 caracteres.
+6. El sistema valida que la nueva contraseña y la confirmación coincidan.
+7. El sistema encripta la contraseña actual ingresada y la compara con el hash almacenado.
+8. Si coincide, encripta la nueva contraseña con SHA256 y la guarda en la base de datos.
+9. El sistema registra el cambio en la bitácora.
+10. El sistema muestra un mensaje de éxito y limpia los campos.
+Flujos secundarios:
+5.1 - La nueva contraseña tiene menos de 8 caracteres: el sistema muestra un mensaje de advertencia.
+6.1 - La confirmación no coincide: el sistema muestra un mensaje de advertencia.
+7.1 - La contraseña actual es incorrecta: el sistema muestra un mensaje de error y no permite el cambio.
+Postcondiciones: La contraseña del usuario fue actualizada en la base de datos.
+
+Diagrama de secuencia "Cambiar contraseña"
+
+Diagrama de clases "Cambiar contraseña"
+
+DER "Cambiar contraseña"
+
+GUI "Cambiar contraseña"
+
+
+T07. Bloqueo por Intentos Fallidos
+
+El sistema implementa un mecanismo de seguridad que bloquea la cuenta de un usuario después de tres intentos fallidos de inicio de sesión.
+
+Descripción del funcionamiento:
+- Cada vez que un usuario ingresa una contraseña incorrecta, el sistema incrementa el campo IntentosFallidos en la tabla Usuarios.
+- Cuando IntentosFallidos alcanza el valor 3, el sistema cambia automáticamente el estado del usuario a 0 (deshabilitado).
+- El sistema registra cada intento fallido en la bitácora con criticidad "Media".
+- Al alcanzar el bloqueo, registra un evento adicional con criticidad "Alta" indicando "Cuenta deshabilitada por intentos fallidos".
+- Cuando el usuario bloqueado intenta iniciar sesión, el sistema muestra el mensaje: "Cuenta bloqueada. Contacte al administrador."
+- El administrador puede rehabilitar la cuenta mediante el botón "Habilitar usuario" en la pantalla de gestión de usuarios, lo cual restablece el estado a 1 y los intentos fallidos a 0.
+- En un inicio de sesión exitoso, si el usuario tenía intentos fallidos acumulados (menos de 3), el sistema los resetea a 0.
+
+Tabla de base de datos:
+- Columna IntentosFallidos INT NOT NULL DEFAULT 0 en la tabla Usuarios
+
+Diagrama de actividad "Bloqueo por intentos fallidos"
+
+
+T08. Dígito Verificador (Integridad de Datos)
+
+El sistema incorpora un mecanismo de integridad que permite detectar si los datos de un usuario fueron modificados directamente en la base de datos, fuera del sistema.
+
+Descripción del funcionamiento:
+- Cada usuario tiene un campo DigitoVerificador (INT) en la tabla Usuarios.
+- Este dígito se calcula como (suma de (posición + 1) * valor ASCII de cada caracter de DNI + NombreUsuario) % 10.
+- Se calcula automáticamente al crear y modificar usuarios mediante DigitoVerificadorHelper.Calcular().
+- En cada inicio de sesión, el sistema valida el dígito verificador almacenado contra el cálculo actual mediante DigitoVerificadorHelper.Validar():
+  - Si no coincide, deniega el acceso y registra en la bitácora "Dígito verificador inválido detectado" con criticidad "Alta".
+  - Muestra el mensaje: "Los datos del usuario fueron alterados. Contacte al administrador."
+- El administrador dispone de herramientas en la pantalla de gestión de usuarios:
+  - "Verificar integridad": compara el dígito almacenado con el calculado e informa si el usuario fue alterado o no.
+  - "Regenerar dígito": recalcula y guarda el dígito correcto (útil después de una corrección manual en BD).
+  - "Simular alteración": herramienta de prueba que deliberadamente guarda un dígito incorrecto para verificar que el mecanismo de detección funciona.
+
+Clases involucradas:
+- DigitoVerificadorHelper (Servicios): métodos Calcular(dni, nombreUsuario) y Validar(usuario).
+- UsuarioBLL (BLL): métodos VerificarIntegridad(dni), SimularAlteracion(dni) y RegenerarDigitoVerificador(dni).
+
+Diagrama de secuencia "Validación de dígito verificador"
+
+
+T09. Arquitectura - Patrones de Diseño
+
+T09.1 - Singleton (SessionManager)
+- La clase SessionManager garantiza una única instancia en toda la aplicación.
+- Implementa doble verificación con lock para seguridad en entornos multi-hilo (double-checked locking).
+- Almacena el usuario autenticado y sus permisos durante toda la sesión.
+- Métodos: Login(usuario), SetPermisos(permisos), Logout().
+
+T09.2 - Observer (LocalizationService)
+- La clase LocalizationService actúa como sujeto observable (singleton).
+- La interfaz ILocalizationObserver define el contrato con el método OnLanguageChanged().
+- Cada formulario se suscribe al servicio mediante Subscribe(this) en su constructor y se desuscribe en OnFormClosed.
+- Al cambiar el idioma con SetLanguage(), el servicio notifica a todos los observadores llamando a OnLanguageChanged().
+- Utiliza WeakReference para evitar fugas de memoria cuando los formularios se cierran sin desuscribirse.
+
+T09.3 - Composite (Roles y Familias de Permisos)
+- IComponentePermiso: interfaz componente que define Id, Nombre, Descripcion y ObtenerPatentes().
+- PatenteComponent: hoja del árbol, devuelve su propio ID como permiso individual.
+- FamiliaComponent: compuesto que contiene una lista de hijos (IComponentePermiso) y delega la obtención de patentes mediante SelectMany().Distinct().
+- RolBE: cliente del composite. Contiene una lista de componentes (patentes sueltas o familias completas) y los recorre recursivamente con ObtenerTodasLasPatentes().
+- La construcción del árbol se realiza en RolesDAL.ObtenerRolConPermisos(), que arma la estructura completa desde las tablas Rol_Pat, Rol_Fam y Fam_Pat.
+
+T09.4 - Facade (Permisos)
+- La clase Permisos simplifica la interacción con el árbol de permisos composite.
+- Provee métodos: Tiene(idPatente), TieneAlguna(ids), TieneTodas(ids).
+- Los formularios llaman a SessionManager.GetInstance.Permisos.Tiene(Patente.GestorUsuarios) sin conocer la estructura interna del composite.
+
+
+T10. Smoke Tests (Pruebas Integradas)
+
+El menú principal incluye seis botones de prueba visibles para el administrador al marcar el checkbox "Mostrar pruebas". Estas pruebas ejercitan el ciclo de vida completo de un usuario de prueba fijo (DNI 90000001, nombre de usuario "Prueba90000001") para verificar que todos los componentes del sistema funcionan correctamente:
+
+1. "Prueba crear usuario": crea el usuario de prueba si no existe.
+2. "Prueba login": inicia sesión con el usuario de prueba.
+3. "Prueba desbloquear": habilita la cuenta del usuario de prueba (si fue bloqueada).
+4. "Prueba modificar usuario": modifica los datos del usuario de prueba.
+5. "Prueba cambiar clave": cambia la contraseña del usuario de prueba.
+6. "Prueba logout": cierra la sesión del usuario de prueba y restaura la sesión del administrador.
+
+Cada prueba se ejecuta sin afectar la sesión activa del administrador gracias al helper EjecutarSinAfectarSesion(), que guarda y restaura el usuario y permisos originales.
